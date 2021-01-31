@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block title %}Изменить данные Пользователя{% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" class="login-form">
+        <fieldset class="form-group">
+            <legend>Данные пользователя</legend>
+            {% csrf_token %}
+            {{ profile_form.first_name }}<br><br>
+            {{ profile_form.email }}<br><br>
+            {{ profile_form.phone }}<br><br>
+            {{ profile_form.address }}<br><br>
+            {{ profile_form.about }}<br><br>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </fieldset>
+    </form>
+{% endblock %}

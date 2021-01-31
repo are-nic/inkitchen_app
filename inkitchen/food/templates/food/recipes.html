@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Все рецепты{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-8">
+    {% if user.is_authenticated %}
+        {% for group in user.groups.all %}
+            {% if group.name == 'cooks' or group.name == 'doctors' or group.name == 'nutritionists'%}
+                <a href="{% url 'create_recipe' %}" class="button-recipe-create"> + Добавить рецепт</a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="recipes-list">
+        {% for recipe in recipes %}
+            <div class="recipe-wrapper">
+                <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+                    <div class="recipe-photo">
+                        <img src="{{ recipe.image.url }}" alt="рецепт">
+                    </div>
+                </a>
+                <div class="recipe-info">
+                <h3>{{ recipe.title }}</h3>
+                    <form method="post" action="{% url 'cart_add' recipe.id %}">
+                        {% csrf_token %}
+                        <div class="input-qty-recipes">
+                            <input name="quantity" type="number" min="1" max="999" class="form-control qty-portions" placeholder="Порций">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Добавить</button>
+                            </span>
+                        </div>
+                    </form>
+                    <!--передаем в кнопку slug рецепта для перехода к нужному рецепту
+                    <a href="{% url 'recipe_details' recipe.slug %}" class="button-recipes-list">Открыть</a>-->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+        <!------------------------------ корзина для рецептов---------------------->
+    <div class="col-sm-4">
+        <div class="card card-body card-profile">
+            <table class="table table-borderless table-shopping-cart">
+                <thead class="text-muted">
+                <tr class="small text-uppercase">
+                    <h2 style="font-size: 2rem; color: black; margin-bottom: 20px;">КОРЗИНА</h2>
+                    <th scope="col" width="300">Доставка планируется</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            <div class="cart-item">
+                                <figure class="itemside align-items-center">
+                                    <div class="aside">
+                                        <a href="{% url 'recipe_details' item.recipe.slug %}">
+                                            <img src="{{ item.recipe.image.url }}" class="img-sm">
+                                        </a>
+                                    </div>
+                                    <figcaption class="info">
+                                        <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+                                            {{ item.recipe.title }}
+                                        </a>
+                                    </figcaption>
+                                </figure>
+                                <!--Кнопка удаления рецепта-->
+                                <form action="{% url 'remove_from_cart' item.id %}">
+                                    <button type="submit" class="btn btn-sm">x</button>
+                                </form>
+                            </div>
+                            <form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
+                                {% csrf_token %}
+                                <div class="form-group" style="margin: 0;">
+                                    <div class="input-group qty-recipe">
+                                        <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

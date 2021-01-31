@@ -1,0 +1,96 @@
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
+from django.views.generic import DetailView
+from rest_framework.generics import get_object_or_404
+
+from .forms import RecipeForm, IngredientFormSet
+from .models import Recipe
+
+
+def all_recipes(request):
+    """вывод всех рецептов на странице Рецептов"""
+    recipes = Recipe.objects.all()                                  # получаем экземпляры всех рецептов
+    return render(request, "recipes.html", {"recipes": recipes})    # выводим их на страницу рецептов
+
+
+@login_required(login_url='recipes')
+def create_recipe(request):
+    """
+    создание рецепта
+    если пользователь неавторизован, выкидывает на страницу рецептов
+    """
+
+    error = ''                                                  # переменная для сообщение об ошибке
+    if request.method == 'POST':
+        form_recipe = RecipeForm(request.POST, request.FILES)   # данные, полученные из формы создания рецепта
+        if form_recipe.is_valid():                              # если данные из формы коректно заполнены
+            recipe = form_recipe.save(commit=False)             # сохраняем данные формы без коммита в БД
+            recipe.owner = request.user                         # присваиваем значению owner текущего пользователя
+            formset = IngredientFormSet(request.POST, instance=recipe)
+            if formset.is_valid():
+                recipe.save()                                   # сохраняем рецепт в БД
+                form_recipe.save_m2m()                          # сохраняем ингридиенты в БД
+                formset.save()
+                return redirect('recipes')                      # перенаправляем пользователя на страницу рецептов
+        else:
+            error = 'Введеные данные некорректны'
+
+    form_recipe = RecipeForm()
+    formset = IngredientFormSet()
+    data = {
+        'form_recipe': form_recipe,
+        'formset': formset,
+        'error': error,
+    }
+    return render(request, 'create_recipe.html', data)
+
+
+class RecipeDetailView(DetailView):
+    """вывод рецепта на странице"""
+    model = Recipe
+    template_name = 'food/recipe_detail.html'
+    context_object_name = 'recipe'                              # имя 'recipe' для обращения в шаблоне к полям рецепта
+
+
+@login_required(login_url='recipes')
+def edit_recipe(request, id):
+    """
+    изменить существующий рецепт
+    если пользователь неавторизован, выкидывает на страницу рецептов
+    """
+    recipe = get_object_or_404(Recipe, id=id)
+    if recipe.owner != request.user:        # проверка на то, что текущий пользователь - создатель рецепта
+        raise PermissionDenied
+
+    form_recipe = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+    ingredients_formset = IngredientFormSet(request.POST or None, instance=recipe)
+    if form_recipe.is_valid() and ingredients_formset.is_valid():
+        recipe = form_recipe.save(commit=False)
+        if ingredients_formset.is_valid():
+            recipe.save()                   # сохраняем рецепт в БД
+            form_recipe.save_m2m()          # сохраняем тэги в БД
+            ingredients_formset.save()      # сохраняем ингридиенты в БД
+
+        return redirect('recipe_details', slug=recipe.slug)
+
+    data = {
+        'form_recipe': form_recipe,
+        'ingredients_formset': ingredients_formset,
+        'recipe': recipe
+    }
+    return render(request, 'edit_recipe.html', data)
+
+
+@login_required(login_url='recipes')
+def remove_recipe(request, id):
+    """
+    Удалить рецепт
+    если пользователь неавторизован, выкидывает на страницу рецептов
+    """
+    recipe = get_object_or_404(Recipe, id=id)
+    if recipe.owner != request.user:
+        raise PermissionDenied
+
+    recipe.delete()
+    return redirect('recipes')

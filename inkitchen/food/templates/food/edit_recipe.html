@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Добавить рецепт{% endblock %}
+
+{% block content %}
+    <div class="add_recipe">
+        <form method="post" enctype="multipart/form-data" class="form-create-recipe">
+            <h3>Изменить свой рецепт</h3>
+            {% csrf_token %}
+            <p>Категория блюда</p>
+            {{ form_recipe.category }}<br><br>
+            {{ form_recipe.title }}<br><br>
+            {{ form_recipe.description }}<br><br>
+            {{ form_recipe.cooking_time }}<br><br>
+            <div>
+                <label for="id_image" class="btn">Фото</label>
+                {{ form_recipe.image }}<br><br>
+            </div>
+            <p>Этот рецепт подходит для</p>
+            {{ form_recipe.group }}<br>
+            <p>Ингредиенты</p>
+            {{ ingredients_formset.management_form }}
+            {% for ingredient in ingredients_formset %}
+                {{ ingredient.id }}
+                <div class="row form-row spacer">
+                    <div class="">
+                        <div class="input-group ingredient">
+                            <ul>
+                                <li>{{ ingredient.name }}</li>
+                                <li>{{ ingredient.qty }}</li>
+                                <li>{{ ingredient.unit }}</li>
+                            </ul>
+                            <div class="input-group-append">
+                                <button class="btn btn-success add-form-row">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <span>{{ error }}</span><br>
+            <button type="submit" class="btn btn-primary">Обновить</button>
+            <button type="submit" class="btn btn-danger remove-recipe">
+                <a href="{% url 'remove_recipe' recipe.id %}">Удалить</a>
+            </button>
+        </form>
+        <script type="text/javascript" src="{% static 'main/js/dynamic_formset.js' %}"></script>
+    </div>
+
+{% endblock content %}

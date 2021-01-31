@@ -1,0 +1,678 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: black;
+}
+
+input {outline:none;}       /* убирает обводку при нажатии на поля ввода */
+
+a:hover{
+    text-decoration:none;
+}
+ul {
+    list-style-type: none;
+}
+/*-----------------------------выбор группы Повар или Покупатель при регистрации------------------------------*/
+ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+#id_group input[type=radio] {
+
+}
+#id_group label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 15px;
+	line-height: 34px;
+	border: 1px solid #999;
+	border-radius: 6px;
+	user-select: none;
+}
+
+/* Checked */
+#id_group input[type=radio]:checked + label {
+	background: #ffe0a6;
+}
+
+/* Hover */
+#id_group label:hover {
+	color: #666;
+}
+
+/*-----------------------------------------------------------------------------------------------------------*/
+.banner-login {
+    position: relative;
+    display: inline-block;
+}
+.wrapper-base {
+    display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	max-width: 1920px;
+	margin: 0 auto;
+}
+.content-base {
+    flex: 1 0 auto;
+}
+/*-------------------------------------------------------Navbar----------------------------------------------*/
+.top-menu {
+  background: rgba(255,255,255,.5);
+  padding: 20px;
+}
+.top-menu:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.navbar-logo {display: inline-block;}
+.navbar-logo img{
+    width: 250px;
+    height: 50px;
+}
+.menu-main {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: right;
+  font-size: 14px;
+  font-weight: 500;
+}
+.menu-main li {display: inline-block;}
+
+.menu-main a {
+    text-decoration: none;
+    display: block;
+    position: relative;
+    line-height: 61px;
+    padding-left: 20px;
+    color: black;
+    transition: width 0.4s ease-in-out; /*данное свойство отвечает за плавное изменение ширины. Здесь можно задать время анимации в секундах (в данном случае задано 0.4 секунды)*/
+
+}
+
+/*-------------эффекты Navbar-------------*/
+.menu-main li:hover {
+    text-decoration: underline      /*нижнее подчеркивание при наведение на элементы navbar*/
+}
+
+@media (max-width: 660px) {
+    .menu-main {
+        float: none;
+        padding-top: 20px;
+    }
+    .top-menu {
+        text-align: center;
+        padding: 20px 0 0 0;
+    }
+    .menu-main a {padding: 0 10px;}
+}
+
+@media (max-width: 600px) {
+    .menu-main li {display: block;}
+}
+
+div.login-banner {
+    top: 25%;
+    left: 13%;
+    position: absolute;
+}
+
+div.login-banner h1 {
+    font-size: 4em;
+    color: black;
+}
+
+.badge {
+    background-color: orangered;
+}
+
+.recipes-menu-scroll {
+
+}
+.recipes-list-scroll {
+
+}
+/*------------------------------выпадающее меню МОЙ ПРОФИЛЬ------------------------------*/
+.two .submenu {
+  visibility: hidden;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.two ul li:hover .submenu {
+  visibility: visible;
+}
+.submenu {
+  position: absolute;
+  z-index: 10;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  display: grid;
+}
+.submenu li a {
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  color: black;
+}
+.sub {
+    transform: none;
+}
+/*---------------------------кнопка "Продолжить" и форма Регистрации на главной странице-----------------------*/
+.register-wrapper-popup, .login-wrapper-popup{
+    display: none;
+    width: 370px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid rgb(223 80 3);
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+  /*позиционируем и центрируем*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 62%;
+}
+.register-wrapper-popup {
+    height: 590px;
+}
+
+/*--------------------------------------кнопка и форма "Войти" на главной странице--------------------------------*/
+
+.login-wrapper-popup {
+    height: 350px;
+}
+.close-login-popup {
+  position: absolute;
+  right: 30px;
+  top: 13px;
+  width: 10px;
+  height: 20px;
+  opacity: 0.3;
+}
+.close-login-popup:hover {
+  opacity: 1;
+}
+.close-login-popup:before, .close-login-popup:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 20px;
+  width: 2px;
+  background-color: #333;
+}
+.close-login-popup:before {
+  transform: rotate(45deg);
+}
+.close-login-popup:after {
+  transform: rotate(-45deg);
+}
+
+/*--------------------------------------кнопка и форма "Подписаться" на главной странице--------------------------*/
+.subscribe-btn {
+    background-color: rgb(223 80 3);
+    border: 1px solid rgb(230 80 3);
+    border-radius: 30px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+    color: #fff;
+    width: 200px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding: 8px 16px;
+    margin: auto;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: background-color 0.1s linear;
+    -moz-transition: background-color 0.1s linear;
+    -o-transition: background-color 0.1s linear;
+    transition: background-color 0.1s linear;
+    outline: none;
+
+}
+.subscribe-btn:hover, .button-recipe-create:hover {
+    background-color: rgb(300 80 3);
+    text-decoration: none;
+    color: white;
+}
+
+.form-popup {
+    display: none;
+    width: 370px;
+    height: 200px;
+    text-align: center;
+    padding: 15px;
+    border: 3px solid rgb(223 80 3);
+    border-radius: 10px;
+    color: black;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 38%;
+    z-index: 99999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.form-container-subscribe {
+    max-width: 320px;
+}
+
+.form-container-subscribe input[type=text] {
+    width: 100%;                    /* текстовое поле должно по ширине занимать 100% относительно контейнера.*/
+ }
+
+.form-container-subscribe input[type=text]:focus {
+    background-color: #ddd;         /* Когда поля формы в фокусе, то пусть меняют свой цвет */
+}
+
+/* Создаем общие стили для кнопок: Отправить */
+.form-container-subscribe .btn {
+    margin-top: 30px;
+}
+
+/* Делаем для всех кнопок эффект при наведении – полная непрозрачность. */
+ .form-container-subscribe .btn:hover, .open-button:hover {
+    opacity: 1;
+}
+
+/* поле ввода емайл для продолжения регистрации на главной странице */
+#id_email,
+#id_password1,
+#id_password2,
+#id_password,
+#id_address,
+#id_first_name,
+#id_about,
+#id_phone,.form-container-subscribe input {
+    border-color: rgb(223 80 3);
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 20px;
+    padding: 5px 20px 5px;
+    width: 250px;
+}
+
+.do_have_acc {
+    margin: 0 20px 10px;
+    font-size: 20px;
+}
+.do_have_acc button{
+    border: none;
+    background-color: white;
+    text-decoration: underline;
+}
+
+
+.register, .sub-navbar {
+    width: 150px;
+    padding: 5px 10px;
+}
+
+.sub-navbar {
+    margin-left: 20px;
+}
+/*----------------------------------------------Recipes-----------------------------------------------------*/
+.recipe-wrapper {
+	float: left;
+	transition: width .2s;
+	padding: 15px;
+	width: 250px;
+}
+
+div.recipe {
+	display: block;
+	border: 1px solid #b5e9a7;
+	border-radius: 3px;
+	position: relative;
+	background: #fff;
+	margin: 0 20px 20px 0;
+	text-decoration: none;
+	color: #474747;
+	z-index: 0;
+	height: 300px;
+}
+
+div.recipes-list {
+	list-style: none;
+	margin: 18px 0 0 0;
+	padding: 0 0 10% 10%;
+
+	justify-content: center;
+}
+
+.recipe-photo {
+    position: relative;
+	overflow: hidden;
+}
+
+.recipe-photo img {
+	margin: auto;
+	transition: transform .4s ease-out;
+	object-fit: cover;
+    width: 250px;
+    height: 150px;
+}
+.recipe:hover .recipe-photo img {
+	transform: scale(1.05);
+}
+
+.recipe-info {
+  background: #fafafa;
+  padding: 15px 0;
+}
+.recipe-info h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #444444;
+  margin: 0 0 10px 0;
+}
+.price {
+  font-size: 16px;
+  color: #fc5a5a;
+  display: block;
+  margin-bottom: 12px;
+}
+.button-recipes-list {
+  text-decoration: none;
+  display: inline-block;
+  padding: 0 12px;
+  background: #dd5600;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 28px;
+  transition: .3s ease-in;
+}
+.recipe:hover .button {background: #fc5a5a;}
+
+.button-recipe-create {
+    background: #dd5600;
+    transition: .3s ease-in;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    width: 250px;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 20px;
+    border-radius: 50px;
+
+}
+
+.form-inline .input-group {
+    width: 100px;
+}
+.input-qty-recipes {
+    display: flex;
+}
+
+.input-group.ingredient {
+    position: relative;
+    display: flex;
+    border-collapse: separate;
+}
+.input-group-append {
+    display: inline-block;
+}
+.a-recipe {
+    float: left;                   /*Задаем обтекание*/
+    margin: 50px;
+    width: 500px;
+}
+
+.ingredients {
+
+}
+
+.title-one-recipe {
+    color: black;
+}
+
+.spacer {
+    margin: 0;
+}
+
+.edit-recipe-button {
+    display: table;
+    font-size: 15px;
+    color: black;
+    margin-bottom: 5px;
+}
+.edit-recipe a, .remove-recipe a {
+    color: white;
+}
+
+.qty-portions{
+    display: inline-block;
+    width: 54%;
+    width: 54%;
+
+}
+/*-----------------------------------------------------------forms---------------------------------------------*/
+form.form-create-recipe {
+    margin-left: 5%;
+    margin-top: 5%;
+    width: 500px;
+}
+
+.login-form {
+    margin-left: 5%;
+    margin-top: 5%;
+    width: 500px;
+}
+.register-form {
+    margin-left: 5%;
+    margin-top: 5%;
+    width: 500px;
+}
+/*-- custom.css --*/
+
+.col-md-12 a{
+    font-size: 25px;
+    font-weight: bold;
+}
+/*---------------------------------------Cart-----------------------------------------------------*/
+
+/*--------------------------------------------Footer--------------------------------------------------*/
+
+footer {
+    color: #ffffff;
+    font-size: 25px;
+    min-height: 120px;
+    display: table;
+    text-align: center;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 40px;
+    clear: both;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid #ededed;
+    background-color: black;
+    flex-shrink: 0;
+    flex: 0 0 auto;
+
+
+}
+
+footer .cv-pdf i {
+    color: #fafafa;
+    text-align: center;
+    font-size: 25px;
+    padding-left: 5px;
+}
+
+footer .cv-pdf i:hover {
+    color: #33ffad;
+    transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    -webkit-transition: all 0.35s ease-in-out;
+    -o-transition: all 0.35s ease-in-out;
+}
+
+.social-links {
+    padding-bottom: 15px;
+}
+
+.social-links li a i {
+    width: 32px;
+    height: 32px;
+    padding: 12px 0;
+    border-radius: 50%;
+    font-size: 13px;
+    line-height: 7px;
+    text-align: center;
+    color: #fafafa;
+    background: #8f8f8f;
+    transition: all 0.35s ease-in-out;
+    -moz-transition: all 0.35s ease-in-out;
+    -webkit-transition: all 0.35s ease-in-out;
+    -o-transition: all 0.35s ease-in-out;
+}
+
+.social-links li a i:hover {
+    background: #33ffad;
+}
+
+#footer-details {
+    margin: 20px;
+
+}
+
+/*--------------------------------------------Media Queries--------------------------------------------*/
+
+@media screen and (max-width:800px) {
+    .second-logo {display:none}
+}
+
+@media screen and (max-width:800px) {
+    .main-foto {display:none}
+}
+
+.container-fluid .navbar-brand {
+    color: white;
+}
+
+.navbar-default .navbar-brand{
+    color: white;
+}
+.navbar-default .navbar-brand a{
+    color: white;
+}
+
+.navbar-default .navbar-nav > li > a{
+    color: white;
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+}
+
+/*--------------------------------------------------Личный кабинет---------------------------------------*/
+
+.card-profile {
+    display: inline-block;
+}
+
+.card-profile .btn-outline-info {
+    width: 200px;
+    float: left;
+}
+
+.card-profile .btn-outline-danger {
+    width: 200px;
+    float: right;
+}
+.avatar-block {
+    margin: auto;
+    max-width: 75%;
+    flex: 0 0 75%;
+}
+.profile-row {
+    margin: 20px 0 0 0;
+}
+#profileForm {
+    z-index: 9;
+}
+/*-----------------------------------------------Блок "часто задаваемые вопросы"------------------------------*/
+
+.accordion {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 15px;
+  width: 100%;
+  text-align: left;
+  border-top: 3px;
+  border-left: 3px;
+  border-right: 3px;
+  outline: none;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.panel-questions {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.often-questions {
+    width: 45%;
+    margin: auto;
+}
+.accordion:after {
+  content: '\02C5'; /* Unicode character for "down" sign (^) */
+  font-size: 13px;
+  color: #777;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\02C4"; /* Unicode character for "up" sign (^) */
+}

@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Добавить рецепт{% endblock %}
+
+{% block content %}
+    <div class="add_recipe">
+        <form method="post" enctype="multipart/form-data" class="form-create-recipe">
+            <h3>Добавить свой рецепт</h3>
+            {% csrf_token %}
+            <p>Категория блюда</p>
+            {{ form_recipe.category }}<br><br>
+            {{ form_recipe.title }}<br><br>
+            {{ form_recipe.description }}<br><br>
+            {{ form_recipe.cooking_time }}<br><br>
+            <div>
+                <label for="id_image" class="btn">Фото</label>
+                {{ form_recipe.image }}<br><br>
+            </div>
+            <p>Этот рецепт подходит для</p>
+            {{ form_recipe.group }}<br>
+            <p>Ингредиенты</p>
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="row form-row spacer">
+                    <div class="">
+                        <div class="input-group ingredient">
+                            <ul>
+                                <li>{{ form.name }}</li>
+                                <li>{{ form.qty }}</li>
+                                <li>{{ form.unit }}</li>
+                            </ul>
+                            <div class="">
+                                <button class="btn btn-success add-form-row">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <span>{{ error }}</span><br>
+            <button type="submit" class="btn btn-primary">Создать</button>
+        </form>
+        <script type="text/javascript" src="{% static 'main/js/dynamic_formset.js' %}"></script>
+    </div>
+{% endblock content %}

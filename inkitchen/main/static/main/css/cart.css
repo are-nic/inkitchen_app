@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+ body {
+     font-family: 'Open Sans', serif;
+     font-size: 14px
+ }
+
+ .container-fluid {
+     margin-top: 70px
+ }
+
+ .card-body-cart {
+     -ms-flex: 1 1 auto;
+     flex: 1 1 auto;
+     padding: 1.40rem
+ }
+
+ .img-sm {
+     width: 100px;
+     height: 70px
+ }
+
+ .itemside .info {
+     padding-left: 15px;
+     padding-right: 7px
+ }
+
+ .table-shopping-cart .price-wrap {
+     line-height: 1.2
+ }
+
+ .table-shopping-cart .price {
+     font-weight: bold;
+     margin-right: 5px;
+     display: block
+ }
+
+ .text-muted {
+     color: #969696 !important
+ }
+
+ a {
+     text-decoration: none !important
+ }
+
+ .card-cart {
+     position: relative;
+     display: -ms-flexbox;
+     display: flex;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     min-width: 0;
+     word-wrap: break-word;
+     background-color: #fff;
+     background-clip: border-box;
+     border: 1px solid rgba(0, 0, 0, .125);
+     border-radius: 0px
+ }
+
+ .itemside {
+     position: relative;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     width: 100%
+ }
+
+ .dlist-align {
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex
+ }
+
+ [class*="dlist-"] {
+     margin-bottom: 5px
+ }
+
+ .coupon {
+     border-radius: 1px
+ }
+
+ .price {
+     font-weight: 600;
+     color: #212529
+ }
+
+ .btn.btn-out {
+     outline: 1px solid #fff;
+     outline-offset: -5px
+ }
+
+ .btn-main {
+     border-radius: 2px;
+     text-transform: capitalize;
+     font-size: 15px;
+     padding: 10px 19px;
+     cursor: pointer;
+     color: #fff;
+     width: 100%
+ }
+
+ .btn-light {
+     color: #ffffff;
+     background-color: #F44336;
+     border-color: #f8f9fa;
+     font-size: 12px;
+     background-image: none;
+ }
+
+ .btn-light:hover {
+     color: #ffffff;
+     background-color: #F44336;
+     border-color: #F44336
+ }
+
+ .btn-apply {
+     font-size: 11px
+ }
+
+ .wrapper-cart {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.recipe-cart{
+    font-family: calibri;
+    font-size: 18px;
+    width: 340px;
+    margin: 20px
+}
+
+.recipe-cart-img {
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 150px;
+    margin: 0 auto;
+}
+.total-price{
+    margin-right: 50px;
+    margin-top: 30px;
+    float: right;
+}
+.icon-bar {
+    background-color: #fff;
+}
+
+.badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+caption p {
+    word-wrap: break-word;
+}
+
+.panel-default {
+    border-color: transparent;
+    padding: 0 10px;
+}
+
+.panel-body {
+    height: 100%;
+    border: 1px solid #ddd;
+}
+
+.product-description {
+    min-height: 40px;
+}
+
+.main-logo {
+    margin-bottom: 25px;
+}
+
+#cart-ingredients {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+tbody tr {
+    border-top: 1px solid grey;
+}
+
+.cart-item {
+    display: flex;
+}

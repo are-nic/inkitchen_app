@@ -1,0 +1,108 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+    <div class="row profile-row">
+        <div class="col-md">
+            <div class="card card-body card-profile">
+                <h5>{{ user.groups.all.0}}</h5>
+                <div class="row">
+                    <div class="col-sm-3 avatar-block"><!--left col-->
+                        <div class="text-center">
+                            <img src="{% static 'main/img/profile_icons/cook.jpg' %}" class="avatar img-circle img-thumbnail" alt="avatar">
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                {% if user.is_authenticated and request.user == user %}
+                <!--если юзер в своем ЛК, то ему доступны кнопки-->
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'remove_profile' user.id %}">Удалить Профиль</a>
+                    <a class="btn btn-sm btn-outline-info" href="{% url 'upgrade_profile' user.id %}">Изменить данные</a>
+            <!------------------------------конец блока popup формы изменения данных пользователя---------------------->
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Контактная информация</h5>
+                <hr>
+                <p>Имя: {{ user.first_name }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Телефон: {{ user.phone }}</p>
+                <p>Адрес доставки: {{ user.address }}</p>
+                <p>О себе: {{ user.about }}</p>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Заказы</h5>
+                <hr>
+                <h1 style="text-align: center;padding: 10px"></h1>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<br>
+    <div class="row profile-row">
+        <div class="col">
+            <div class="card card-body">
+                <form method="get">
+
+                <button class="btn btn-primary" type="submit">Поиск</button>
+              </form>
+            </div>
+        </div>
+
+    </div>
+    <br>-->
+
+    <div class="row profile-row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Рецепт</th>
+                        <th>Категория</th>
+                        <th>Дата создания</th>
+                        {% if user.is_authenticated and request.user == user %}
+                            <th>Изменить</th>
+                            <th>Удалить</th>
+                        {% else %}
+                            <th>Добавить в корзину</th>
+                        {% endif %}
+                    </tr>
+                    {% for recipe in recipes %}
+                        <tr>
+                            <td><a href="{% url 'recipe_details' recipe.slug %}">{{ recipe.title }}</a></td>
+                            <td>{{ recipe.category }}</td>
+                            <td>{{ recipe.date_created }}</td>
+                            {% if user.is_authenticated and request.user == user %}
+                                <td><a class="btn btn-sm btn-outline-info" href="{% url 'edit_recipe' recipe.id %}">Изменить</a></td>
+                                <td><a class="btn btn-sm btn-outline-danger" href="{% url 'remove_recipe' recipe.id %}">Удалить</a></td>
+                            {% else %}
+                                <th>
+                                    <form method="post" action="{% url 'cart_add' recipe.id %}">
+                                        {% csrf_token %}
+                                        <div class="input-qty-recipes">
+                                            <input style="width: 100px; height: 30px; margin-right: 5px;" name="quantity" type="number" min="1" max="999" class="form-control qty-portions" placeholder="Кол-во">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-sm btn-outline-success" type="submit">Добавить</button>
+                                            </span>
+                                        </div>
+                                    </form>
+                                </th>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

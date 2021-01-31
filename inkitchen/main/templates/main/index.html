@@ -1,0 +1,156 @@
+{% extends 'main/base.html' %}
+
+{% block title %}inKitchen{% endblock %}
+
+{% block content %}
+<!--------------------------------Блок главного баннера + формы регистрации и логина--------------------------->
+    <div class="banner-login">
+        <div class=login-banner>
+            <h1>Доставка свежих </h1>
+            <h1>продуктов к рецептам</h1>
+            <h1>из магазинов</h1>
+            {% if user.is_authenticated %}
+             <!--Если User авторизован, то ...-->
+            {% else %}
+            <!--Если User не авторизован, то он видит popup-формы для регистрации и входа-->
+                <form method="post" class="continue-register-form">
+                    {% csrf_token %}
+                    {{ register_form.email }}
+                    <button type="button" class="subscribe-btn register" onclick="openRegisterForm()">Продолжить</button>
+                </form>
+
+                <p class="do_have_acc">Есть аккаунт?
+                    <button type="button" onclick="openLoginForm()">Войти</button>
+                </p>
+            <!--------------------------------блок popup формы логина-------------------------------->
+                <div class="login-wrapper-popup" id="loginForm">
+                    <a href="" class="close-login-popup" onclick="closeLoginForm()"></a>
+                    <form method="post" action="{% url 'login' %}?next={{ next }}" class="login-form-popup">
+                        <fieldset class="form-group">
+                            <legend>Войти</legend>
+                            {% csrf_token %}
+                            <p>Введите email</p>
+                            {{ login_form.email }}<br><br>
+                            <p>Введите пароль</p>
+                            {{ login_form.password }}<br><br>
+                            <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+                            <button type="submit" class="btn btn-primary">Войти</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <script>
+                    function openLoginForm() {
+                        document.getElementById("loginForm").style.display = "block";
+                    }
+
+                    function closeLoginForm() {
+                        document.getElementById("loginForm").style.display = "none";
+                    }
+                </script>
+            <!----------------------------конец блока popup формы логина-------------------------------->
+
+            <!------------------------------блок popup формы регистрации-------------------------------->
+                <div class="register-wrapper-popup" id="registerForm">
+                    <a href="" class="close-login-popup" onclick="closeRegisterForm()"></a>
+                    <form method="post" action="{% url 'register' %}" class="register-form-popup">
+                        <fieldset class="form-group">
+                            <legend>Регистрация</legend>
+                            {% csrf_token %}
+                            <p>Введите email</p>
+                            <!--здесь нужно автозаполнение поля емайл-->
+                            {{ register_form.email }}<br><br>
+                            <p>Введите пароль</p>
+                            {{ register_form.password1 }}<br><br>
+                            <p>Повторите пароль</p>
+                            {{ register_form.password2 }}<br><br>
+                            <p>Выберите категорию</p>
+                            {{ register_form.group }}<br><br>
+                            <button type="submit" class="btn btn-primary">Создать аккаунт</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <script>
+                    function openRegisterForm() {
+                        document.getElementById("registerForm").style.display = "block";
+                    }
+
+                    function closeRegisterForm() {
+                        document.getElementById("registerForm").style.display = "none";
+                    }
+                </script>
+            <!------------------------------конец блока popup формы регистрации-------------------------------->
+
+            {% endif %}
+        </div>
+        <img class="main-banner" width="100%" src="static/main/img/banner1.jpg" alt="main-banner">
+    </div>
+<!------------------------------------------конец блока главного баннера---------------------------------------->
+    <img class="main-banner" width="100%" src="static/main/img/instruction.jpg" alt="instruction-banner">
+<!----------------------------------------------карусель рецептов--------------------------------------->
+    <div class="recipes-menu-scroll showcase__carousel--container"
+         style="background-image: url(static/main/img/recipe_banner.jpg);">
+        <div class="opacity-layer">
+        <section class="showcase-section">
+            <h2 style="font-size: 2rem; color: black; margin-bottom: 20px;">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
+            <a href="{% url 'recipes' %}" class="subscribe-btn">Перейти в меню</a>
+        </section>
+        <i class="fa fa-chevron-left" style="float:left;"></i>
+        <div class="recipes-list-scroll showcase__carousel--content">
+            {% for recipe in recipes|slice:"0:5:1" %}   <!--вывод только 5 первых рецептов в карусели-->
+                <div class="showcase__carousel--item">
+                    <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+                        <div class="recipe-photo-carousel">
+                            <img src="{{ recipe.image.url }}" alt="рецепт">
+                        </div>
+                    </a>
+                    <div class="recipe-info">
+                    <h3>{{ recipe.title }}</h3>
+                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}">
+                            {% csrf_token %}
+                            <div class="input-qty-recipes">
+                            <input name="quantity" type="number" min="1" max="999" class="form-control" placeholder="Порций">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="submit">Добавить</button>
+                            </span>
+                            </div>
+                        </form>-->
+                        <!--передаем в кнопку slug рецепта для перехода к нужному рецепту
+                        <a href="{% url 'recipe_details' recipe.slug %}" class="button-recipes-list">Открыть</a>-->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <i class="fa fa-chevron-right" style="float: right;"></i>
+        </div>
+<!--------------------------------------------------Часто задаваемые вопросы----------------------------------------->
+        <div class="often-questions">
+            <h2 style="font-size: 2rem; color: black; margin-bottom: 20px;">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ?</h2>
+            <button class="accordion">Сколько порций в моем плане?</button>
+            <div class="panel-questions">
+                <p>Сколько бы не было, все твои!</p>
+            </div>
+
+            <button class="accordion">Рекомендуется ли мне какая-то диета?</button>
+            <div class="panel-questions">
+                <p>Какая еще диета!? Живем один раз!</p>
+            </div>
+
+            <button class="accordion">Могу ли выбрать магазин?</button>
+            <div class="panel-questions">
+                <p>Магазин уже выбрал тебя!</p>
+            </div>
+
+            <button class="accordion">Как работает доставка?</button>
+            <div class="panel-questions">
+                <p>Доставка пока не работает</p>
+            </div>
+
+            <button class="accordion">Как работает подписка?</button>
+            <div class="panel-questions">
+                <p>Так же как и доставка</p>
+            </div>
+        </div>
+<!--------------------------------------------------Конец вопросам------------------------------------------------->
+    </div>
+
+{% endblock content %}
