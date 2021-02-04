@@ -21,34 +21,36 @@ def get_products():
         if data.status_code == 200:
             # переводим данные запроса в JSON
             data_shops = data.json()
-            # проходим циклом по всем id магазинов, продающих данный ингредиент
-            for shop_id in data_shops["data"]:
-                # проходим по списку продуктов конркетного магазина
-                for product in data_shops['data'][shop_id]['1']:
-                    # если в БД нет записи об этом магазине
-                    if not Shop.objects.filter(id=product['shop']['id']).exists():
-                        shop = Shop(
-                            id=product['shop']['id'],
-                            name=product['shop']['nameForm'],
-                            logo=product['shop']['logoForm']
+            if data_shops['data'] != 'not found':
+                # проходим циклом по всем id магазинов, продающих данный ингредиент
+                for shop_id in data_shops["data"]:
+                    # проходим по списку продуктов конркетного магазина
+                    for product in data_shops['data'][shop_id]['1']:
+                        # если в БД нет записи об этом магазине
+                        if not Shop.objects.filter(id=product['shop']['id']).exists():
+                            shop = Shop(
+                                id=product['shop']['id'],
+                                name=product['shop']['nameForm'],
+                                logo=product['shop']['logoForm']
+                            )
+                            shop.save()
+
+                        product_db = Product(
+                            id=product['id'],
+                            shop=Shop.objects.get(id=product['shop']['id']),
+                            name=product['name'],
+                            qty_per_item=product['valuecount'],
+                            stock=product['countstore'],
+                            price=product['pricepercount'],
+                            unit=product['value']['name'],
+                            tag=TagIngredient.objects.get(id=tag.id),
                         )
-                        shop.save()
-
-                    product_db = Product(
-                        id=product['id'],
-                        shop=Shop.objects.get(id=product['shop']['id']),
-                        name=product['name'],
-                        qty_per_item=product['valuecount'],
-                        stock=product['countstore'],
-                        price=product['pricepercount'],
-                        unit=product['value']['name'],
-                        tag=TagIngredient.objects.get(id=tag.id),
-                    )
-                    product_db.save()
-            # удаление тега ингредиента из БД при условии отсутствия товаров по этому тегу
-            if Product.objects.filter(tag=tag.id).count() == 0:
-                tag.delete()
-
+                        product_db.save()
+                # удаление тега ингредиента из БД при условии отсутствия товаров по этому тегу
+                if Product.objects.filter(tag=tag.id).count() == 0:
+                    tag.delete()
+            else:
+                print('нет данных по тегу {}'.format(tag.name))
         else:
             print(data.status_code, 'не удалось выполнить запрос к по тегу {}'.format(tag.name))
     print('complete')
