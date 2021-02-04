@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-
+{% load static %}
 {% block title %}inKitchen{% endblock %}
 
 {% block content %}
@@ -87,11 +87,10 @@
 <!------------------------------------------конец блока главного баннера---------------------------------------->
     <img class="main-banner" width="100%" src="static/main/img/instruction.jpg" alt="instruction-banner">
 <!----------------------------------------------карусель рецептов--------------------------------------->
-    <div class="recipes-menu-scroll showcase__carousel--container"
-         style="background-image: url(static/main/img/recipe_banner.jpg);">
+    <div class="recipes-menu-scroll showcase__carousel--container" style="background-image: url(static/main/img/recipe_banner.jpg);">
         <div class="opacity-layer">
         <section class="showcase-section">
-            <h2 style="font-size: 2rem; color: black; margin-bottom: 20px;">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
+            <h2 class="title-main-page">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
             <a href="{% url 'recipes' %}" class="subscribe-btn">Перейти в меню</a>
         </section>
         <i class="fa fa-chevron-left" style="float:left;"></i>
@@ -124,7 +123,7 @@
         </div>
 <!--------------------------------------------------Часто задаваемые вопросы----------------------------------------->
         <div class="often-questions">
-            <h2 style="font-size: 2rem; color: black; margin-bottom: 20px;">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ?</h2>
+            <h2 class="title-main-page">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ?</h2>
             <button class="accordion">Сколько порций в моем плане?</button>
             <div class="panel-questions">
                 <p>Сколько бы не было, все твои!</p>
@@ -150,7 +149,43 @@
                 <p>Так же как и доставка</p>
             </div>
         </div>
-<!--------------------------------------------------Конец вопросам------------------------------------------------->
     </div>
+<!--------------------------------------------------Конец вопросам------------------------------------------------->
+<!--------------------------------------------------Блок выбора плана питания------------------------------------------------->
+
+        <div class="card-grid">
+            <h2 class="title-main-page">ВЫБЕРИТЕ ПЛАН</h2>
+
+            <form method="post" action="{% url 'home' %}" class="plan-menu-wrapper-form">
+                <fieldset class="form-group plan-menu-group">
+                    {% csrf_token %}
+                    {% for radio in choose_plan_form.plan_menu %}
+                        <label class="card">
+                            {{ radio }}
+                            <div class="plan-details">
+                                {% if radio.choice_label == 4 %}
+                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/4.jpg' %}" /></div>
+                                    <h2>{{ radio.choice_label }}</h2>
+                                    <h6>блюда в день</h6>
+                                {% elif radio.choice_label == 6 %}
+                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/6.jpg' %}" /></div>
+                                    <h2>{{ radio.choice_label }}</h2>
+                                    <h6>блюд в день</h6>
+                                {% elif radio.choice_label == 8 %}
+                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/8.jpg' %}" /></div>
+                                    <h2>{{ radio.choice_label }}</h2>
+                                    <h6>блюд в день</h6>
+                                {% elif radio.choice_label == 10 %}
+                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/10.jpg' %}" /></div>
+                                    <h2>{{ radio.choice_label }}</h2>
+                                    <h6>блюд в день</h6>
+                                {% endif %}
+                            </div>
+                        </label>
+                    {% endfor %}
+                </fieldset>
+                <button type="submit" class="btn btn-primary">Выбрать</button>
+            </form>
+        </div>
 
 {% endblock content %}
