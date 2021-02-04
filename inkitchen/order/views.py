@@ -13,33 +13,34 @@ def order_create(request):
                 order.owner = request.user
                 order.save()
     '''
-    order = Order.objects.create(
-        owner=request.user,
-    )
-    order.save()
-    cart = request.session.get('cart', {})
-    for id, quantity in cart.items():
-        recipe = get_object_or_404(Recipe, pk=id)   # получаем рецепт по id из корзины
-        ingredients = recipe.ingredients.all()      # получаем все игредиенты текущего рецепта
-        for ingredient in ingredients:
-            product_form = OrderItemForm(request.POST or None, instance=ingredient.name)
-            product = product_form.save()
-            order_item = OrderItem(
-                order=order,
-                recipe=recipe,
-                product=product,
-                qty=ingredient.qty
-            )
-            order_item.save()
+    if request.method == 'POST':
+        order = Order.objects.create(
+            owner=request.user,
+        )
+        order.save()
+        cart = request.session.get('cart', {})
+        for id, quantity in cart.items():
+            recipe = get_object_or_404(Recipe, pk=id)  # получаем рецепт по id из корзины
+            ingredients = recipe.ingredients.all()  # получаем все игредиенты текущего рецепта
+            for ingredient in ingredients:
+                product_form = OrderItemForm(request.POST or None, instance=ingredient.name)
+                product = product_form.save()
+                order_item = OrderItem(
+                    order=order,
+                    recipe=recipe,
+                    product=product,
+                    price=product.price,
+                    qty=ingredient.qty
+                )
+                order_item.save()
 
-        # очистка корзины
-        cart.clear()
-        return render(request, 'order_created.html')
+            # очистка корзины
+            cart.clear()
+            return render(request, 'order_created.html')
 
     product_form = OrderItemForm
 
     data = {
-        'cart': cart,
         'product_form': product_form,
     }
-    return render(request, 'cart/cart.html', data)
+    return render(request, 'order/order_create.html', data)
