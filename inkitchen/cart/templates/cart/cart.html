@@ -10,7 +10,7 @@
 	                    <table class="table table-borderless table-shopping-cart">
                             <thead class="text-muted">
                                 <tr class="small text-uppercase">
-                                    <th scope="col" width="100">Ингредиент</th>
+                                    <th scope="col" width="50">Ингредиент</th>
                                     <th scope="col" width="50">Цена, руб.</th>
                                     <th scope="col" width="50">Кол-во</th>
                                     <th scope="col" width="50">Ед. изм.</th>
@@ -23,11 +23,6 @@
                                             <td>
                                                 <div class="price-wrap">
                                                     <var class="price">{{ ingredient }}</var>
-                                                    <form method="post" enctype="multipart/form-data">
-                                                        <p>выбрать продукт</p>
-                                                        {% csrf_token %}
-                                                        {{ product_form }}
-                                                    </form>
                                                 </div>
                                             </td>
                                             <td>
