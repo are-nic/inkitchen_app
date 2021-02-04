@@ -50,41 +50,42 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for item in cart_items %}
-                    <tr>
-                        <td>
-                            <div class="cart-item">
-                                <figure class="itemside align-items-center">
-                                    <div class="aside">
-                                        <a href="{% url 'recipe_details' item.recipe.slug %}">
-                                            <img src="{{ item.recipe.image.url }}" class="img-sm">
-                                        </a>
-                                    </div>
-                                    <figcaption class="info">
-                                        <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
-                                            {{ item.recipe.title }}
-                                        </a>
-                                    </figcaption>
-                                </figure>
-                                <!--Кнопка удаления рецепта-->
-                                <form action="{% url 'remove_from_cart' item.id %}">
-                                    <button type="submit" class="btn btn-sm">x</button>
-                                </form>
-                            </div>
-                            <form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
-                                {% csrf_token %}
-                                <div class="form-group" style="margin: 0;">
-                                    <div class="input-group qty-recipe">
-                                        <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
-                                    </div>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <div class="cart-item">
+                                    <figure class="itemside align-items-center">
+                                        <div class="aside">
+                                            <a href="{% url 'recipe_details' item.recipe.slug %}">
+                                                <img src="{{ item.recipe.image.url }}" class="img-sm">
+                                            </a>
+                                        </div>
+                                        <figcaption class="info">
+                                            <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+                                                {{ item.recipe.title }}
+                                            </a>
+                                        </figcaption>
+                                    </figure>
+                                    <!--Кнопка удаления рецепта-->
+                                    <form action="{% url 'remove_from_cart' item.id %}">
+                                        <button type="submit" class="btn btn-sm">x</button>
+                                    </form>
                                 </div>
-                                <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
+                                <form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
+                                    {% csrf_token %}
+                                    <div class="form-group" style="margin: 0;">
+                                        <div class="input-group qty-recipe">
+                                            <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            <h4>{{ request.session.cart|length }}/{{ request.session.plan_menu }} Блюд</h4>
         </div>
     </div>
 </div>
