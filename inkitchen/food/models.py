@@ -149,7 +149,7 @@ class Product(models.Model):
     shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE)
     name = models.CharField(max_length=300, verbose_name='Наименование продукта')
     qty_per_item = models.PositiveIntegerField(verbose_name='Кол-во на ед. продукта')
-    stock = models.PositiveIntegerField(verbose_name='Остаток')                     # остаток единиц продукта в магазине
+    stock = models.PositiveIntegerField(verbose_name='Остаток')            # остаток единиц продукта в магазине
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     unit = models.CharField(max_length=10, verbose_name='Ед. измерения')
     tag = models.ForeignKey(TagIngredient, verbose_name='Тэг ингредиента',
