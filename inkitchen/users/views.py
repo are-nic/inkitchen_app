@@ -9,6 +9,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from food.models import Recipe
 
+User = get_user_model()
+
 
 def login(request):
     """обработка данных из формы входа на сайт"""
@@ -31,8 +33,8 @@ def login(request):
     else:
         login_form = UserLoginForm()
 
-    args = {'login_form': login_form, 'next': request.GET.get('next', '')}
-    return render(request, 'login.html', args)
+    data = {'login_form': login_form, 'next': request.GET.get('next', '')}
+    return render(request, 'login.html', data)
 
 
 def logout(request):
@@ -87,34 +89,6 @@ def register(request):
 
     data = {'register_form': register_form}
     return render(request, 'register.html', data)
-
-
-#-------------------------------------------------доделать----------------------------------------------------#
-def continue_register(request):
-    """
-    обработка на главной странице форм ввода email для продолженя регистрации,
-    вывод группы рецептов для карусели,
-    отправка форм логинга и регистрации для popup-окон
-    """
-    if request.method == 'POST':
-        email = request.POST.get('email')                               # получение значения поля
-        return redirect(reverse('register'), {'email': email})          # перенаправление на страницу регистрации
-
-    register_form = UserRegistrationForm()          # передаем форму регистрации на главную страницу
-    login_form = UserLoginForm                      # передаем форму логинга на главную страницу для popup-окна
-    recipes = Recipe.objects.all()                  # передаем список рецептов на главную страницу
-
-    data = {
-        'register_form': register_form,
-        'recipes': recipes,
-        'login_form': login_form,
-    }
-    return render(request, 'main/index.html', data)
-
-#=------------------------------------------------------------------------------------------------------------------
-
-
-User = get_user_model()
 
 
 @login_required(login_url='home')
