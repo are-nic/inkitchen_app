@@ -17,7 +17,6 @@ def cart_add(request, id):
     # получаем из сессии значение выбранного кол-во блюд (план питания)
     plan_menu = int(request.session.get('plan_menu'))
     if len(cart) < plan_menu:  # если количество рецептов в корзине меньше числа блюд по плану меню
-        print(len(cart), plan_menu)
         quantity = int(request.POST.get('quantity'))
 
         cart = request.session.get('cart', {})

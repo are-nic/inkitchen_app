@@ -58,7 +58,7 @@ class IngredientForm(ModelForm, forms.Form):
 
 
 IngredientFormSet = forms.inlineformset_factory(Recipe, IngredientOfRecipe, form=IngredientForm, can_delete=True,
-                                                fields=('name', 'qty', 'unit'), max_num=20, min_num=1, extra=0,
+                                                fields=('name', 'qty', 'unit'), max_num=100, min_num=1, extra=0,
                                                 fk_name='recipe',
                                                 widgets={
                                                     'name': Select(attrs={

@@ -202,5 +202,3 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,         # использовать подтверждение регистрации по емайл
     'SERIALIZERS': {},
 }
-
-

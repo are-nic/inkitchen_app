@@ -1,9 +1,20 @@
 from django import forms
 from .models import Order, OrderItem
 from django.forms import Select, RadioSelect
+from food.models import Product, IngredientOfRecipe
+
+
+class OrderForm(forms.ModelForm, forms.Form):
+    class Meta:
+        model = Order
+        fields = []
 
 
 class OrderItemForm(forms.ModelForm, forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(OrderItemForm, self).__init__(*args, **kwargs)
+        self.fields['product'].queryset = Product.objects.filter(tag=IngredientOfRecipe.objects.get(id=1).name)
+
     class Meta:
         model = OrderItem
         fields = ['product', ]
@@ -11,10 +22,11 @@ class OrderItemForm(forms.ModelForm, forms.Form):
         widgets = {
             'product': Select(attrs={
                 'class': 'select-product',
-                'style': 'width: 200px',
+                'style': 'width: 300px',
             }),
         }
 
+class Product
 
 class PlanMenuForm(forms.Form):
     """

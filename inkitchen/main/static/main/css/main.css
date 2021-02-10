@@ -239,8 +239,6 @@ div.login-banner h1 {
     background-color: rgb(223 80 3);
     border: 1px solid rgb(230 80 3);
     border-radius: 30px;
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
-    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
     color: #fff;
     width: 200px;
@@ -251,9 +249,6 @@ div.login-banner h1 {
     margin: auto;
     text-decoration: none;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: background-color 0.1s linear;
-    -moz-transition: background-color 0.1s linear;
-    -o-transition: background-color 0.1s linear;
     transition: background-color 0.1s linear;
     outline: none;
 
@@ -344,154 +339,9 @@ div.login-banner h1 {
 .sub-navbar {
     margin-left: 20px;
 }
-/*----------------------------------------------Recipes-----------------------------------------------------*/
-.recipe-wrapper {
-	float: left;
-	transition: width .2s;
-	padding: 15px;
-	width: 250px;
-}
 
-div.recipe {
-	display: block;
-	border: 1px solid #b5e9a7;
-	border-radius: 3px;
-	position: relative;
-	background: #fff;
-	margin: 0 20px 20px 0;
-	text-decoration: none;
-	color: #474747;
-	z-index: 0;
-	height: 300px;
-}
 
-div.recipes-list {
-	list-style: none;
-	margin: 18px 0 0 0;
-	padding: 0 0 10% 10%;
-
-	justify-content: center;
-}
-
-.recipe-photo {
-    position: relative;
-	overflow: hidden;
-}
-
-.recipe-photo img {
-	margin: auto;
-	transition: transform .4s ease-out;
-	object-fit: cover;
-    width: 250px;
-    height: 150px;
-}
-.recipe:hover .recipe-photo img {
-	transform: scale(1.05);
-}
-
-.recipe-info {
-  background: #fafafa;
-  padding: 15px 0;
-}
-.recipe-info h3 {
-  font-size: 18px;
-  font-weight: 400;
-  color: #444444;
-  margin: 0 0 10px 0;
-}
-.price {
-  font-size: 16px;
-  color: #fc5a5a;
-  display: block;
-  margin-bottom: 12px;
-}
-.button-recipes-list {
-  text-decoration: none;
-  display: inline-block;
-  padding: 0 12px;
-  background: #dd5600;
-  color: white;
-  text-transform: uppercase;
-  font-size: 12px;
-  line-height: 28px;
-  transition: .3s ease-in;
-}
-.recipe:hover .button {background: #fc5a5a;}
-
-.button-recipe-create {
-    background: #dd5600;
-    transition: .3s ease-in;
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 250px;
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 20px;
-    border-radius: 50px;
-
-}
-
-.form-inline .input-group {
-    width: 100px;
-}
-.input-qty-recipes {
-    display: flex;
-}
-
-.input-group.ingredient {
-    position: relative;
-    display: flex;
-    border-collapse: separate;
-}
-.input-group-append {
-    display: inline-block;
-}
-.a-recipe {
-    float: left;                   /*Задаем обтекание*/
-    margin: 50px;
-    width: 500px;
-}
-
-.ingredients {
-
-}
-
-.title-one-recipe {
-    color: black;
-}
-
-.spacer {
-    margin: 0;
-}
-
-.edit-recipe-button {
-    display: table;
-    font-size: 15px;
-    color: black;
-    margin-bottom: 5px;
-}
-.edit-recipe a, .remove-recipe a {
-    color: white;
-}
-
-.qty-portions{
-    display: inline-block;
-    width: 54%;
-    width: 54%;
-
-}
 /*-----------------------------------------------------------forms---------------------------------------------*/
-form.form-create-recipe {
-    margin-left: 5%;
-    margin-top: 5%;
-    width: 500px;
-}
 
 .login-form {
     margin-left: 5%;
@@ -509,7 +359,6 @@ form.form-create-recipe {
     font-size: 25px;
     font-weight: bold;
 }
-/*---------------------------------------Cart-----------------------------------------------------*/
 
 /*--------------------------------------------Footer--------------------------------------------------*/
 
