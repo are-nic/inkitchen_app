@@ -1,4 +1,4 @@
-from .models import Recipe, IngredientOfRecipe
+from .models import Recipe, IngredientOfRecipe, Product
 from django import forms
 from django.forms import (ModelForm,
                           TextInput,
