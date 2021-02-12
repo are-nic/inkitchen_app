@@ -11,9 +11,10 @@ class OrderForm(forms.ModelForm, forms.Form):
 
 
 class OrderItemForm(forms.ModelForm, forms.Form):
+
     def __init__(self, *args, **kwargs):
         super(OrderItemForm, self).__init__(*args, **kwargs)
-        self.fields['product'].queryset = Product.objects.filter(tag=IngredientOfRecipe.objects.get(id=1).name)
+        self.fields['product'].queryset = Product.objects.filter(tag=IngredientOfRecipe.objects.get(id=3).name)
 
     class Meta:
         model = OrderItem
@@ -26,7 +27,6 @@ class OrderItemForm(forms.ModelForm, forms.Form):
             }),
         }
 
-class Product
 
 class PlanMenuForm(forms.Form):
     """
