@@ -6,14 +6,14 @@ from django import forms
 
 
 def order_create(request):
-    cart = request.session.get('cart', {})
-    ingredients = 0
+    cart = request.session.get('cart', {})      # получаем содержимое корзины из сессии
+
+    ingredients = 0     # считаем кол-во ингридиентов во всех рецептах корзины
     for recipe_id in cart:
         recipe = get_object_or_404(Recipe, pk=recipe_id)
         ingredients += recipe.ingredients.all().count()
-
-    ProductFormSet = forms.inlineformset_factory(Order, OrderItem, form=OrderItemForm, fields=('product',),
-                                                 max_num=100, min_num=0, extra=ingredients)
+    # в extra передаем общее число всех ингридиентов корзины для вывода соответсвующего кол-ва форм
+    ProductFormSet = forms.formset_factory(form=OrderItemForm, min_num=0, extra=ingredients)
 
     if request.method == 'POST':
         form_order = OrderForm(request.POST)
@@ -22,21 +22,22 @@ def order_create(request):
             order.owner = request.user      # записываем в поле owner текущего пользователя
             order.save()                    # сохраняем в БД экземпляр заказа
 
-            formset = ProductFormSet(request.POST, instance=order)
-            for product in formset:
-                product(price=)
-            print(formset)
-            if formset.is_valid():                         # сохраняем ингридиенты в БД
-                formset.save()
-
-                ''' for recipe_id in cart:
-                recipe = get_object_or_404(Recipe, pk=recipe_id)    # получаем рецепт по id из корзины
-                ingredients = recipe.ingredients.all()              # получаем все игредиенты текущего рецепта
-                for ingredient in ingredients:                      # перебираем ингридиенты рецепта
-                    product_form = OrderItemForm(request.POST)
-                    product_name = product_form.save(commit=False)
-                    product = Product.objects.get(name=product_name)
-
+            # собираем выбранные продукты из форм
+            product_list = []
+            formset = ProductFormSet(request.POST)
+            if formset.is_valid():
+                for form in formset:
+                    print(form.cleaned_data['product'])
+                    product_list.append(form.cleaned_data['product'])    # заносим выбранные продукты в список
+            print('-------------------------------------------------------')
+            product_order_set = []
+            product_index = 0
+            for recipe_id in cart:
+                recipe = get_object_or_404(Recipe, pk=recipe_id)        # получаем рецепт по id из корзины
+                ingredients = recipe.ingredients.all()                  # получаем все игредиенты текущего рецепта
+                for ingredient in ingredients:                # перебираем ингридиенты рецепта
+                    product = Product.objects.get(name=product_list[product_index])
+                    print(product)
                     order_item = OrderItem(
                         order=order,
                         recipe=recipe,
@@ -44,10 +45,15 @@ def order_create(request):
                         price=product.price,
                         qty=ingredient.qty
                     )
-                    order_item.save()'''
 
-                cart.clear()                                        # очистка корзины
-                return render(request, 'order/order_created.html')
+                    product_order_set.append(order_item)
+                    product_index += 1
+            product_index = 0
+            for product in product_order_set:
+                product.save()
+
+            cart.clear()                                            # очистка корзины
+            return render(request, 'order/order_created.html')
 
     product_formset = ProductFormSet()
 
