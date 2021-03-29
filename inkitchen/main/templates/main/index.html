@@ -3,12 +3,13 @@
 {% block title %}inKitchen{% endblock %}
 
 {% block content %}
-<!--------------------------------Блок главного баннера + формы регистрации и логина--------------------------->
-    <div class="banner-login">
-        <div class=login-banner>
-            <h1>Доставка свежих </h1>
-            <h1>продуктов к рецептам</h1>
-            <h1>из магазинов</h1>
+<div id="main-page-content">
+<!--------------------------------Блок главного баннера, формы регистрации и логина--------------------------->
+    <div class="banner">
+        <div class="login-case">
+            <h2>Готовые блюда и свежие продукты </h2>
+            <h2>из ресторанов</h2>
+            <p>Продукты к блюдам отобраны и рассчитаны порционно экспертами и диетологами</p>
             {% if user.is_authenticated %}
              <!--Если User авторизован, то ...-->
             {% else %}
@@ -24,7 +25,7 @@
                 </p>
             <!--------------------------------блок popup формы логина-------------------------------->
                 <div class="login-wrapper-popup" id="loginForm">
-                    <a href="" class="close-login-popup" onclick="closeLoginForm()"></a>
+                    <a href="#" class="close-login-popup" onclick="closeLoginForm()"></a>
                     <form method="post" action="{% url 'login' %}?next={{ next }}" class="login-form-popup">
                         <fieldset class="form-group">
                             <legend>Войти</legend>
@@ -79,113 +80,117 @@
                     }
                 </script>
             <!------------------------------конец блока popup формы регистрации-------------------------------->
-
             {% endif %}
         </div>
-        <img class="main-banner" width="100%" src="static/main/img/banner1.jpg" alt="main-banner">
     </div>
-<!------------------------------------------конец блока главного баннера---------------------------------------->
-    <img class="main-banner" width="100%" src="static/main/img/instruction.jpg" alt="instruction-banner">
-<!----------------------------------------------карусель рецептов--------------------------------------->
-    <div class="recipes-menu-scroll showcase__carousel--container" style="background-image: url(static/main/img/recipe_banner.jpg);">
+<!------------------------------------------конец блока главного баннера, форм логина и регистрации--------------------->
+    <div class="how-to-work-wrapper">
+        <h1 class="how-to-work-title">КАК ЭТО РАБОТАЕТ</h1>
+        <div class="how-to-work-icons-block">
+            <div class="how-to-work-icon" id="ic01"><p>Выберите кол-во блюд на каждый день</p></div>
+            <div class="how-to-work-icon" id="ic02"><p>Выберите дату и время доставки</p></div>
+            <div class="how-to-work-icon" id="ic03"><p>Выберите блюда</p></div>
+            <div class="how-to-work-icon" id="ic04"><p>Готовьте дома</p></div>
+        </div>
+    </div>
+
+<!----------------------------------------------слайдер рецептов--------------------------------------->
+    <div class="recipes-menu-scroll" style="background-image: url(static/main/img/recipe_banner.jpg);">
         <div class="opacity-layer">
-        <section class="showcase-section">
-            <h2 class="title-main-page">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
-            <a href="{% url 'recipes' %}" class="subscribe-btn">Перейти в меню</a>
-        </section>
-        <i class="fa fa-chevron-left" style="float:left;"></i>
-        <div class="recipes-list-scroll showcase__carousel--content">
-            {% for recipe in recipes|slice:"0:5:1" %}   <!--вывод только 5 первых рецептов в карусели-->
-                <div class="showcase__carousel--item">
-                    <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
-                        <div class="recipe-photo-carousel">
-                            <img src="{{ recipe.image.url }}" alt="рецепт">
-                        </div>
-                    </a>
-                    <div class="recipe-info">
-                    <h3>{{ recipe.title }}</h3>
-                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}">
-                            {% csrf_token %}
-                            <div class="input-qty-recipes">
-                            <input name="quantity" type="number" min="1" max="999" class="form-control" placeholder="Порций">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="submit">Добавить</button>
-                            </span>
+            <section class="showcase-section">
+                <h2 class="title-main-page">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
+                <a href="{% url 'recipes' %}" class="subscribe-btn">Перейти в меню</a>
+            </section>
+            <div class="slider">
+                {% for recipe in recipes %}
+                    <div class="slider-item">
+                        <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+                            <div class="recipe-photo-carousel">
+                                <img src="{{ recipe.image.url }}" alt="рецепт">
                             </div>
-                        </form>-->
-                        <!--передаем в кнопку slug рецепта для перехода к нужному рецепту
-                        <a href="{% url 'recipe_details' recipe.slug %}" class="button-recipes-list">Открыть</a>-->
+                        </a>
+                        <div class="recipe-info">
+                            <h3>{{ recipe.title }}</h3>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        <i class="fa fa-chevron-right" style="float: right;"></i>
-        </div>
-<!--------------------------------------------------Часто задаваемые вопросы----------------------------------------->
-        <div class="often-questions">
-            <h2 class="title-main-page">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ?</h2>
-            <button class="accordion">Сколько порций в моем плане?</button>
-            <div class="panel-questions">
-                <p>Сколько бы не было, все твои!</p>
-            </div>
-
-            <button class="accordion">Рекомендуется ли мне какая-то диета?</button>
-            <div class="panel-questions">
-                <p>Какая еще диета!? Живем один раз!</p>
-            </div>
-
-            <button class="accordion">Могу ли выбрать магазин?</button>
-            <div class="panel-questions">
-                <p>Магазин уже выбрал тебя!</p>
-            </div>
-
-            <button class="accordion">Как работает доставка?</button>
-            <div class="panel-questions">
-                <p>Доставка пока не работает</p>
-            </div>
-
-            <button class="accordion">Как работает подписка?</button>
-            <div class="panel-questions">
-                <p>Так же как и доставка</p>
+                {% endfor %}
+                <!--подключаем JQuery-->
+                <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+                <!--подключаем слайдер Slick-->
+                <script type="text/javascript" src="{% static 'main/js/slick.min.js' %}"></script>
+                <!--подключаем файл скриптов-->
+                <script type="text/javascript" src="{% static 'main/js/slide.js' %}"></script>
             </div>
         </div>
     </div>
-<!--------------------------------------------------Конец вопросам------------------------------------------------->
+
+<!--------------------------------------------------Часто задаваемые вопросы----------------------------------------->
+    <div class="often-questions">
+        <h2 class="title-main-page">ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ?</h2>
+        <button class="accordion">Сколько порций в моем плане?</button>
+        <div class="panel-questions">
+            <p>Сколько бы не было, все твои!</p>
+        </div>
+
+        <button class="accordion">Рекомендуется ли мне какая-то диета?</button>
+        <div class="panel-questions">
+            <p>Какая еще диета!? Живем один раз!</p>
+        </div>
+
+        <button class="accordion">Могу ли выбрать магазин?</button>
+        <div class="panel-questions">
+            <p>Магазин уже выбрал тебя!</p>
+        </div>
+
+        <button class="accordion">Как работает доставка?</button>
+        <div class="panel-questions">
+            <p>Доставка пока не работает</p>
+        </div>
+
+        <button class="accordion">Как работает подписка?</button>
+        <div class="panel-questions">
+            <p>Так же как и доставка</p>
+        </div>
+    </div>
+
 <!--------------------------------------------------Блок выбора плана питания------------------------------------------------->
 
-        <div class="card-grid">
-            <h2 class="title-main-page">ВЫБЕРИТЕ ПЛАН</h2>
+    <div class="card-grid">
+        <h2 class="title-main-page">ВЫБЕРИТЕ ПЛАН</h2>
 
-            <form method="post" action="{% url 'home' %}" class="plan-menu-wrapper-form">
-                <fieldset class="form-group plan-menu-group">
-                    {% csrf_token %}
-                    {% for radio in choose_plan_form.plan_menu %}
-                        <label class="card">
-                            {{ radio }}
-                            <div class="plan-details">
-                                {% if radio.choice_label == 4 %}
-                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/4.jpg' %}" /></div>
-                                    <h2>{{ radio.choice_label }}</h2>
-                                    <h6>блюда в день</h6>
-                                {% elif radio.choice_label == 6 %}
-                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/6.jpg' %}" /></div>
-                                    <h2>{{ radio.choice_label }}</h2>
-                                    <h6>блюд в день</h6>
-                                {% elif radio.choice_label == 8 %}
-                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/8.jpg' %}" /></div>
-                                    <h2>{{ radio.choice_label }}</h2>
-                                    <h6>блюд в день</h6>
-                                {% elif radio.choice_label == 10 %}
-                                    <div class="plan-image"><img src="{% static 'main/img/plan_menu/10.jpg' %}" /></div>
-                                    <h2>{{ radio.choice_label }}</h2>
-                                    <h6>блюд в день</h6>
-                                {% endif %}
-                            </div>
-                        </label>
-                    {% endfor %}
-                </fieldset>
-                <button type="submit" class="btn btn-primary">Выбрать</button>
-            </form>
-        </div>
+        <form method="post" action="{% url 'home' %}" class="plan-menu-wrapper-form">
+            <fieldset class="form-group plan-menu-group">
+                {% csrf_token %}
+                {% for radio in choose_plan_form.plan_menu %}
+                <label class="card">
+                    {{ radio }}
+                    <div class="plan-details">
+                        {% if radio.choice_label == 4 %}
+                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/4.jpg' %}" /></div>
+                        <h2>{{ radio.choice_label }}</h2>
+                        <h6>блюда в день</h6>
 
+                        {% elif radio.choice_label == 6 %}
+                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/6.jpg' %}" /></div>
+                        <h2>{{ radio.choice_label }}</h2>
+                        <h6>блюд в день</h6>
+
+                        {% elif radio.choice_label == 8 %}
+                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/8.jpg' %}" /></div>
+                        <h2>{{ radio.choice_label }}</h2>
+                        <h6>блюд в день</h6>
+
+                        {% elif radio.choice_label == 10 %}
+                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/10.jpg' %}" /></div>
+                        <h2>{{ radio.choice_label }}</h2>
+                        <h6>блюд в день</h6>
+                        {% endif %}
+                    </div>
+                </label>
+                {% endfor %}
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Выбрать</button>
+        </form>
+    </div>
+</div>
 {% endblock content %}
