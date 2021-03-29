@@ -37,7 +37,8 @@ class UserRegistrationForm(UserCreationForm):
 
         widgets = {
             'email': EmailInput(attrs={
-                'value': 'your@email.com',
+                'placeholder': 'Введите E-mail',
+
             }),
             'password1': TextInput(attrs={
                 'placeholder': 'введите пароль',
