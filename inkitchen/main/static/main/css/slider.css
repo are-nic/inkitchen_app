@@ -1,0 +1,123 @@
+.slider {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  align-items: center;
+  position: relative;
+  padding: 0 100px;
+}
+/*убрать внутренние отступы для стрелок при разрешении 615рх*/
+@media screen and (max-width: 615px) {
+    .slider {
+       padding: 0;
+    }
+}
+  /* Слайдер */
+.slick-slider{}
+/* Слайдер запущен */
+.slick-slider.slick-initialized{}
+/* Слайдер с точками */
+.slick-slider.slick-dotted{}
+
+/* Ограничивающая оболочка */
+.slick-list {
+    overflow: hidden;
+    max-width: 1200px;
+}
+/* Лента слайдов */
+.slick-track{}
+/* Слайд */
+.slick-slide{}
+/* Слайд активный (показывается) */
+.slick-slide.slick-active{}
+/* Слайд основной */
+.slick-slide.slick-current{}
+/* Слайд по центру */
+.slick-slide.slick-center{}
+/* Клонированный слайд */
+.slick-slide.slick-cloned{}
+
+/* Стрелка */
+.slick-arrow{
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    font-size: 0;
+    width: 46px;
+    height: 81px;
+    border: none;
+}
+
+/* Стрелка влево */
+.slick-arrow.slick-prev{
+    left: 0;
+    background: url('../img/slider_left_arrow.png') 0 0 no-repeat;
+    margin-left: 30px;
+}
+/* Стрелка вправо */
+.slick-arrow.slick-next{
+    right: 0;
+    background: url('../img/slider_right_arrow.png') 0 0 no-repeat;
+    margin-right: 30px;
+}
+
+/* Стрелка не активная */
+.slick-arrow.slick-disabled{
+    opacity: 0.2;
+}
+/* Точки (булиты) */
+.slick-dots{}
+.slick-dots li{}
+/* Активная точка */
+.slick-dots li.slick-active{}
+/* Элемент точки */
+.slick-dots li button{}
+
+/*---------------------------------старые стили из карусели рецептов-----------------------------------------------*/
+.showcase-section{
+  height: 150px;
+  text-align: center;
+  padding: 1rem;
+}
+.recipes-menu-scroll{
+  text-align: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 1000px;
+  align-items: center;
+}
+
+.slider-item{
+    background-color: white;
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
+    margin: 0 8px;
+    display: inline-block;
+    float: left;
+    transition: width .2s;
+	padding: 10px;
+	min-width: 200px;
+}
+
+.opacity-layer {
+    background: rgba(205, 214, 219, 0.3);
+    height: 500px;
+    margin: 3% 8%;
+    box-shadow: 0 0 3px rgba(0,0,0,.5);
+}
+
+.recipe-photo-carousel {
+
+}
+
+.recipe-photo-carousel img {
+	margin: auto;
+	transition: transform .4s ease-out;
+	object-fit: cover;
+    width: 300px;
+    height: 200px;
+}
+.recipe:hover .recipe-photo-carousel img {
+	transform: scale(1.05);
+}
