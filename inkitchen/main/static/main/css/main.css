@@ -9,19 +9,18 @@
 html,
 body {
     height: 100%;
+    min-width: 400px;
 }
 h1, h2, h3, h4, h5, h6 {
     color: black;
 }
 
-input {outline:none;}       /* убирает обводку при нажатии на поля ввода */
+input {outline:none;}       /* убирает обводку полей ввода при нажатии на них */
 
-a:hover{
-    text-decoration:none;
-}
-ul {
-    list-style-type: none;
-}
+a:hover{text-decoration:none;}
+
+ul {list-style-type: none;}
+
 /*-----------------------------выбор группы Повар или Покупатель при регистрации------------------------------*/
 ul li {
     display: inline-block;
@@ -40,30 +39,48 @@ ul li {
 	user-select: none;
 }
 
-/* Checked */
+/* нажатие на выбранную группу пользователей */
 #id_group input[type=radio]:checked + label {
 	background: #ffe0a6;
 }
 
-/* Hover */
+/* наведение на радиокнопки */
 #id_group label:hover {
 	color: #666;
 }
 
 /*-----------------------------------------------------------------------------------------------------------*/
-.banner-login {
+/*баннер главной страницы*/
+.banner {
     position: relative;
     display: inline-block;
+    background: url('../img/banner_1920.jpg') 0 0 no-repeat;
+    background-size: 1550px 700px;
 }
+/*убирать баннер при размере окна 1000px*/
+@media screen and (max-width: 1000px) {
+    .banner {
+       background-image: none;
+    }
+}
+@media screen and (max-width: 615px) {
+    .often-questions {
+       width: 80%;
+    }
+}
+
+/*оболочка контента после боди*/
 .wrapper-base {
-    display: flex;
-	flex-direction: column;
 	min-height: 100%;
 	max-width: 1920px;
 	margin: 0 auto;
 }
-.content-base {
-    flex: 1 0 auto;
+/*разметка главной страницы*/
+#main-page-content {
+    display: grid;
+    grid-template-columns: 100%;                        /*ширина колонки*/
+    grid-template-rows: 700px 300px 500px 500px 500px;  /*высота строк*/
+
 }
 /*-------------------------------------------------------Navbar----------------------------------------------*/
 .top-menu {
@@ -97,8 +114,9 @@ ul li {
     line-height: 61px;
     padding-left: 20px;
     color: black;
-    transition: width 0.4s ease-in-out; /*данное свойство отвечает за плавное изменение ширины. Здесь можно задать время анимации в секундах (в данном случае задано 0.4 секунды)*/
-
+    /*данное свойство отвечает за плавное изменение ширины.
+    Здесь можно задать время анимации в секундах (в данном случае задано 0.4 секунды)*/
+    transition: width 0.4s ease-in-out;
 }
 
 /*-------------эффекты Navbar-------------*/
@@ -122,26 +140,19 @@ ul li {
     .menu-main li {display: block;}
 }
 
-div.login-banner {
+div.login-case {
     top: 25%;
     left: 13%;
     position: absolute;
 }
 
-div.login-banner h1 {
+div.login-case h1 {
     font-size: 4em;
     color: black;
 }
 
 .badge {
     background-color: orangered;
-}
-
-.recipes-menu-scroll {
-
-}
-.recipes-list-scroll {
-
 }
 
 /*------------------------------Заголовки главной страницы------------------------------*/
@@ -293,7 +304,7 @@ div.login-banner h1 {
     background-color: #ddd;         /* Когда поля формы в фокусе, то пусть меняют свой цвет */
 }
 
-/* Создаем общие стили для кнопок: Отправить */
+/* Создаем общие стили для кнопок "Отправить" */
 .form-container-subscribe .btn {
     margin-top: 30px;
 }
@@ -341,7 +352,7 @@ div.login-banner h1 {
 }
 
 
-/*-----------------------------------------------------------forms---------------------------------------------*/
+/*-----------------------------------------------------------Формы---------------------------------------------*/
 
 .login-form {
     margin-left: 5%;
@@ -360,7 +371,7 @@ div.login-banner h1 {
     font-weight: bold;
 }
 
-/*--------------------------------------------Footer--------------------------------------------------*/
+/*--------------------------------------------Подвал--------------------------------------------------*/
 
 footer {
     color: #ffffff;
@@ -425,33 +436,8 @@ footer .cv-pdf i:hover {
 
 #footer-details {
     margin: 20px;
-
 }
 
-/*--------------------------------------------Media Queries--------------------------------------------*/
-
-@media screen and (max-width:800px) {
-    .second-logo {display:none}
-}
-
-@media screen and (max-width:800px) {
-    .main-foto {display:none}
-}
-
-.container-fluid .navbar-brand {
-    color: white;
-}
-
-.navbar-default .navbar-brand{
-    color: white;
-}
-.navbar-default .navbar-brand a{
-    color: white;
-}
-
-.navbar-default .navbar-nav > li > a{
-    color: white;
-}
 
 .glyphicon {
     position: relative;
@@ -492,6 +478,57 @@ footer .cv-pdf i:hover {
 #profileForm {
     z-index: 9;
 }
+/*-----------------------------------------------Блок "Как это работает"------------------------------*/
+.how-to-work-wrapper{
+    text-align: center;
+    background: url('../img/how_to_work/how_to_work.jpg') 0 0 no-repeat;
+    background-size: cover;
+    padding: 2% 0 3%;
+}
+.how-to-work-title {
+    color: white;
+}
+
+.how-to-work-icons-block{
+    display: flex;
+    align-items: center;
+    margin: 1% 3%;
+}
+
+.how-to-work-icon {
+    width: 200px;
+    height: 130px;
+    color: white;
+    text-align: center;
+    margin: auto;
+}
+
+.how-to-work-icon p {
+    padding: 100px 0 0 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#ic01{
+    background: url('../img/how_to_work/ic01.png') 0 0 / 80px auto no-repeat;
+    background-position: top;
+}
+
+#ic02{
+    background: url('../img/how_to_work/ic02.png') 0 0 / 80px auto no-repeat;
+    background-position: top;
+}
+
+#ic03{
+    background: url('../img/how_to_work/ic03.png') 0 0 / 80px auto no-repeat;
+    background-position: top;
+}
+
+#ic04{
+    background: url('../img/how_to_work/ic04.png') 0 0 / 80px auto no-repeat;
+    background-position: top;
+}
+
 /*-----------------------------------------------Блок "часто задаваемые вопросы"------------------------------*/
 
 .accordion {
@@ -522,6 +559,7 @@ footer .cv-pdf i:hover {
 .often-questions {
     width: 45%;
     margin: auto;
+    text-align: center;
 }
 .accordion:after {
   content: '\02C5'; /* Unicode character for "down" sign (^) */
@@ -533,4 +571,10 @@ footer .cv-pdf i:hover {
 
 .active:after {
   content: "\02C4"; /* Unicode character for "up" sign (^) */
+}
+
+/*страница О нас*/
+.about {
+    margin: 5% 20%;
+    width: 60%;
 }
