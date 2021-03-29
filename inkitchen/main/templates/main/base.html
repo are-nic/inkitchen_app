@@ -20,8 +20,8 @@
         <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
         <script type="text/javascript" src="{% static 'main/js/accordion.js' %}"></script>
 
-        <!-----------------------------------------------Карусель стили--------------------------------->
-        <link rel="stylesheet" href="{% static 'main/css/carousel.css' %}">
+        <!-----------------------------------------------Слайдер стили--------------------------------->
+        <link rel="stylesheet" href="{% static 'main/css/slider.css' %}">
         <!---------------------------------------------------------------------------------------------->
         <!-----------------------------------------------Корзина стили--------------------------------->
         <link rel="stylesheet" href="{% static 'main/css/cart.css' %}">
@@ -62,8 +62,7 @@
                         <!--<li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Регистрация</a></li>
                         <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Войти</a></li>-->
                     {% endif %}
-                    <li><a href="{% url 'recipes' %}"><i class="fa fa-cutlery"></i> МЕНЮ ДЛЯ ДОМА</a></li>
-                    <li><a href="{% url 'recipes' %}"><i class="fa fa-cutlery"></i> МЕНЮ ДЛЯ ОФИСА</a></li>
+                    <li><a href="{% url 'recipes' %}"><i class=""></i> МЕНЮ</a></li>
                     <li><a href="{% url 'about' %}">О НАС</a></li>
                     <li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>
                 </ul>
@@ -82,7 +81,7 @@
             <!-- Конец блока сообщений -->
             <!------------------------------блок popup формы подписки-------------------------------->
             <div class="form-popup" id="myForm">
-                <a href="" class="close-login-popup" onclick="closeForm()"></a>
+                <a href="#" class="close-login-popup" onclick="closeForm()"></a>
                 <form action="#" class="form-container-subscribe">
                     <h3>Подписаться</h3>
                     <input type="text" placeholder="Ваш Email" name="email" required>
@@ -98,12 +97,15 @@
                     document.getElementById("myForm").style.display = "none";
                 }
             </script>
-            <!----------------------------конец блока popup формы подписки------------------------>
+            <!----------------------------конец блока popup формы подписки---------------------->
+
+            <!----------------------------блок контента------------------------>
             <div class="content-base" id="content">
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
+        <!----------------------------Подвал------------------------>
         <footer class="container-fluid">
             <div class="">
                 <div class="col-sm-12"></div>
