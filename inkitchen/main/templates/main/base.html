@@ -20,6 +20,9 @@
         <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
         <script type="text/javascript" src="{% static 'main/js/accordion.js' %}"></script>
 
+        <!-----------------------------------------------Navbar стили--------------------------------->
+        <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
+        <!---------------------------------------------------------------------------------------------->
         <!-----------------------------------------------Слайдер стили--------------------------------->
         <link rel="stylesheet" href="{% static 'main/css/slider.css' %}">
         <!---------------------------------------------------------------------------------------------->
@@ -37,37 +40,45 @@
     </head>
     <body>
         <div class="wrapper-base">
-            <!--------------------------------- navbar ------------------------------------------------->
-            <nav class="top-menu two">
-                <a class="navbar-logo" href="{% url 'home' %}">
-                    <img class='logo' src="{% static 'main/img/logo_navbar.png' %}" alt="Logo">
-                </a>
-                <ul class="menu-main">
-                    {% if user.is_authenticated %}
-                        <li><a href="#"> МОЙ ПРОФИЛЬ<i class="fa fa-angle-down fa-user"></i></a>
-                            <ul class="submenu">
-                                <li class="sub"><a href="{% url 'profile' %}">Личный кабинет</a></li>
-                                <li class="sub"><a href="{% url 'logout' %}">Выйти</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="{% url 'cart_detail' %}" style="color: #dd5600;">
-                                <i class="fa fa-shopping-cart"></i> Корзина
-                                {% if recipe_count > 0 %}
-                                    <label class="badge badge-warning">{{ recipe_count }}</label>
-                                {% endif %}
-                            </a>
-                        </li>
-                    {% else %}
-                        <!--<li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Регистрация</a></li>
-                        <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Войти</a></li>-->
-                    {% endif %}
-                    <li><a href="{% url 'recipes' %}"><i class=""></i> МЕНЮ</a></li>
-                    <li><a href="{% url 'about' %}">О НАС</a></li>
-                    <li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>
-                </ul>
+<!---------------------------------------------------- navbar --------------------------------------------------------->
+            <nav>
+                <div class="top-menu two">
+                    <a class="navbar-logo" href="{% url 'home' %}">
+                        <img class='logo' src="{% static 'main/img/logo_navbar.png' %}" alt="Logo">
+                    </a>
+                    <div class="menuToggle icon">
+                        <div class="hamburger"></div>
+                    </div>
+                    <ul class="navbar-menu">
+                        {% if user.is_authenticated %}
+                            <li><a href="#"> МОЙ ПРОФИЛЬ</a>
+                                <ul class="user-submenu">
+                                    <li class="sub"><a href="{% url 'profile' %}">Личный кабинет</a></li>
+                                    <li class="sub"><a href="{% url 'logout' %}">Выйти</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'cart_detail' %}" style="color: #dd5600;">
+                                    <i class="fa fa-shopping-cart"></i> Корзина
+                                    {% if recipe_count > 0 %}
+                                        <label class="badge badge-warning">{{ recipe_count }}</label>
+                                    {% endif %}
+                                </a>
+                            </li>
+                        {% else %}
+                            <!--<li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Регистрация</a></li>
+                            <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Войти</a></li>-->
+                        {% endif %}
+                        <li><a href="{% url 'home' %}"> План доставки</a></li>
+                        <li><a href="{% url 'recipes' %}"> МЕНЮ</a></li>
+                        <li><a href="{% url 'about' %}">О НАС</a></li>
+                        <!--<li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>-->
+                    </ul>
+                </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script type="text/javascript" src="{% static 'main/js/burger_menu.js' %}"></script>
             </nav>
-            <!-- /.navbar -->
+<!--------------------------------------------конец блока navbar ---------------------------------------------------------------->
             <!-- Сообщения при входе, выходе, регистрации аккаунта -->
             {% if messages %}
                 <div class="alert alert-success">
@@ -79,8 +90,8 @@
                 </div>
             {% endif %}
             <!-- Конец блока сообщений -->
-            <!------------------------------блок popup формы подписки-------------------------------->
-            <div class="form-popup" id="myForm">
+            <!------------------------------блок popup формы подписки (отключен 31.02.2021)-------------------------------->
+            <!--<div class="form-popup" id="myForm">
                 <a href="#" class="close-login-popup" onclick="closeForm()"></a>
                 <form action="#" class="form-container-subscribe">
                     <h3>Подписаться</h3>
@@ -96,7 +107,7 @@
                 function closeForm() {
                     document.getElementById("myForm").style.display = "none";
                 }
-            </script>
+            </script>-->
             <!----------------------------конец блока popup формы подписки---------------------->
 
             <!----------------------------блок контента------------------------>
