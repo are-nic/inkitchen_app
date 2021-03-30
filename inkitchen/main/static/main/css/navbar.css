@@ -1,0 +1,123 @@
+/*-------------------------------------------------------Navbar----------------------------------------------*/
+
+.top-menu {
+    background: #fff;
+    max-width: 1920px;
+    margin: 0px auto;
+    padding: 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar-logo {
+    display: inline-block;
+    position:relative;
+    z-index: 3;
+}
+
+.navbar-logo img{
+    width: 250px;
+    height: 50px;
+}
+.navbar-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: right;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.navbar-menu a {
+    display: block;
+    position: relative;
+    line-height: 61px;
+    padding-left: 20px;
+    color: black;
+    /*данное свойство отвечает за плавное изменение ширины.
+    Здесь можно задать время анимации в секундах (в данном случае задано 0.4 секунды)*/
+    transition: width 0.4s ease-in-out;
+}
+
+.navbar-menu li:hover {
+    text-decoration: underline      /*нижнее подчеркивание при наведение на элементы navbar*/
+}
+
+/*hamburger*/
+.menuToggle{
+    color: #000;
+    cursor: pointer;
+    display: none;
+}
+/*Бургер меню скрыто до размера экрана в 767рх*/
+@media( max-width: 767px){
+    .menuToggle{
+        display: block;
+    }
+    .navbar-logo {
+        display: none;
+    }
+    .navbar-menu{
+        display: none;
+        position: absolute;
+        background: #fff;
+        width: 100%;
+        margin-left: -20px;
+        margin-top: 19px;
+        padding-left: 10px;
+    }
+    .navbar-menu li{
+        display: block;
+    }
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.hamburger {
+    width: 40px;
+    height: 4px;
+    transform: translate(-50%, -50%);
+    background: #000;
+    transition: 0.5s;
+    display: inline-block;
+    margin-left: 12px;
+}
+
+.hamburger:before,
+.hamburger:after {
+    content: "";
+    width: 40px;
+    height: 4px;
+    position: absolute;
+    background: #000;
+    transition: 0.5s;
+}
+
+.hamburger:before {
+    top: -16px;
+}
+
+.hamburger:after {
+    top: 16px;
+}
+
+.icon.active-burger .hamburger {
+    background: rgba(0, 0, 0, 0);
+}
+
+.icon.active-burger .hamburger:before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.icon.active-burger .hamburger:after {
+    top: 0;
+    transform: rotate(135deg);
+}
+/*hamburger*/
