@@ -6,11 +6,11 @@
 	box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
     height: 100%;
     min-width: 400px;
 }
+
 h1, h2, h3, h4, h5, h6 {
     color: black;
 }
@@ -20,6 +20,11 @@ input {outline:none;}       /* убирает обводку полей ввод
 a:hover{text-decoration:none;}
 
 ul {list-style-type: none;}
+
+/*контент после навбара*/
+.content-base{
+    padding: 100px 0 0 0;
+}
 
 /*-----------------------------выбор группы Повар или Покупатель при регистрации------------------------------*/
 ul li {
@@ -57,12 +62,13 @@ ul li {
     background: url('../img/banner_1920.jpg') 0 0 no-repeat;
     background-size: 1550px 700px;
 }
-/*убирать баннер при размере окна 1000px*/
-@media screen and (max-width: 1000px) {
+/*убирать баннер при размере окна 1099px*/
+@media screen and (max-width: 1099px) {
     .banner {
        background-image: none;
     }
 }
+/*изменение резмеров блока с вопросами при уменьшении экрана*/
 @media screen and (max-width: 615px) {
     .often-questions {
        width: 80%;
@@ -79,80 +85,14 @@ ul li {
 #main-page-content {
     display: grid;
     grid-template-columns: 100%;                        /*ширина колонки*/
-    grid-template-rows: 700px 300px 500px 500px 500px;  /*высота строк*/
-
-}
-/*-------------------------------------------------------Navbar----------------------------------------------*/
-.top-menu {
-  background: rgba(255,255,255,.5);
-  padding: 20px;
-}
-.top-menu:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.navbar-logo {display: inline-block;}
-.navbar-logo img{
-    width: 250px;
-    height: 50px;
-}
-.menu-main {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  float: right;
-  font-size: 14px;
-  font-weight: 500;
-}
-.menu-main li {display: inline-block;}
-
-.menu-main a {
-    text-decoration: none;
-    display: block;
-    position: relative;
-    line-height: 61px;
-    padding-left: 20px;
-    color: black;
-    /*данное свойство отвечает за плавное изменение ширины.
-    Здесь можно задать время анимации в секундах (в данном случае задано 0.4 секунды)*/
-    transition: width 0.4s ease-in-out;
+    grid-template-rows: 700px 300px 550px 500px 500px;  /*высота строк*/
 }
 
-/*-------------эффекты Navbar-------------*/
-.menu-main li:hover {
-    text-decoration: underline      /*нижнее подчеркивание при наведение на элементы navbar*/
-}
-
-@media (max-width: 660px) {
-    .menu-main {
-        float: none;
-        padding-top: 20px;
+/*изменяем размеры разметки страницы при уменьшении экрана*/
+@media screen and (max-width: 1099px){
+    #main-page-content {
+        grid-template-rows: 400px 300px 550px 500px 400px;  /*высота строк*/
     }
-    .top-menu {
-        text-align: center;
-        padding: 20px 0 0 0;
-    }
-    .menu-main a {padding: 0 10px;}
-}
-
-@media (max-width: 600px) {
-    .menu-main li {display: block;}
-}
-
-div.login-case {
-    top: 25%;
-    left: 13%;
-    position: absolute;
-}
-
-div.login-case h1 {
-    font-size: 4em;
-    color: black;
-}
-
-.badge {
-    background-color: orangered;
 }
 
 /*------------------------------Заголовки главной страницы------------------------------*/
@@ -161,18 +101,17 @@ div.login-case h1 {
     color: black;
     margin-bottom: 20px;
 }
-/*---------------------------------------------------------------------------------------*/
 
 /*------------------------------выпадающее меню МОЙ ПРОФИЛЬ------------------------------*/
-.two .submenu {
+.two .user-submenu {
   visibility: hidden;
   background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
-.two ul li:hover .submenu {
+.two ul li:hover .user-submenu {
   visibility: visible;
 }
-.submenu {
+.user-submenu {
   position: absolute;
   z-index: 10;
   -webkit-transition: 0.5s ease-in-out;
@@ -181,7 +120,7 @@ div.login-case h1 {
   transition: 0.5s ease-in-out;
   display: grid;
 }
-.submenu li a {
+.user-submenu li a {
   border-bottom: 1px solid rgba(255,255,255,.3);
   color: black;
 }
@@ -189,6 +128,28 @@ div.login-case h1 {
     transform: none;
 }
 /*---------------------------кнопка "Продолжить" и форма Регистрации на главной странице-----------------------*/
+div.login-case {
+    top: 25%;
+    left: 13%;
+    position: absolute;
+}
+
+/*положение верхнего блока с баннером при размере экрана 700рх*/
+@media screen and (max-width: 700px){
+    div.login-case {
+        top: 10%;
+        left: 5%;
+        right: 5%;
+        margin: auto;
+        text-align: center;
+    }
+}
+
+div.login-case h1 {
+    font-size: 4em;
+    color: black;
+}
+
 .register-wrapper-popup, .login-wrapper-popup{
     display: none;
     width: 370px;
@@ -496,7 +457,7 @@ footer .cv-pdf i:hover {
 }
 
 .how-to-work-icon {
-    width: 200px;
+    width: 230px;
     height: 130px;
     color: white;
     text-align: center;
@@ -504,7 +465,7 @@ footer .cv-pdf i:hover {
 }
 
 .how-to-work-icon p {
-    padding: 100px 0 0 0;
+    padding: 120px 0 0 0;
     font-size: 20px;
     font-weight: bold;
 }
@@ -545,10 +506,6 @@ footer .cv-pdf i:hover {
   transition: 0.4s;
 }
 
-.active, .accordion:hover {
-  background-color: #ccc;
-}
-
 .panel-questions {
   padding: 0 18px;
   background-color: white;
@@ -560,6 +517,11 @@ footer .cv-pdf i:hover {
     width: 45%;
     margin: auto;
     text-align: center;
+}
+@media screen and (max-width: 700px){
+    .often-questions {
+        width: 80%;
+    }
 }
 .accordion:after {
   content: '\02C5'; /* Unicode character for "down" sign (^) */
