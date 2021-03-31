@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-        <!--не менять версию jquery из-за динамических ингредиентов-->
+        <!--НЕ МЕНЯТЬ ЗДЕСЬ ВЕРСИЮ jquery из-за динамических ингредиентов при создании рецепта (перестают работать)-->
         <script src="https://yastatic.net/jquery/3.3.1/jquery.min.js"></script>
 
         <!--стили и обработка кнопок добавления ингредиентов при создании рецептов-->
@@ -34,6 +34,9 @@
         <!---------------------------------------------------------------------------------------------->
         <!-----------------------------------------------Рецепты стили--------------------------------->
         <link rel="stylesheet" href="{% static 'main/css/recipes.css' %}">
+        <!---------------------------------------------------------------------------------------------->
+        <!-----------------------------------------------Кнопка и окно "Подписаться" стили--------------------------------->
+        <link rel="stylesheet" href="{% static 'main/css/subscribe.css' %}">
         <!---------------------------------------------------------------------------------------------->
 
         <title>{% block title %}{% endblock %}</title>
@@ -75,7 +78,9 @@
                         <!--<li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>-->
                     </ul>
                 </div>
+                <!--подключаем JQuery-->
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <!--подключаем js скрипт-->
                 <script type="text/javascript" src="{% static 'main/js/burger_menu.js' %}"></script>
             </nav>
 <!--------------------------------------------конец блока navbar ---------------------------------------------------------------->
