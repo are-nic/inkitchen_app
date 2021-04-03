@@ -1,0 +1,53 @@
+#content-market {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 60% 40%;
+    grid-template-areas: "catalog cart"
+                         "catalog order";
+}
+
+.catalog-market {
+    grid-area: catalog;
+    border-right: 2px solid #eee;
+}
+
+.cart-market {
+    grid-area: cart;
+    text-align: center;
+}
+
+.order-market {
+    grid-area: order;
+    background-color: #eee;
+}
+
+/*разметка блока с продуктами*/
+.wrapper_products {
+    display: flex;
+    flex-wrap: wrap;    /*перенос продуктов на строку ниже при нехватки места*/
+    justify-content: center;
+}
+
+.item_market {
+    float: left;
+    transition: width .2s;
+    padding: 15px;
+    margin: 15px;
+    width: 200px;
+}
+
+.product_img_wrap {
+    height: 170px;
+    border-radius: 5%;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 20%);
+    padding: 10% 0;
+}
+
+.product_img_wrap img {
+    border-radius: 5%;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+}
