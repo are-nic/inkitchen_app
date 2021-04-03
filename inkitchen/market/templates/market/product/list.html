@@ -1,0 +1,51 @@
+{% extends "market/base.html" %}
+{% load static %}
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Продукты{% endif %}
+{% endblock %}
+{% block content %}
+    <!--блок каталога продуктов-->
+    <div class="catalog-market">
+        <div id="sidebar">
+            <h3>Категории</h3>
+            <ul>
+                <li {% if not category %} class="selected"{% endif %}>
+                    <a href="{% url 'market:product_list' %}">Все</a>
+                </li>
+                {% for c in categories %}
+                    <li {% if category.slug == c.slug %} class="selected"{% endif %}>
+                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-----------------------------------------блок с продуктами--------------------------------------------------->
+        <div class="product-block">
+            <h1>{% if category %}{{ category.name }}{% else %}Продукты{% endif %}</h1>
+            <div class="wrapper_products">
+                {% for product in products %}
+                <div class="item_market">
+                    <div class="product_img_wrap">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'main/img/no_image.png' %}{% endif %}">
+                        </a>
+                    </div>
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                    {{ product.price }} Р
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!--блок корзины-->
+    <div class="cart-market">
+        <h2>Корзина</h2>
+        <div class="cart-items"></div>
+    </div>
+
+    <!--блок формы заказа-->
+    <div class="order-market">
+
+    </div>
+{% endblock %}
