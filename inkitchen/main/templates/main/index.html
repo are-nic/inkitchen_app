@@ -17,7 +17,7 @@
                 <form method="post" class="continue-register-form">
                     {% csrf_token %}
                     {{ register_form.email }}
-                    <button type="button" class="subscribe-btn register" onclick="openRegisterForm()">Продолжить</button>
+                    <button type="button" class="orange-btn register" onclick="openRegisterForm()">Продолжить</button>
                 </form>
 
                 <p class="do_have_acc">Есть аккаунт?
@@ -99,7 +99,7 @@
         <div class="opacity-layer">
             <section class="showcase-section">
                 <h2 class="title-main-page">ЧТО СЕГОДНЯ ПРИГОТОВИТЬ?</h2>
-                <a href="{% url 'recipes' %}" class="subscribe-btn">Перейти в меню</a>
+                <a href="{% url 'recipes' %}" class="orange-btn">Перейти в меню</a>
             </section>
             <div class="slider">
                 {% for recipe in recipes %}
