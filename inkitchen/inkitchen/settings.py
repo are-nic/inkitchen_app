@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'market',
     'users',
     'crispy_forms',
     'cart',
@@ -57,6 +58,7 @@ TEMPLATES = [
         'DIRS': [
             'main/templates/users',                 # каталог поиска шаблонов для страниц Пользователя
             'food/templates/food',                  # каталог поиска шаблонов рецептов
+            'market/templates/market/product',                  # каталог поиска шаблонов рецептов
             ],
         'APP_DIRS': True,
         'OPTIONS': {
