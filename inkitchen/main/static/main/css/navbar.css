@@ -33,7 +33,6 @@
 .navbar-menu a {
     display: block;
     position: relative;
-    line-height: 61px;
     padding-left: 20px;
     color: black;
     /*данное свойство отвечает за плавное изменение ширины.

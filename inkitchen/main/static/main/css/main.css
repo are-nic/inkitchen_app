@@ -233,12 +233,6 @@ div.login-case h1 {
     text-decoration: underline;
 }
 
-
-.register, .sub-navbar {
-    width: 150px;
-    padding: 5px 10px;
-}
-
 .sub-navbar {
     margin-left: 20px;
 }
