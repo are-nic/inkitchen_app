@@ -75,6 +75,11 @@
                         <li><a href="{% url 'home' %}"> План доставки</a></li>
                         <li><a href="{% url 'recipes' %}"> МЕНЮ</a></li>
                         <li><a href="{% url 'about' %}">О НАС</a></li>
+                        <li>
+                            <a href="{% url 'market:product_list' %}">
+                                <button class="orange-btn market-btn">Market</button>
+                            </a>
+                        </li>
                         <!--<li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>-->
                     </ul>
                 </div>
