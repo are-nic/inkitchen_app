@@ -15,16 +15,15 @@ def cart_add(request, id):
     """
     cart = request.session.get('cart', {})
     # получаем из сессии значение выбранного кол-во блюд (план питания)
-    plan_menu = int(request.session.get('plan_menu'))
-    if len(cart) < plan_menu:  # если количество рецептов в корзине меньше числа блюд по плану меню
-        quantity = int(request.POST.get('quantity'))
+    # plan_menu = int(request.session.get('plan_menu'))
+    # if len(cart) < plan_menu:  # если количество рецептов в корзине меньше числа блюд по плану меню
+    quantity = int(request.POST.get('quantity'))
 
-        cart = request.session.get('cart', {})
-        cart[id] = cart.get(id, quantity)
+    cart[id] = cart.get(id, quantity)
 
-        request.session['cart'] = cart
-    else:
-        messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
+    request.session['cart'] = cart
+    #else:
+        #messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
 
     return redirect(reverse('recipes'))     # после добавления рецепта в корзину возврат к списку рецептов
 
