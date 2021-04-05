@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from food.models import Recipe, Product
+from food.models import Recipe
 
 User = get_user_model()
 
@@ -30,6 +30,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
                   'title',
                   'slug',
                   'image',
+                  'price',
                   'description',
                   'cooking_time',
                   'group',
@@ -44,6 +45,7 @@ class RecipeDetailSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.slug = validated_data.get('slug', instance.slug)
         instance.image = validated_data.get('image', instance.image)
+        instance.price = validated_data.get('price', instance.price)
         instance.description = validated_data.get('description', instance.description)
         instance.cooking_time = validated_data.get('cooking_time', instance.cooking_time)
         instance.ingredients = validated_data.get('ingredients', instance.ingredients)
