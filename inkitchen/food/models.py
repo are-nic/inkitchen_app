@@ -1,22 +1,10 @@
+from decimal import Decimal
+from django.core.validators import MinValueValidator
 from django.db import models
 from slugify import slugify
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-
-
-class Shop(models.Model):       # магазин продуктов (Азбука Вкуса, Пешеход и тд)
-
-    name = models.CharField(max_length=100, verbose_name="Название магазина")
-    logo = models.ImageField(verbose_name='Логотип магазина', blank=True)
-
-    class Meta:
-        verbose_name = 'Магазин'
-        verbose_name_plural = 'Магазины'
-        db_table = 'Shop'
-
-    def __str__(self):
-        return self.name
 
 
 class Category(models.Model):
@@ -36,18 +24,18 @@ class Category(models.Model):
         return self.name
 
 
-class TagIngredient(models.Model):
+class TagProduct(models.Model):
     """
-    Тэги для ингредиентов
+    Тэги продуктов
     """
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=100, verbose_name='Тэг')
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'Тэг ингредиентов'
-        verbose_name_plural = 'Тэги ингредиентов'
-        db_table = 'tags_ingredients'
+        verbose_name = 'Тэг продуктов'
+        verbose_name_plural = 'Тэги продуктов'
+        db_table = 'tags_products'
 
     def __str__(self):
         return self.name
@@ -73,12 +61,6 @@ class Recipe(models.Model):
     """
     Рецепт
     """
-    OFFICE = 'OFFICE'
-    HOME = 'HOME'
-    GROUP_RECIPE = [
-        (OFFICE, 'Для офиса'),
-        (HOME, 'Для дома'),
-    ]
 
     owner = models.ForeignKey(User, verbose_name='Автор рецепта', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.SET_NULL, null=True, blank=True)
@@ -87,7 +69,8 @@ class Recipe(models.Model):
     cooking_time = models.CharField(max_length=50, verbose_name='Время приготовления')
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(verbose_name='Фото блюда', blank=True, null=True, upload_to='recipes')
-    group = models.CharField(max_length=6, choices=GROUP_RECIPE, default=HOME, verbose_name='Группа рецепта')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена',
+                                default=0.01, validators=[MinValueValidator(Decimal('0.01'))])
     date_created = models.DateTimeField(auto_now_add=True, null=True, verbose_name='создан')
     tags = models.ManyToManyField(TagRecipe, blank=True, default='рецепт', verbose_name='Тэги')
 
@@ -107,7 +90,7 @@ class Recipe(models.Model):
         return super(Recipe, self).save(*args, **kwargs)
 
 
-class IngredientOfRecipe(models.Model):
+class Ingredient(models.Model):
     """
     экземпляр ингридиента, который принадлежит к конкретному рецепту в определенном кол-ве.
     для получения всех ингридиентов по какому либо рецепту использовать: recipe.ingredients.all()
@@ -126,46 +109,15 @@ class IngredientOfRecipe(models.Model):
     ]
 
     recipe = models.ForeignKey(Recipe, verbose_name='Рецепт', on_delete=models.CASCADE, related_name='ingredients')
-    name = models.ForeignKey(TagIngredient, verbose_name='Тэг', on_delete=models.CASCADE, related_name='ingredient_name')
+    name = models.ForeignKey(TagProduct, verbose_name='Тэг', on_delete=models.CASCADE, related_name='ingredient_name')
     qty = models.PositiveIntegerField(verbose_name='Кол-во')
     unit = models.CharField(max_length=20, choices=UNITS, verbose_name='Ед. измерения')
 
     class Meta:
         ordering = ('name',)
-        verbose_name = 'Ингредиент рецепта'
-        verbose_name_plural = 'Ингредиенты рецепта'
-        db_table = 'Ingredient_Of_Recipe'
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
+        db_table = 'Ingredient'
 
     def __str__(self):
         return self.name.name
-
-
-class Product(models.Model):
-    """
-    Экземпляр продукта, который поставляется магазинами. Каждый ингредиент может ссылаться на несколько продуктов
-    одного вида
-    """
-    # поля, получаемые от магазинов
-    shop = models.ForeignKey(Shop, verbose_name='Магазин', on_delete=models.CASCADE)
-    name = models.CharField(max_length=300, verbose_name='Наименование продукта')
-    qty_per_item = models.PositiveIntegerField(verbose_name='Кол-во на ед. продукта')
-    stock = models.PositiveIntegerField(verbose_name='Остаток')            # остаток единиц продукта в магазине
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
-    unit = models.CharField(max_length=10, verbose_name='Ед. измерения')
-    tag = models.ForeignKey(TagIngredient, verbose_name='Тэг ингредиента',
-                            on_delete=models.CASCADE, related_name='product')
-    # Доп. поля
-    protein = models.CharField(max_length=10, verbose_name='Белки', blank=True)
-    fats = models.CharField(max_length=10, verbose_name='Жиры', blank=True)
-    carbohydrate = models.CharField(max_length=10, verbose_name='Углеводы', blank=True)
-    kkal = models.CharField(max_length=30, verbose_name='Ккал', blank=True)
-    available = models.BooleanField(default=True, verbose_name='В наличии')
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукты'
-        db_table = 'Product'
-
-    def __str__(self):
-        return self.name
