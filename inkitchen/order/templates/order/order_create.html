@@ -10,63 +10,21 @@
                         <table class="table table-borderless table-shopping-cart">
                             <thead class="text-muted">
                                 <tr class="small text-uppercase">
-                                    <th scope="col" width="100">Ингредиент</th>
-                                    <th scope="col" width="50">Цена, руб.</th>
-                                    <th scope="col" width="50">Кол-во</th>
-                                    <th scope="col" width="50">Ед. изм.</th>
+                                    <th scope="col" width="100">{{ request.session.cart|length }} блюд в корзине</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in cart_items %}
-                                    {% for ingredient in item.recipe.ingredients.all %}
-                                        <tr>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.name.product.all.0.price }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.qty }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.get_unit_display }}</var>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">{{ item.recipe }}</var>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
 	                        </tbody>
 	                    </table>
-                        <form action="{% url 'order_create' %}" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ product_formset.management_form }}
-                            <table class="table table-borderless table-shopping-cart">
-                                <thead class="text-muted">
-                                    <tr class="small text-uppercase">
-                                        <th scope="col" width="300">выбрать продукт</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for form in product_formset %}
-                                        <tr>
-                                            <td>
-                                                {{ form.product }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <span>{{ error }}</span><br>
-                            <button type="submit" class="btn btn-primary">Создать</button>
-                        </form>
 	                </div>
 	            </div>
 	        </aside>
