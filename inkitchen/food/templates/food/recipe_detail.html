@@ -17,6 +17,8 @@
         <img src="{{ recipe.image.url }}" alt="recipe" style="width: 500px;">
         <p>Описание рецепта:</p>
         <p>{{ recipe.description }}</p><br>
+        <p>Цена:</p>
+        {{ recipe.price }} руб.<br><br>
         <p>Время приготовления: {{ recipe.cooking_time }}</p><br>
         <form method="post" action="{% url 'cart_add' recipe.id %}">
             {% csrf_token %}
