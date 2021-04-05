@@ -1,7 +1,8 @@
 from django import forms
-from .models import Order, OrderItem
-from django.forms import Select, RadioSelect
-from food.models import Product, IngredientOfRecipe
+from .models import Order
+from django.forms import RadioSelect
+from datetime import date, timedelta
+import locale
 
 
 class OrderForm(forms.ModelForm, forms.Form):
@@ -10,33 +11,19 @@ class OrderForm(forms.ModelForm, forms.Form):
         fields = []
 
 
-class OrderItemForm(forms.ModelForm, forms.Form):
-
-    def __init__(self, ingredient, *args, **kwargs):
-        super(OrderItemForm, self).__init__(*args, **kwargs)
-        self.fields['product'].queryset = Product.objects.filter(tag=ingredient)
-
-    class Meta:
-        model = OrderItem
-        fields = ['product', ]
-
-        widgets = {
-            'product': Select(attrs={
-                'class': 'select-product',
-                'style': 'width: 300px',
-            }),
-        }
-
-
 class PlanMenuForm(forms.Form):
     """
     План меню для выбора количества блюд на главной странице
     """
-    PLAN_MENU = (
-        ('4', 4),
-        ('6', 6),
-        ('8', 8),
-        ('10', 10)
-    )
+    locale.setlocale(locale.LC_ALL, "")             # для русских названий в датах
+    start_day = date.today() + timedelta(days=1)    # начальная дата с завтрашнего дня
+    end_day = start_day + timedelta(days=6)         # конечная дата = + 6 дней от завтрашней
+    WEEK = {}
+    delta = end_day - start_day
+    key = 0
+    for i in range(delta.days + 1):
+        WEEK[key] = ((start_day + timedelta(i)).strftime('%A, %d %b'))
+        key += 1
+    key = 0
 
-    plan_menu = forms.ChoiceField(choices=PLAN_MENU, widget=RadioSelect(attrs={'class': 'card-radio'}), initial='4')
+    week = forms.ChoiceField(choices=WEEK, widget=RadioSelect(attrs={'class': 'card-radio'}))
