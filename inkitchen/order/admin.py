@@ -2,12 +2,12 @@ from django.contrib import admin
 from .models import *
 
 
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    raw_id_fields = ['product']
+class OrderRecipeInline(admin.TabularInline):
+    model = OrderRecipe
+    raw_id_fields = ['recipe']
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'owner', 'created_at', 'updated_at', 'paid']
-    inlines = [OrderItemInline, ]
+    inlines = [OrderRecipeInline, ]
