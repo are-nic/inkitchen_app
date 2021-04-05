@@ -15,7 +15,8 @@ class Cart:
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)       # получить корзину из текущей сессии
         if not cart:                                            # если в сессии отсутствует корзина
-            cart = self.session[settings.CART_SESSION_ID] = {}  # сохраняем пустую корзину в сессии в виде пустого словаря
+            # сохраняем пустую корзину в сессии в виде пустого словаря
+            cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
     def add(self, recipe, quantity=1, update_quantity=False):
