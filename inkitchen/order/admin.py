@@ -9,5 +9,5 @@ class OrderRecipeInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'owner', 'created_at', 'updated_at', 'paid']
+    list_display = ['id', 'customer', 'created_at', 'updated_at', 'paid']
     inlines = [OrderRecipeInline, ]
