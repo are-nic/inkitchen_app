@@ -5,25 +5,13 @@
      font-size: 14px
  }
 
- .container-fluid {
-     margin-top: 70px
- }
-
  .card-body-cart {
      -ms-flex: 1 1 auto;
      flex: 1 1 auto;
      padding: 1.40rem
  }
 
- .img-sm {
-     width: 100px;
-     height: 70px
- }
 
- .itemside .info {
-     padding-left: 15px;
-     padding-right: 7px
- }
 
  .table-shopping-cart .price-wrap {
      line-height: 1.2
@@ -39,10 +27,6 @@
      color: #969696 !important
  }
 
- a {
-     text-decoration: none !important
- }
-
  .card-cart {
      position: relative;
      display: -ms-flexbox;
@@ -55,14 +39,6 @@
      background-clip: border-box;
      border: 1px solid rgba(0, 0, 0, .125);
      border-radius: 0px
- }
-
- .itemside {
-     position: relative;
-     display: -webkit-box;
-     display: -ms-flexbox;
-     display: flex;
-     width: 100%
  }
 
  .dlist-align {
@@ -173,23 +149,94 @@ caption p {
     border: 1px solid #ddd;
 }
 
-.product-description {
-    min-height: 40px;
+/*--------------------------------------------------------------------------------------------------------------------*/
+.order_container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50px 100%;
+    grid-template-areas: "header header"
+                         "recipes data";
+    margin: 50px 70px;
 }
 
-.main-logo {
-    margin-bottom: 25px;
+#order_header {
+    grid-area: header;
+    text-align: center;
+    background-color: #ffebcd;
 }
 
-#cart-ingredients {
-    margin-top: 50px;
-    margin-left: 50px;
+#order_recipes {
+    grid-area: recipes;
+    padding: 20px 20px 20px 0;
 }
 
-tbody tr {
-    border-top: 1px solid grey;
+#order_data {
+    grid-area: data;
+    background-color: #eee;
 }
 
 .cart-item {
     display: flex;
+}
+
+.itemside {
+     position: relative;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     width: 100%;
+     margin: 0;
+ }
+
+.itemside .info {
+   padding-left: 15px;
+   padding-right: 7px
+}
+
+a {
+   text-decoration: none !important
+}
+
+.aside {
+   width: 170px;
+}
+.img-sm {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+}
+
+#find-me {
+    background-image: url(../img/geolocation_icon.png);
+    height: 41px;
+    width: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+    transition: 0.5s;
+}
+
+#find-me:hover {
+    transform: scale(1.1);
+}
+
+.form-order {
+    display: inline;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+#id_phone_number_0 {
+    width: 150px;
 }
