@@ -7,41 +7,21 @@
 	        <aside class="col-lg-9">
 	            <div class="card-cart">
 	                <div class="table-responsive">
-	                    <table class="table table-borderless table-shopping-cart">
+                        <table class="table table-borderless table-shopping-cart">
                             <thead class="text-muted">
                                 <tr class="small text-uppercase">
-                                    <th scope="col" width="50">Ингредиент</th>
-                                    <th scope="col" width="50">Цена, руб.</th>
-                                    <th scope="col" width="50">Кол-во</th>
-                                    <th scope="col" width="50">Ед. изм.</th>
+                                    <th scope="col" width="100">Блюд в корзине: {{ request.session.cart|length }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for item in cart_items %}
-                                    {% for ingredient in item.recipe.ingredients.all %}
-                                        <tr>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.name.product.all.0.price }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.qty }}</var>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="price-wrap">
-                                                    <var class="price">{{ ingredient.get_unit_display }}</var>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">{{ item.recipe }}</var>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 {% endfor %}
 	                        </tbody>
 	                    </table>
@@ -49,7 +29,7 @@
 	            </div>
 	        </aside>
 	        <aside class="col-lg-3">
-	            <div class="card-cart mb-3">
+	            <!--<div class="card-cart mb-3">
 	                <div class="card-body-cart">
 	                    <form>
 	                        <div class="form-group"> <label>Есть Купон?</label>
@@ -62,7 +42,7 @@
 	                        </div>
 	                    </form>
 	                </div>
-	            </div>
+	            </div>-->
 	            <div class="card-cart">
 	                <div class="card-body-cart">
 	                    <dl class="dlist-align">
@@ -77,11 +57,10 @@
 	                        <dt>Итого:</dt>
 	                        <dd class="text-right text-dark b ml-3"><strong>00.00 руб</strong></dd>
 	                    </dl>
-	                    <hr> <a href="{% url 'order_create' %}" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Оформить заказ </a>
-                        <a href="{% url 'recipes' %}" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Добавить еще</a>
+	                    <hr> <a href="{% url 'order_create' %}" class="button-recipe-create" data-abc="true"> Оформить заказ </a>
 	                </div>
 	            </div>
 	        </aside>
 	    </div>
 	</div>
-{% endblock %}  
+{% endblock %}
