@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages, auth
 from django.urls import reverse
@@ -89,6 +90,15 @@ def register(request):
 
     data = {'register_form': register_form}
     return render(request, 'register.html', data)
+
+
+def validate_email(request):
+    """Проверка доступности емайл при регистрации"""
+    email = request.GET.get('email', None)
+    response = {
+        'is_taken': User.objects.filter(email__iexact=email).exists()
+    }
+    return JsonResponse(response)
 
 
 @login_required(login_url='home')
