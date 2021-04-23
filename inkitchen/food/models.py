@@ -89,6 +89,14 @@ class Recipe(models.Model):
         self.slug = slugify(self.title)
         return super(Recipe, self).save(*args, **kwargs)
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
 
 class Ingredient(models.Model):
     """
