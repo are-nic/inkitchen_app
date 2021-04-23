@@ -16,3 +16,6 @@ class ProductMarketAdmin(admin.ModelAdmin):
 # Регистрация моделей в админке
 admin.site.register(CategoryProduct, CategoryProductAdmin)
 admin.site.register(ProductMarket, ProductMarketAdmin)
+admin.site.register(OrderMarket)
+admin.site.register(OrderItemMarket)
+admin.site.register(ShippingAddress)
