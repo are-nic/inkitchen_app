@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'food',
     'order',
     'api',
+    'phonenumber_field',
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
@@ -58,7 +59,7 @@ TEMPLATES = [
         'DIRS': [
             'main/templates/users',                 # каталог поиска шаблонов для страниц Пользователя
             'food/templates/food',                  # каталог поиска шаблонов рецептов
-            'market/templates/market/product',                  # каталог поиска шаблонов рецептов
+            'market/templates/market',              # каталог поиска шаблонов маркета
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -129,6 +130,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+PHONENUMBER_DEFAULT_REGION = 'RU'
+
+# ключ google для геопозиции
+# GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyCBKlUMShvTbUdnjNc9lsgbEr5A4Qut880'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
