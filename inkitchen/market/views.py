@@ -23,15 +23,20 @@ def product_list(request, category_slug=None):
         'categories': categories,
         'products': products
     }
-    return render(request, 'list.html', data)
+    return render(request, 'products.html', data)
 
 
-def product_detail(request, id):
+def cart(request):
     """
-    Вывод одного продукта
-    :param request:
-    :param id:
-    :return:
+    Корзина
     """
-    product = get_object_or_404(ProductMarket, id=id, available=True)
-    return render(request, 'detail.html', {'product': product})
+    data = {}
+    return render(request, 'products.html', data)
+
+
+def checkout(request):
+    """
+    Заказ
+    """
+    data = {}
+    return render(request, 'products.html', data)
