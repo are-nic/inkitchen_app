@@ -2,65 +2,87 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-fluid">
-	    <div class="row">
-	        <aside class="col-lg-9">
-	            <div class="card-cart">
-	                <div class="table-responsive">
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col" width="100">{{ request.session.cart|length }} блюд в корзине</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item in cart_items %}
-                                    <tr>
-                                        <td>
-                                            <div class="price-wrap">
-                                                <var class="price">{{ item.recipe }}</var>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-	                        </tbody>
-	                    </table>
-	                </div>
-	            </div>
-	        </aside>
-	        <aside class="col-lg-3">
-	            <!--<div class="card-cart mb-3">
-	                <div class="card-body-cart">
-	                    <form>
-	                        <div class="form-group"> <label>Есть Купон?</label>
-	                            <div class="input-group">
-                                    <input type="text" class="form-control coupon" name="" placeholder="Код купона">
-                                    <span class="input-group-append">
-                                        <button class="btn btn-primary btn-apply coupon">Применить</button>
-                                    </span>
-                                </div>
-	                        </div>
-	                    </form>
-	                </div>
-	            </div>-->
-	            <div class="card-cart">
-	                <div class="card-body-cart">
-	                    <dl class="dlist-align">
-	                        <dt>Общая цена:</dt>
-	                        <dd class="text-right ml-3">{{ total }} руб</dd>
-	                    </dl>
-	                    <dl class="dlist-align">
-	                        <dt>Скидка:</dt>
-	                        <dd class="text-right text-danger ml-3">100%</dd>
-	                    </dl>
-	                    <dl class="dlist-align">
-	                        <dt>Итого:</dt>
-	                        <dd class="text-right text-dark b ml-3"><strong>00.00 руб</strong></dd>
-	                    </dl>
-	                    <hr> <a href="{% url 'order_create' %}" class="button-recipe-create" data-abc="true"> Оформить заказ </a>
-	                </div>
-	            </div>
-	        </aside>
-	    </div>
+	<div class="order_container">
+		<!--Шапка-->
+		<header id="order_header">
+			<h2 class="title-main-page">ОФОРМЛЕНИЕ ЗАКАЗА</h2>
+		</header>
+
+		<!--Блок с Рецептами заказа-->
+		<div id="order_recipes">
+			<p>БЕСПЛАТНАЯ ДОСТАВКА при покупке от 1000 руб.</p>
+			<p>Блюд в корзине: {{ request.session.cart|length }}</p>
+			<hr>
+			{% for item in cart_items %}
+			<div class="cart-item">
+				<figure class="itemside align-items-center">
+					<div class="aside">
+						<a href="{% url 'recipe_details' item.recipe.slug %}">
+							<img src="{{ item.recipe.image.url }}" class="img-sm">
+						</a>
+					</div>
+					<figcaption class="info">
+						<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+							{{ item.recipe.title }}
+						</a>
+						<p>{{ item.recipe.price }} р.</p>
+						<p>Кол-во порций: {{ item.q_portion }}</p>
+					</figcaption>
+				</figure>
+				<!--Кнопка удаления рецепта-->
+				<!--<form action="{% url 'remove_from_cart' item.id %}">
+					<button type="submit" class="btn btn-sm">x</button>
+				</form>-->
+			</div>
+			<hr>
+			{% endfor %}
+		</div>
+
+		<!--Блок с данными заказа-->
+		<div id="order_data">
+			<p><strong>Адрес доставки</strong></p>
+			<div class="geolocation">
+				<button id="find-me"></button><br/>
+				<p id="status"></p>
+				<p id="map-link"></p>
+				<script type="text/javascript" src="{% static 'main/js/geolocation.js' %}"></script>
+			</div>
+			<form method="post" enctype="multipart/form-data" class="form_order_create">
+				{% csrf_token %}
+
+				{{ form.address }}
+				<p><strong>Данные</strong></p>
+				{{ form.name }}<br><br>
+				{{ form.phone_number }}<br><br>
+				{{ form.city }}<br><br>
+				{{ form.street }}<br><br>
+				{{ form.building }}<br><br>
+				{{ form.apartment }}<br><br>
+
+				<p><strong>Оплата</strong></p>
+				{{ form.pay_method }}<br><br>
+
+				<p><strong>Доп. информация</strong></p>
+				{{ form.at_door }}<br><br>
+
+				<button type="submit" class="btn btn-primary">Создать</button>
+			</form>
+
+			<div class="card-body-cart">
+				<dl class="dlist-align">
+					<dt>Общая цена:</dt>
+					<dd class="text-right ml-3">{{ total }} руб</dd>
+				</dl>
+				<dl class="dlist-align">
+					<dt>Скидка:</dt>
+					<dd class="text-right text-danger ml-3">100%</dd>
+				</dl>
+				<dl class="dlist-align">
+					<dt>Итого:</dt>
+					<dd class="text-right text-dark b ml-3"><strong>00.00 руб</strong></dd>
+				</dl>
+				<hr> <a href="{% url 'order_create' %}" class="button-recipe-create" data-abc="true"> Оплатить </a>
+			</div>
+		</div>
 	</div>
 {% endblock %}
