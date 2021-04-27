@@ -4,104 +4,107 @@
 {% block title %}Все рецепты{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-sm-8">
-    {% if user.is_authenticated %}
-        {% for group in user.groups.all %}
-            {% if group.name == 'cooks' or group.name == 'doctors' or group.name == 'nutritionists'%}
-                <a href="{% url 'create_recipe' %}" class="button-recipe-create"> + Добавить рецепт</a>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    <div class="recipes-list">
+<div id="recipe_page_container">
+    <div id="days_order_block">
+
+    </div>
+    <div id="filter_recipes_block">
+
+    </div>
+    <div id="recipes-list">
         {% for recipe in recipes %}
-            <div class="recipe-wrapper">
-                <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
-                    <div class="recipe-photo">
-                        <img src="{{ recipe.image.url }}" alt="рецепт">
+        <div class="recipe-wrapper">
+            <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+                <div class="recipe-photo">
+                    <img src="{{ recipe.image.url }}" alt="рецепт">
+                </div>
+            </a>
+            <div class="recipe-info-wrap">
+                <div class="recipe-title-wrap">
+                    <h3>{{ recipe.title }}</h3>
+                </div>
+                <div class="recipe-info-block">
+                    <div class="kkal-info">
+                        {{ recipe.kkal }}
+                        <p>ккал</p>
                     </div>
-                </a>
-                <div class="recipe-info">
-                <h3>{{ recipe.title }}</h3>
-                    <form method="post" action="{% url 'cart_add' recipe.id %}">
-                        {% csrf_token %}
-                        <div class="input-qty-recipes">
-                            <input name="quantity" type="number" min="1" max="999" class="form-control qty-portions" placeholder="Порций">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="submit">Добавить</button>
-                            </span>
-                        </div>
-                    </form>
-                    <!--передаем в кнопку slug рецепта для перехода к нужному рецепту
-                    <a href="{% url 'recipe_details' recipe.slug %}" class="button-recipes-list">Открыть</a>-->
+                    <div class="p_f_c-info">
+                        {{ recipe.protein }}/{{ recipe.fat }}/{{ recipe.carbohydrates }}
+                        <p>БЖУ</p>
+                    </div>
+                    <div class="add-recipe-btn-wrap">
+                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}">
+                            {% csrf_token %}-->
+                            <button class="btn-add-recipe" type="submit" data-recipe="{{ recipe.id }}" data-qty="{{ recipe }}">
+                                +
+                            </button>
+                        <!--</form>-->
+                    </div>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
-    </div>
+
         <!---------------------------------- корзина для рецептов ----------------------------------->
-    <div class="col-sm-4">
-        <div class="card card-body card-profile">
-            <table class="table table-borderless table-shopping-cart">
-                <thead class="text-muted">
-                    <tr>
-                        <th>
-                            {% if request.session.cart|length != request.session.plan_menu %}
-                                <a href="{% url 'order_create' %}" class="btn btn-secondary disabled" role="button" aria-disabled="true" id="disable-btn-next-order">
-                                    Далее
-                                </a>
-                            {% else %}
-                                <a href="{% url 'order_create' %}" class="btn btn-warning" role="button" aria-pressed="true" id="active-btn-next-order">
-                                    Далее
-                                </a>
-                            {% endif %}
-                        </th>
-                    </tr>
-                    <tr class="small text-uppercase">
-                        <th><h2 class="title-main-page">КОРЗИНА</h2></th>
-                    </tr>
-                    <tr>
-                        <th scope="col" width="300">Доставка планируется</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in cart_items %}
-                        <tr>
-                            <td>
-                                <div class="cart-item">
-                                    <figure class="itemside align-items-center">
-                                        <div class="aside">
-                                            <a href="{% url 'recipe_details' item.recipe.slug %}">
-                                                <img src="{{ item.recipe.imageURL }}" class="img-sm">
-                                            </a>
-                                        </div>
-                                        <figcaption class="info">
-                                            <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
-                                                {{ item.recipe.title }}
-                                            </a>
-                                        </figcaption>
-                                    </figure>
-                                    <!--Кнопка удаления рецепта-->
-                                    <form action="{% url 'remove_from_cart' item.id %}">
-                                        <button type="submit" class="btn btn-sm">x</button>
-                                    </form>
-                                </div>
-                                <form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
-                                    {% csrf_token %}
-                                    <div class="form-group" style="margin: 0;">
-                                        <div class="input-group qty-recipe">
-                                            <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+
+    <div id="cart_recipes_page_wrap">
+        <div id="cart_head">
+            <h2 class="title-main-page">КОРЗИНА</h2>
+            <div id="delivery_day">
+                <p>Доставка планируется</p>
+            </div>
+        </div>
+        <div id="cart_recipes_block">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <div class="aside">
+                    <a href="{% url 'recipe_details' item.recipe.slug %}">
+                        <img src="{{ item.recipe.imageURL }}" class="img-sm">
+                    </a>
+                </div>
+                <div class="info">
+                    <div class="info-title">
+                        <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+                            {{ item.recipe.title }}
+                        </a>
+                        <!--Кнопка удаления рецепта-->
+                        <form action="{% url 'remove_from_cart' item.id %}">
+                            <button type="submit" class="btn btn-sm">x</button>
+                        </form>
+                    </div>
+                        <!--Кнопки изменения кол-ва рецепта в корзине-->
+                    <div class="meal_count_cart">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus">-</button>
+                        <input type="number" min="0" max="100" value="{{ item.q_portion }}" readonly class="raz">
+                        <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus">+</button>
+                    </div>
+                </div>
+                <!--<form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
+                    {% csrf_token %}
+                    <div class="form-group" style="margin: 0;">
+                        <div class="input-group qty-recipe">
+                            <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
+                </form>-->
+			</div>
+            {% endfor %}
+        </div>
+        <div id="next_btn_wrap">
             <h4>{{ request.session.cart|length }}/{{ request.session.plan_menu }} Блюд</h4>
+            {% if request.session.cart|length != request.session.plan_menu %}
+            <a href="{% url 'order_create' %}" role="button" aria-disabled="true" id="disable-btn-next-order">
+                Далее
+            </a>
+            {% else %}
+            <a href="{% url 'order_create' %}" role="button" aria-pressed="true" id="active-btn-next-order">
+                Далее
+            </a>
+            {% endif %}
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{% static 'main/js/recipes.js' %}"></script>
 {% endblock content %}
