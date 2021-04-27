@@ -67,10 +67,14 @@ class Recipe(models.Model):
     title = models.CharField(max_length=255, verbose_name='Название рецепта')
     slug = models.SlugField(unique=True)
     cooking_time = models.CharField(max_length=50, verbose_name='Время приготовления')
+    protein = models.IntegerField(verbose_name='Белки', null=True)
+    fat = models.IntegerField(verbose_name='Жиры', null=True)
+    carbohydrates = models.IntegerField(verbose_name='Углеводы', null=True)
+    kkal = models.IntegerField(verbose_name='Калории', null=True)
     description = models.TextField(verbose_name='Описание')
     image = models.ImageField(verbose_name='Фото блюда', blank=True, null=True, upload_to='recipes')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена',
-                                default=0.01, validators=[MinValueValidator(Decimal('0.01'))])
+                                default=0.00, validators=[MinValueValidator(Decimal('0.00'))])
     date_created = models.DateTimeField(auto_now_add=True, null=True, verbose_name='создан')
     tags = models.ManyToManyField(TagRecipe, blank=True, default='рецепт', verbose_name='Тэги')
 
