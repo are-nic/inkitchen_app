@@ -5,8 +5,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <!-- Favicon -->
-        <!--<link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon">-->
+        <link rel="shortcut icon" type="image/png" href="{% static 'main/img/favicon.ico' %}">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
         <!--НЕ МЕНЯТЬ ЗДЕСЬ ВЕРСИЮ jquery из-за динамических ингредиентов при создании рецепта (перестают работать)-->
@@ -62,14 +63,14 @@
                                     <li class="sub"><a href="{% url 'logout' %}">Выйти</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="{% url 'cart_detail' %}" style="color: #dd5600;">
+                            <!--<li>
+                                <a href="{% url 'recipes' %}" style="color: #dd5600;">
                                     <i class="fa fa-shopping-cart"></i> Корзина
                                     {% if recipe_count > 0 %}
                                         <label class="badge badge-warning">{{ recipe_count }}</label>
                                     {% endif %}
                                 </a>
-                            </li>
+                            </li>-->
                         {% else %}
                             <!--<li><a href="{% url 'register' %}"><i class="fa fa-user-plus"></i> Регистрация</a></li>
                             <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Войти</a></li>-->
@@ -82,7 +83,6 @@
                                 <button class="orange-btn market-btn">Market</button>
                             </a>
                         </li>
-                        <!--<li><button class="subscribe-btn sub-navbar" onclick="openForm()">Подписаться</button></li>-->
                     </ul>
                 </div>
                 <!--подключаем JQuery-->
@@ -102,25 +102,6 @@
                 </div>
             {% endif %}
             <!-- Конец блока сообщений -->
-            <!------------------------------блок popup формы подписки (отключен 31.02.2021)-------------------------------->
-            <!--<div class="form-popup" id="myForm">
-                <a href="#" class="close-login-popup" onclick="closeForm()"></a>
-                <form action="#" class="form-container-subscribe">
-                    <h3>Подписаться</h3>
-                    <input type="text" placeholder="Ваш Email" name="email" required>
-                    <button type="submit" class="btn btn-primary">Отправить</button>
-                </form>
-            </div>
-            <script>
-                function openForm() {
-                    document.getElementById("myForm").style.display = "block";
-                }
-
-                function closeForm() {
-                    document.getElementById("myForm").style.display = "none";
-                }
-            </script>-->
-            <!----------------------------конец блока popup формы подписки---------------------->
 
             <!----------------------------блок контента------------------------>
             <div class="content-base" id="content">
