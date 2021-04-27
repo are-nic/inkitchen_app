@@ -42,15 +42,14 @@ def get_current_location(request):
     получить текущее местоположение пользователя при заказе
     в функцию передаются долгота и широта, возвращается адресс.
     """
-    lat = request.GET.get('lat', None)      # получаем из шаблона широту
-    lon = request.GET.get('lon', None)      # получаем из шаблона долготу
+    lat = request.GET.get('lat', None)      # получаем из ajax широту
+    lon = request.GET.get('lon', None)      # получаем из ajax долготу
     geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                       "Chrome/53.0.2785.116 Safari/537.36")
     location = geolocator.reverse([lat, lon])   # преобразуем координаты в адрес (json формат)
     # address = location.address
 
     address = location.raw['address']
-    # print(address)
 
     town = address.get('town', '')
     city = address.get('city', '')
@@ -71,5 +70,4 @@ def get_current_location(request):
         'street': street,
         'house': house
     }
-    print(state, city, municipality, street, house)
     return JsonResponse(response)
