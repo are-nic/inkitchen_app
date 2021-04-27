@@ -15,20 +15,18 @@
 			<hr>
 			{% for item in cart_items %}
 			<div class="cart-item">
-				<figure class="itemside align-items-center">
-					<div class="aside">
-						<a href="{% url 'recipe_details' item.recipe.slug %}">
-							<img src="{{ item.recipe.image.url }}" class="img-sm">
-						</a>
-					</div>
-					<figcaption class="info">
-						<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
-							{{ item.recipe.title }}
-						</a>
-						<p>{{ item.recipe.price }} р.</p>
-						<p>Кол-во порций: {{ item.q_portion }}</p>
-					</figcaption>
-				</figure>
+				<div class="aside">
+					<a href="{% url 'recipe_details' item.recipe.slug %}">
+						<img src="{{ item.recipe.imageURL }}" class="img-sm">
+					</a>
+				</div>
+				<div class="info">
+					<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+						{{ item.recipe.title }}
+					</a>
+					<p>{{ item.recipe.price }} р.</p>
+					<p>Кол-во порций: {{ item.q_portion }}</p>
+				</div>
 				<!--Кнопка удаления рецепта-->
 				<!--<form action="{% url 'remove_from_cart' item.id %}">
 					<button type="submit" class="btn btn-sm">x</button>
