@@ -1,3 +1,4 @@
+// обработка блока часто здаваемых вопросов
 window.onload = function() {
     var acc = document.getElementsByClassName("accordion");
     var i;
