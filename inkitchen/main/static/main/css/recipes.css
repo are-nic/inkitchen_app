@@ -1,8 +1,44 @@
+/*----------------------------------------------разметка страницы с рецептами-----------------------------------------*/
+#recipe_page_container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 60px 60px 85%;
+    grid-template-areas: "days days"
+                         "filter filter"
+                         "recipes cart";
+    margin: 0 70px;
+}
+
+#days_order_block {
+    grid-area: days;
+    text-align: center;
+    border: 1px dashed;
+}
+
+#filter_recipes_block {
+    grid-area: filter;
+    border: 1px dashed;
+}
+
+#recipes-list {
+    display: flex;
+    grid-area: recipes;
+    list-style: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+/*-----------------------------------------------------------------------------------------------------------------*/
+
+.p_f_c-form {
+    display:flex;
+}
 .recipe-wrapper {
-	float: left;
 	transition: width .2s;
-	padding: 15px;
+	margin: 0 15px 30px 15px;
 	width: 250px;
+	box-shadow: 0 0 10px rgb(0 0 0 / 50%);
 }
 
 div.recipe {
@@ -16,13 +52,6 @@ div.recipe {
 	color: #474747;
 	z-index: 0;
 	height: 300px;
-}
-
-div.recipes-list {
-	list-style: none;
-	margin: 18px 0 0 0;
-	padding: 0 0 10% 10%;
-	justify-content: center;
 }
 
 .recipe-photo {
@@ -42,16 +71,22 @@ div.recipes-list {
 	transform: scale(1.05);
 }
 
-.recipe-info {
+.recipe-info-wrap {
   background: #fafafa;
-  padding: 15px 0;
+  padding: 10px;
 }
-.recipe-info h3 {
+.recipe-info-wrap h3 {
   font-size: 18px;
   font-weight: 400;
   color: #444444;
   margin: 0 0 10px 0;
 }
+
+.recipe-info-block {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
 .price {
   font-size: 16px;
   display: block;
@@ -70,6 +105,7 @@ div.recipes-list {
 }
 .recipe:hover .button {background: #fc5a5a;}
 
+/*кнопка создания рецепта старый стиль*/
 .button-recipe-create {
     background: #dd5600;
     transition: .1s ease-in;
@@ -92,10 +128,6 @@ div.recipes-list {
     width: 100px;
 }
 
-.input-qty-recipes {
-    display: flex;
-}
-
 .input-group.ingredient {
     position: relative;
     display: flex;
@@ -107,13 +139,9 @@ div.recipes-list {
 }
 
 .a-recipe {
-    float: left;                   /*Задаем обтекание*/
+    float: left;
     margin: 50px;
     width: 500px;
-}
-
-.ingredients {
-
 }
 
 .title-one-recipe {
@@ -137,17 +165,15 @@ div.recipes-list {
 .qty-portions{
     display: inline-block;
     width: 54%;
-    width: 54%;
 }
 
-#active-btn-next-order:hover {
-    background-color: rgb(300 80 3);
+#active-btn-next-order:hover, .btn-add-recipe:hover {
+    background-color: #F9918B;
     text-decoration: none;
     color: white;
 }
 
-#active-btn-next-order {
-    background: #dd5600;
+#active-btn-next-order, #disable-btn-next-order {
     transition: .1s ease-in;
     margin-left: auto;
     margin-right: auto;
@@ -162,24 +188,56 @@ div.recipes-list {
     border-radius: 50px;
 }
 
+#active-btn-next-order {
+    background: #FC453B;
+}
+
 #disable-btn-next-order {
     background: #c9c0bb;
-    transition: .1s ease-in;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 250px;
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    display: block;
-    font-size: 20px;
-    border-radius: 50px;
 }
 
 form.form-create-recipe {
     margin-left: 5%;
     margin-top: 5%;
     width: 500px;
+}
+
+.btn-add-recipe {
+    background-color: #FC453B;
+    color: white;
+    font-size: 30px;
+    width: 45px;
+    border: none;
+    float: right;
+}
+
+.kkal-info, .p_f_c-info {
+    margin: 5px 0 0 0;
+    text-align: center;
+    height: 40px;
+    padding: 0 10px;
+    flex: 1 0.8 auto;
+}
+.kkal-info {
+    border-right: solid gray;
+}
+.p_f_c-info {
+    width: 80px;
+}
+.recipe-info-block p{
+    margin-bottom: 0;
+}
+
+.add-recipe-btn-wrap {
+    -webkit-flex: 3 1 40px;
+    -ms-flex: 3 1 40px;
+    flex: 3 1 40px;
+}
+
+.recipe-title-wrap {
+    height: 50px;
+}
+
+#next_btn_wrap, .title-cart-wrap {
+    text-align: center;
 }

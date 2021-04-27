@@ -51,3 +51,16 @@
     max-height: 100%;
     margin: auto;
 }
+
+.btn_add_product_market {
+    border: 2px solid #F15E45;
+    border-radius: 50px;
+    width: 100px;
+    padding: 5px;
+    color: #F15E45;
+    cursor: pointer;
+}
+
+.name_product_market {
+    height: 38px;
+}
