@@ -27,8 +27,8 @@ class CategoryProduct(models.Model):
 
 
 class ProductMarket(models.Model):
-    category = models.ForeignKey(CategoryProduct, related_name='products', verbose_name='Категория', on_delete=models.SET_NULL,
-                                 null=True, blank=True)
+    category = models.ForeignKey(CategoryProduct, related_name='products', verbose_name='Категория',
+                                 on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=300, verbose_name='Наименование')
     # qty_per_item = models.PositiveIntegerField(verbose_name='Кол-во на ед. продукта')
     # unit = models.CharField(max_length=10, verbose_name='Ед. измерения')
@@ -38,8 +38,8 @@ class ProductMarket(models.Model):
     stock = models.PositiveIntegerField(verbose_name='Остаток')
     tags = models.ManyToManyField(TagProduct, blank=True, verbose_name='Тэги', related_name='products')
     available = models.BooleanField(default=True, verbose_name='В наличии')
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')    # delete
-    updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')      # delete
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
 
     class Meta:
         ordering = ('name',)
@@ -65,16 +65,31 @@ class OrderMarket(models.Model):
     complete = models.BooleanField(default=False, null=True, blank=False, verbose_name='Выполнен')
     transaction_id = models.CharField(max_length=200, null=True)
 
+    class Meta:
+        ordering = ('date_order',)
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+        db_table = 'Order_Market'
+
     def __str__(self):
         return str(self.id)
 
-    @property       # дает возожность обращаться к методу в шаблоне
-    def get_total_cart(self):
+    @property       # дает возожность обращаться к методу в шаблоне для вывода цен
+    def get_cart_total(self):
         """
         стоимость всего заказа
         """
         order_items = self.orderitemmarket_set.all()
-        total = sum([item.get_total_item for item in order_items])
+        total = sum([item.get_total for item in order_items])
+        return total
+
+    @property
+    def get_cart_items(self):
+        """
+        кол-во продуктов в корзине
+        """
+        order_items = self.orderitemmarket_set.all()
+        total = sum([item.quantity for item in order_items])
         return total
 
 
@@ -85,9 +100,9 @@ class OrderItemMarket(models.Model):
     date_added = models.DateTimeField(auto_now_add=True, verbose_name='Товар добавлен')
 
     @property
-    def get_total_item(self):
+    def get_total(self):
         """
-        определить стоимость продукта в заказе
+        определить стоимость продукта в заказе в зависимости от количества
         """
         total = self.product.price * self.quantity
         return total
@@ -100,6 +115,12 @@ class ShippingAddress(models.Model):
     city = models.CharField(max_length=200, null=True, verbose_name='Город')
     region = models.CharField(max_length=200, null=True, verbose_name='Регион')
     date_added = models.DateTimeField(auto_now_add=True, verbose_name='Дата добавления')
+
+    class Meta:
+        ordering = ('order',)
+        verbose_name = 'Адрес доставки'
+        verbose_name_plural = 'Адреса доставки'
+        db_table = 'Shipping_Address'
 
     def __str__(self):
         return self.address
