@@ -12,6 +12,13 @@
             {{ form_recipe.category }}<br><br>
             {{ form_recipe.title }}<br><br>
             {{ form_recipe.description }}<br><br>
+            <p>БЖУ:</p>
+            <div class="p_f_c-form">
+                {{ form_recipe.protein }} <p>/</p> {{ form_recipe.fat }} <p>/</p> {{ form_recipe.carbohydrates }}
+            </div>
+            <br>
+            <p>Калорийность:</p>
+            {{ form_recipe.kkal }}<br>
             <p>Цена, руб.</p>
             {{ form_recipe.price }}<br><br>
             {{ form_recipe.cooking_time }}<br><br>
