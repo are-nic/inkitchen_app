@@ -15,7 +15,8 @@ class RecipeForm(ModelForm, forms.Form):
 
     class Meta:
         model = Recipe
-        fields = ['category', 'title', 'description', 'cooking_time', 'image', 'price', 'tags']
+        fields = ['category', 'title', 'description', 'protein', 'fat', 'carbohydrates', 'kkal', 'cooking_time', 'image',
+                  'price', 'tags']
 
         # типы полей и их аттрибуты
         widgets = {
@@ -32,12 +33,38 @@ class RecipeForm(ModelForm, forms.Form):
             }),
             'price': NumberInput(attrs={
                 'class': 'form-recipe-price form-control',
-                'style': 'width: 50px',
-                'step': '0.01'
+                'style': 'width: 100px',
+                'step': '1.00'
+            }),
+            'protein': NumberInput(attrs={
+                'class': 'form-recipe-price form-control',
+                'style': 'width: 100px',
+                'placeholder': 'белки',
+                'step': '1.00'
+
+            }),
+            'fat': NumberInput(attrs={
+                'class': 'form-recipe-price form-control',
+                'style': 'width: 100px',
+                'placeholder': 'жиры',
+                'step': '1.00'
+            }),
+            'carbohydrates': NumberInput(attrs={
+                'class': 'form-recipe-price form-control',
+                'style': 'width: 100px',
+                'placeholder': 'углеводы',
+                'step': '1.00'
+            }),
+            'kkal': NumberInput(attrs={
+                'class': 'form-recipe-price form-control',
+                'style': 'width: 100px',
+                'placeholder': 'ккал',
+                'step': '1.00'
             }),
             'cooking_time': TextInput(attrs={
                 'class': 'form-recipe-cook-time form-control',
                 'placeholder': 'Время приготовления',
+                'style': 'width: 200px',
             }),
             'image': FileInput(attrs={
                 'class': 'form-recipe-image',
