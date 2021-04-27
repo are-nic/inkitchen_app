@@ -21,6 +21,11 @@
                 <!--если юзер в своем ЛК, то ему доступны кнопки-->
                     <a class="btn btn-sm btn-outline-danger" href="{% url 'remove_profile' user.id %}">Удалить Профиль</a>
                     <a class="btn btn-sm btn-outline-info" href="{% url 'upgrade_profile' user.id %}">Изменить данные</a>
+                    {% for group in user.groups.all %}
+                        {% if group.name == 'cooks' or group.name == 'doctors' or group.name == 'nutritionists'%}
+                            <a class="btn btn-sm btn-outline-success" href="{% url 'create_recipe' %}"> + Добавить рецепт</a>
+                        {% endif %}
+                    {% endfor %}
             <!------------------------------конец блока popup формы изменения данных пользователя---------------------->
                 {% endif %}
             </div>
