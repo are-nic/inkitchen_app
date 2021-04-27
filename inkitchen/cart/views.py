@@ -1,36 +1,55 @@
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 
 
-def cart_detail(request):
-    """
-    Отображает страницу содержимого корзины
-    """
-    return render(request, "cart/cart.html")
-
-
 def cart_add(request, id):
     """
-    Добавление указанного количества товара в корзину
+    Добавление блюда в корзину
     """
     cart = request.session.get('cart', {})
     # получаем из сессии значение выбранного кол-во блюд (план питания)
     # plan_menu = int(request.session.get('plan_menu'))
     # if len(cart) < plan_menu:  # если количество рецептов в корзине меньше числа блюд по плану меню
-    quantity = int(request.POST.get('quantity'))
-
+    # quantity = int(request.POST.get('quantity'))  # получаем кол-во блюд при добалвении блюда в корзину
+    quantity = 1  # добавляем одну порцию блюда в корзину
     cart[id] = cart.get(id, quantity)
 
     request.session['cart'] = cart
-    #else:
-        #messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
+    # else:
+    # messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
 
-    return redirect(reverse('recipes'))     # после добавления рецепта в корзину возврат к списку рецептов
+    return redirect(reverse('recipes'))  # после добавления рецепта в корзину возврат к списку рецептов
+
+
+def add_to_cart(request):
+    """
+    Добавление 1 блюда в корзину при нажатии на кнопку "+" на странице рецептов с помощью AJAX.
+    Данные передаются в функцию, которая проверят: было ли добавлено блюдо в корзину ранее или впервые.
+    В первом случае к имеющемуся кол-ву порций прибавляется 1. Во втором случае кол-во порций устанавливается = 1
+    """
+    recipe_id = request.GET.get('recipe_id', None)  # получаем из ajax id добавленного в корзину рецепта
+
+    cart = request.session.get('cart', {})
+
+    # проверяем, есть ли рецепт в корзине (в сессии)
+    if recipe_id not in cart:                       # если рецепта нет в корзине, то кол-во порций устанавливаем = 1
+        quantity = 1
+        cart[recipe_id] = quantity                  # заносим в сессию кол-во порций данного блюда
+    else:                                           # если на момент добавления блюда, оно уже было в корзине
+        quantity = cart[recipe_id] + 1              # увеличиваем имеющееся кол-во порций юлюда в корзине на 1
+        cart[recipe_id] = quantity
+
+    cart[recipe_id] = cart.get(recipe_id, quantity)
+
+    request.session['cart'] = cart
+
+    return HttpResponse("рецепт добавлен")
 
 
 def adjust_cart(request, id):
     """
-    Отрегулировать кол-во продукта внутри корзины
+    Отрегулировать кол-во блюд внутри корзины
     """
     quantity = int(request.POST.get('quantity'))
     cart = request.session.get('cart', {})
@@ -46,7 +65,7 @@ def adjust_cart(request, id):
 
 def remove_recipe_from_cart(request, id):
     """
-    Удалить рецепт из корзины
+    Удалить блюдо из корзины
     """
     cart = request.session.get('cart', {})
     cart.pop(id)
