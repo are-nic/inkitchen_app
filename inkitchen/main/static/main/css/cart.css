@@ -5,10 +5,11 @@ body {
     font-size: 14px
 }
 
-.card-body-cart {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    padding: 1.40rem
+.card-total_price-wrap {
+    display: flex;
+    padding-top: 20px;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .table-shopping-cart .price-wrap {
@@ -47,10 +48,6 @@ body {
 
 [class*="dlist-"] {
     margin-bottom: 5px
-}
-
-.coupon {
-    border-radius: 1px
 }
 
 .price {
@@ -212,6 +209,34 @@ caption p {
     width: 90%;
     padding-top: 15px;
 }
+
+#active-btn-next-order:hover, .btn-add-recipe:hover {
+    background-color: #ff5f56;
+    text-decoration: none;
+    color: white;
+}
+
+#active-btn-next-order, #disable-btn-next-order {
+    transition: .1s ease-in;
+    margin: auto;
+    width: 250px;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    font-size: 20px;
+    border-radius: 50px;
+}
+
+#active-btn-next-order {
+    background: #e5433a;
+}
+
+#disable-btn-next-order {
+    background: #c9c0bb;
+}
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------корзина на странице заказа--------------------------------------------------*/
 .order_container {
@@ -227,7 +252,7 @@ caption p {
 #order_header {
     grid-area: header;
     text-align: center;
-    background-color: #ffebcd;
+    border: 1px dashed;
 }
 
 #order_recipes {
@@ -237,7 +262,8 @@ caption p {
 
 #order_data {
     grid-area: data;
-    background-color: #eee;
+    border: 1px dashed;
+    padding: 20px;
 }
 
 .cart-item {
@@ -268,12 +294,14 @@ a {
 
 #find-me {
     background-image: url(../img/geolocation_icon.png);
-    height: 41px;
-    width: 30px;
+    background-color: white;
+    height: 33px;
+    width: 23px;
     background-size: cover;
     background-repeat: no-repeat;
     border: none;
     transition: 0.5s;
+    margin-right: 10px;
 }
 
 #find-me:hover {
@@ -282,19 +310,146 @@ a {
 
 .form-order {
     display: inline;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
+    padding: 7px 10px;
     line-height: 1.5;
     color: #495057;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 #id_phone_number_0 {
     width: 150px;
+}
+
+#button-create-order {
+    background: #e5433a;
+    transition: .1s ease-in;
+    width: 200px;
+    height: 40px;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    display: block;
+    font-size: 20px;
+    border-radius: 50px;
+}
+
+#button-create-order:hover {
+    background: #ff5f56;
+}
+
+.text-right, #over-info {
+    color: #e5433a;
+}
+.sm-text {
+    font-size: 12px;
+}
+
+#id_pay_method {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+input[type='radio'],
+label {
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  position: relative;
+  height: 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin-right: 15px;
+}
+
+input[type='radio']::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #e5433a;
+}
+
+input[type='radio']:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #e5433a;
+  transform: translate(-50%, -50%);
+  visibility: visible;
+}
+
+#id_pay_method label,
+#terms_and_politica,
+#order_at_door,
+#geolocation {
+    display: flex;
+}
+
+#terms_and_politica p,
+#order_at_door p{
+    margin: 0;
+    font-size: 13px;
+}
+
+#id_at_door,
+#terms_and_politica-check{
+    margin: 4px 10px 0 0;
+    background-color: #fff;
+    border: 1px solid #e5433a;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.form_order_create input#id_address {
+    border-color: #c0c0c0;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 20px;
+    padding: 5px 20px 5px;
+    width: 80%;
+}
+
+#id_name,
+#id_phone_number_0,
+#id_phone_number_1,
+#id_city,
+#id_street,
+#id_building,
+#id_apartment {
+    border: none;
+    border-bottom: 2px solid #c0c0c0;
+    outline: none;
+
+}
+
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+#form-address-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    width: 80%;
+}
+
+#id_building {
+    width: 50px;
 }
