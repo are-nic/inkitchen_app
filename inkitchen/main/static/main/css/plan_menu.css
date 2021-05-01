@@ -92,10 +92,6 @@
     right: 20px;
 }
 
-label {
-    display: none;
-}
-
 .plan-menu-group {
     display: flex;
 }
