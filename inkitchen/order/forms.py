@@ -24,6 +24,14 @@ class OrderForm(forms.ModelForm, forms.Form):
         'placeholder': 'Квартира',
     }))
 
+    ON_DELIVERY = 'on delivery'
+    ONLINE = 'online'
+    PAY_METHOD = (
+        (ON_DELIVERY, 'Оплата наличными или банковской картой при получении'),
+        (ONLINE, 'Онлайн оплата'),
+    )
+    pay_method = forms.ChoiceField(choices=PAY_METHOD, label='Оплата', initial=ONLINE, widget=forms.RadioSelect)
+
     class Meta:
         model = Order
         fields = ['name', 'address', 'phone_number', 'city', 'street', 'building', 'apartment', 'pay_method', 'at_door']
@@ -43,7 +51,6 @@ class OrderForm(forms.ModelForm, forms.Form):
             }),
             'at_door': forms.CheckboxInput(attrs={
                 'class': 'form-order',
-                'placeholder': 'Оставить заказ у дверей',
             }),
         }
 
