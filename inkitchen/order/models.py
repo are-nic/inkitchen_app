@@ -12,19 +12,11 @@ class Order(models.Model):
     """
     Модель Заказа
     """
-
-    ON_DELIVERY = 'on delivery'
-    ONLINE = 'online'
-    PAY_METHOD = [
-        (ON_DELIVERY, 'при получении'),
-        (ONLINE, 'онлайн'),
-    ]
-
     customer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, verbose_name='Покупатель')
     name = models.CharField(max_length=50, verbose_name='Имя', blank=True, null=True)
     address = models.CharField(max_length=250, verbose_name='Адрес доставки', null=True)
     phone_number = PhoneNumberField(verbose_name='Телефон', blank=True, null=True)
-    pay_method = models.CharField(max_length=11, choices=PAY_METHOD, default=ONLINE, verbose_name='способ оплаты')
+    pay_method = models.CharField(max_length=11, verbose_name='способ оплаты')
     at_door = models.BooleanField(default=False, verbose_name='Оставить заказ у дверей')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
