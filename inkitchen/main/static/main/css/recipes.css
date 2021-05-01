@@ -109,10 +109,7 @@ div.recipe {
 .button-recipe-create {
     background: #dd5600;
     transition: .1s ease-in;
-    margin-top: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: 30px auto auto;
     width: 250px;
     border: none;
     color: white;
@@ -165,35 +162,6 @@ div.recipe {
 .qty-portions{
     display: inline-block;
     width: 54%;
-}
-
-#active-btn-next-order:hover, .btn-add-recipe:hover {
-    background-color: #F9918B;
-    text-decoration: none;
-    color: white;
-}
-
-#active-btn-next-order, #disable-btn-next-order {
-    transition: .1s ease-in;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
-    width: 250px;
-    border: none;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    display: block;
-    font-size: 20px;
-    border-radius: 50px;
-}
-
-#active-btn-next-order {
-    background: #FC453B;
-}
-
-#disable-btn-next-order {
-    background: #c9c0bb;
 }
 
 form.form-create-recipe {
