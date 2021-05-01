@@ -1,10 +1,7 @@
 // определение местоположения пользователя. Передача широты и долготы в представление и возврат адреса.
-function geoFindMe() {
-
+function geoFindMe(event) {
+    event.preventDefault();
 	const status = document.querySelector('#status');
-	const mapLink = document.querySelector('#map-link');
-
-	mapLink.textContent = '';
 
 	function success(position) {
 		const latitude  = position.coords.latitude;
@@ -16,8 +13,8 @@ function geoFindMe() {
 
             success: function(response) {
                 status.textContent = '';
-		        mapLink.textContent = `${response.city} ${response.municipality} ${response.state}
-		                               ${response.street} ${response.house}`;
+		        $("#id_address").attr("value", `${response.city} ${response.municipality} ${response.state}
+		                                        ${response.street} ${response.house}`)
             },
 
             error: function (response) {
@@ -38,7 +35,7 @@ function geoFindMe() {
 	if(!navigator.geolocation) {
 		status.textContent = 'Геолокация не поддерживается Вашим браузером';
 	} else {
-		status.textContent = 'Местоположение…';
+		status.textContent = 'Поиск…';
 		navigator.geolocation.getCurrentPosition(success, error);
 	}
 }
