@@ -29,7 +29,7 @@ class UserRegistrationForm(UserCreationForm):
         ('doctors', 'Врач'),
         ('nutritionists', 'Диетолог'),
     )
-    group = forms.ChoiceField(choices=CHOICES, label='Группа пользователя', widget=forms.RadioSelect)
+    group = forms.ChoiceField(choices=CHOICES, label='Группа пользователя', initial='customers', widget=forms.RadioSelect)
 
     class Meta:
         model = User
