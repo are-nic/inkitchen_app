@@ -33,12 +33,14 @@
                         <p>БЖУ</p>
                     </div>
                     <div class="add-recipe-btn-wrap">
-                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}">
-                            {% csrf_token %}-->
-                            <button class="btn-add-recipe" type="submit" data-recipe="{{ recipe.id }}" data-qty="{{ recipe }}">
-                                +
-                            </button>
-                        <!--</form>-->
+                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}" class="form_recipe_add">-->
+                        <form method="post" action="{% url 'add_to_cart' %}" class="form_recipe_add">
+                            {% csrf_token %}
+                            <button class="btn-add-recipe" type="submit"
+                                    data-recipe="{{ recipe.id }}"
+                                    data-name="{{ recipe.title }}"
+                                    data-image="{{ recipe.image.url }}">+</button>
+                        </form>
                     </div>
                 </div>
             </div>
