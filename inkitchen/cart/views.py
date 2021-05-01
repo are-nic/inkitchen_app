@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
@@ -22,6 +23,7 @@ def cart_add(request, id):
     return redirect(reverse('recipes'))  # после добавления рецепта в корзину возврат к списку рецептов
 
 
+@login_required(login_url='home')
 def add_to_cart(request):
     """
     Добавление 1 блюда в корзину при нажатии на кнопку "+" на странице рецептов с помощью AJAX.
@@ -36,7 +38,7 @@ def add_to_cart(request):
     if recipe_id not in cart:                       # если рецепта нет в корзине, то кол-во порций устанавливаем = 1
         quantity = 1
         cart[recipe_id] = quantity                  # заносим в сессию кол-во порций данного блюда
-    else:                                           # если на момент добавления блюда, оно уже было в корзине
+    else:                                           # если на момент добавления блюда, оно уже в корзине
         quantity = cart[recipe_id] + 1              # увеличиваем имеющееся кол-во порций юлюда в корзине на 1
         cart[recipe_id] = quantity
 
