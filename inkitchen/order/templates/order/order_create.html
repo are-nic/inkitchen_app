@@ -39,48 +39,60 @@
 		<!--Блок с данными заказа-->
 		<div id="order_data">
 			<p><strong>Адрес доставки</strong></p>
-			<div class="geolocation">
-				<button id="find-me"></button><br/>
-				<p id="status"></p>
-				<p id="map-link"></p>
-				<script type="text/javascript" src="{% static 'main/js/geolocation.js' %}"></script>
-			</div>
-			<form method="post" enctype="multipart/form-data" class="form_order_create">
+			<form method="post" action="" class="form_order_create">
 				{% csrf_token %}
-
-				{{ form.address }}
+				<div id="geolocation">
+					<button id="find-me"></button>
+					{{ form.address }}
+					<p id="status"></p>
+					<script type="text/javascript" src="{% static 'main/js/geolocation.js' %}"></script>
+				</div>
+				<br><br>
 				<p><strong>Данные</strong></p>
-				{{ form.name }}<br><br>
-				{{ form.phone_number }}<br><br>
-				{{ form.city }}<br><br>
-				{{ form.street }}<br><br>
-				{{ form.building }}<br><br>
-				{{ form.apartment }}<br><br>
-
+					{{ form.name }}<br><br>
+					{{ form.phone_number }}<br><br>
+				<div id="form-address-block">
+					{{ form.city }}<br><br>
+					{{ form.street }}<br><br>
+					{{ form.building }}<br><br>
+					{{ form.apartment }}<br><br>
+				</div>
 				<p><strong>Оплата</strong></p>
 				{{ form.pay_method }}<br><br>
 
-				<p><strong>Доп. информация</strong></p>
-				{{ form.at_door }}<br><br>
+				<p><strong id="over-info">Доп. информация</strong></p>
+				<div id="order_at_door">
+					{{ form.at_door }}
+					<div>
+						<p>Оставить заказ у дверей</p>
+						<p>опция доступна только при оплате онлайн</p>
+					</div>
+				</div>
+				<br>
+				<div id="terms_and_politica">
+					<input type="checkbox" id="terms_and_politica-check">
+					<div>
+						<p>Продолжая, Вы соглашаетесь с нашими Условиями и политикой конфиденциальности</p>
+						<p>Вы будете получать рассылку от inKitchen</p>
+					</div>
+				</div>
 
-				<button type="submit" class="btn btn-primary">Создать</button>
+				<hr>
+
+				<div class="card-total_price-wrap">
+					<div id="cart-total-price-block">
+						<dl class="dlist-align">
+							<dt>Итого к оплате:</dt>
+							<dd class="text-right ml-3">{{ total }} руб.</dd>
+						</dl>
+						<dl class="dlist-align sm-text">
+							<dt>Вы экономите:</dt>
+							<dd class="text-right b ml-3"><u>00.00 руб.</u></dd>
+						</dl>
+					</div>
+					<a href="{% url 'order_create' %}" id="button-create-order" data-abc="true"> Оплатить </a>
+				</div>
 			</form>
-
-			<div class="card-body-cart">
-				<dl class="dlist-align">
-					<dt>Общая цена:</dt>
-					<dd class="text-right ml-3">{{ total }} руб</dd>
-				</dl>
-				<dl class="dlist-align">
-					<dt>Скидка:</dt>
-					<dd class="text-right text-danger ml-3">100%</dd>
-				</dl>
-				<dl class="dlist-align">
-					<dt>Итого:</dt>
-					<dd class="text-right text-dark b ml-3"><strong>00.00 руб</strong></dd>
-				</dl>
-				<hr> <a href="{% url 'order_create' %}" class="button-recipe-create" data-abc="true"> Оплатить </a>
-			</div>
 		</div>
 	</div>
 {% endblock %}
