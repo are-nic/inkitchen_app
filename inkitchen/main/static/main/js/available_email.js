@@ -3,7 +3,7 @@
 $(document).ready(function () {
     // поймать событие отправки формы
     $('#id_email').keyup(function () {
-        // создать вызов AJAX
+        // создаем вызов AJAX
         $.ajax({
              data: $(this).serialize(), // получить данные из формы
              url: 'users/validate_email',
@@ -19,7 +19,7 @@ $(document).ready(function () {
              },
              // При ошибке
              error: function (response) {
-                // предупреждение об ошибке
+                // предупреждение об ошибке в консоли
                 console.log(response.responseJSON.errors)
              }
         });
