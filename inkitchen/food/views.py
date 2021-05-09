@@ -8,13 +8,51 @@ from .forms import RecipeForm, IngredientFormSet
 from .models import Recipe
 
 
+def delivery_day(request, index):
+    """
+    вывод плана меню на конкретный день на странице рецептов
+    """
+    plan_menu = request.session['plan_menu']
+    weekday_data = plan_menu[index]
+    recipes = Recipe.objects.all()
+    data = {
+        'weekday': weekday_data,
+        'plan_menu': plan_menu,
+        'recipes': recipes,
+    }
+
+    if len(plan_menu) > 0:
+        for day in plan_menu:
+            print(day, plan_menu[day])
+
+    return render(request, "recipes.html", data)
+
+
 def all_recipes(request):
-    """вывод всех рецептов на странице Рецептов"""
+    """
+    вывод всех рецептов на странице Рецептов
+    Выборка из сессии плана-меню (даты, кол-ва блюд на конкретный день) и отправка в html-шаблон
+    """
+    plan_menu = request.session['plan_menu']
+    if len(plan_menu) > 0:
+        for day in plan_menu:
+            print(day, plan_menu[day])
     recipes = Recipe.objects.all()                                  # получаем экземпляры всех рецептов
-    return render(request, "recipes.html", {"recipes": recipes})    # выводим их на страницу рецептов
+    data = {
+        "recipes": recipes,
+        "plan_menu": plan_menu
+    }
+    return render(request, "recipes.html", data)                    # выводим их на страницу рецептов
 
 
-@login_required(login_url='recipes')
+class RecipeDetailView(DetailView):
+    """вывод рецепта на странице"""
+    model = Recipe
+    template_name = 'food/recipe_detail.html'
+    context_object_name = 'recipe'                              # имя 'recipe' для обращения в шаблоне к полям рецепта
+
+
+@login_required(login_url='home')
 def create_recipe(request):
     """
     создание рецепта
@@ -46,14 +84,7 @@ def create_recipe(request):
     return render(request, 'create_recipe.html', data)
 
 
-class RecipeDetailView(DetailView):
-    """вывод рецепта на странице"""
-    model = Recipe
-    template_name = 'food/recipe_detail.html'
-    context_object_name = 'recipe'                              # имя 'recipe' для обращения в шаблоне к полям рецепта
-
-
-@login_required(login_url='recipes')
+@login_required(login_url='home')
 def edit_recipe(request, id):
     """
     изменить существующий рецепт
@@ -65,7 +96,7 @@ def edit_recipe(request, id):
 
     form_recipe = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
     ingredients_formset = IngredientFormSet(request.POST or None, instance=recipe)
-    if form_recipe.is_valid() and ingredients_formset.is_valid():
+    if form_recipe.is_valid():
         recipe = form_recipe.save(commit=False)
         if ingredients_formset.is_valid():
             recipe.save()                   # сохраняем рецепт в БД
@@ -82,7 +113,7 @@ def edit_recipe(request, id):
     return render(request, 'edit_recipe.html', data)
 
 
-@login_required(login_url='recipes')
+@login_required(login_url='home')
 def remove_recipe(request, id):
     """
     Удалить рецепт
