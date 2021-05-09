@@ -151,6 +151,7 @@
         <div class="panel-questions">
             <p>Так же как и доставка</p>
         </div>
+        <a name="menu"></a> <!--якорь для перехода по пункту "План доставки"-->
     </div>
 
 <!--------------------------------------------------Блок выбора плана питания------------------------------------------------->
@@ -158,39 +159,38 @@
     <div class="card-grid">
         <h2 class="title-main-page">ВЫБЕРИТЕ ПЛАН</h2>
 
-        <form method="post" action="{% url 'home' %}" class="plan-menu-wrapper-form">
-            <fieldset class="form-group plan-menu-group">
-                {% csrf_token %}
-                {% for radio in choose_plan_form.plan_menu %}
-                <label class="card">
-                    {{ radio }}
-                    <div class="plan-details">
-                        {% if radio.choice_label == 4 %}
-                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/4.jpg' %}" /></div>
-                        <h2>{{ radio.choice_label }}</h2>
-                        <h6>блюда в день</h6>
-
-                        {% elif radio.choice_label == 6 %}
-                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/6.jpg' %}" /></div>
-                        <h2>{{ radio.choice_label }}</h2>
-                        <h6>блюд в день</h6>
-
-                        {% elif radio.choice_label == 8 %}
-                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/8.jpg' %}" /></div>
-                        <h2>{{ radio.choice_label }}</h2>
-                        <h6>блюд в день</h6>
-
-                        {% elif radio.choice_label == 10 %}
-                        <div class="plan-image"><img src="{% static 'main/img/plan_menu/10.jpg' %}" /></div>
-                        <h2>{{ radio.choice_label }}</h2>
-                        <h6>блюд в день</h6>
-                        {% endif %}
+        <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+            {{ menu_formset.management_form }}
+            <div id="plan-menu-container">
+                {% for form in menu_formset %}
+                <div class="delivery_day_container">
+                    <div class="date_field_menu">
+                        {{ form.delivery_date }}
                     </div>
-                </label>
+                    <div class="plan_img-container">
+                        <div class="plan-image">
+                            <img src="{% static 'main/img/plan_menu/4.jpg' %}" />
+                        </div>
+                        <div class="qty_meals_menu">
+                            {{ form.qty_meals }}
+                            <p>блюд в день</p>
+                        </div>
+                    </div>
+                    <div class="time_field_menu">
+                        {{ form.delivery_time }}
+                    </div>
+                </div>
                 {% endfor %}
-            </fieldset>
-            <button type="submit" class="btn btn-primary">Выбрать</button>
+            </div>
+            <button type="submit" class="orange-btn">Продолжить</button>
         </form>
+        <script src="{% static 'main/js/timepicker.js' %}"></script>
+        <script>
+            $(function () {
+                $('.bs-timepicker').timepicker();
+            });
+        </script>
     </div>
 </div>
 {% endblock content %}
