@@ -263,7 +263,7 @@ footer {
     min-height: 120px;
     display: table;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 80px;
     height: 40px;
     clear: both;
     padding-top: 20px;
@@ -312,7 +312,7 @@ footer .cv-pdf i:hover {
 }
 
 .social-links li a i:hover {
-    background: #33ffad;
+    background: #ff5f56;
 }
 
 #footer-details {
