@@ -6,11 +6,20 @@
 {% block content %}
 <div id="recipe_page_container">
     <div id="days_order_block">
-
+        {% for day, data in plan_menu.items %}
+            <div>
+                <a href="{% url 'delivery_day' day %}" class="week_day-delivery">{{ day }}</a>
+                <!--<p class="week_day-delivery"></p>-->
+                <!--<p>{{ data.delivery_date }}</p>-->
+                <p class="gty_per_day">0/{{ data.qty_meals }}</p>
+            </div>
+        {% endfor %}
     </div>
+
     <div id="filter_recipes_block">
 
     </div>
+
     <div id="recipes-list">
         {% for recipe in recipes %}
         <div class="recipe-wrapper">
@@ -59,7 +68,7 @@
         </div>
         <div id="cart_recipes_block">
             {% for item in cart_items %}
-            <div class="cart-item">
+            <div class="cart-item" id="recipe_id_{{ item.id }}">
                 <div class="aside">
                     <a href="{% url 'recipe_details' item.recipe.slug %}">
                         <img src="{{ item.recipe.imageURL }}" class="img-sm">
@@ -78,7 +87,7 @@
                         <!--Кнопки изменения кол-ва рецепта в корзине-->
                     <div class="meal_count_cart">
                         <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus">-</button>
-                        <input type="number" min="0" max="100" value="{{ item.q_portion }}" readonly class="raz">
+                        <input type="number" min="0" max="99" value="{{ item.q_portion }}" readonly class="raz">
                         <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus">+</button>
                     </div>
                 </div>
@@ -95,7 +104,7 @@
             {% endfor %}
         </div>
         <div id="next_btn_wrap">
-            <h4>{{ request.session.cart|length }}/{{ request.session.plan_menu }} Блюд</h4>
+            <h4>0/{{ weekday.qty_meals }} Блюд</h4>
             {% if request.session.cart|length != request.session.plan_menu %}
             <a href="{% url 'order_create' %}" role="button" aria-disabled="true" id="disable-btn-next-order">
                 Далее
