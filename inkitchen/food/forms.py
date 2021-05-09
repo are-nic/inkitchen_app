@@ -15,8 +15,8 @@ class RecipeForm(ModelForm, forms.Form):
 
     class Meta:
         model = Recipe
-        fields = ['category', 'title', 'description', 'protein', 'fat', 'carbohydrates', 'kkal', 'cooking_time', 'image',
-                  'price', 'tags']
+        fields = ['category', 'title', 'description', 'protein', 'fat', 'carbohydrates', 'kkal', 'cooking_time',
+                  'image', 'price', 'tags']
 
         # типы полей и их аттрибуты
         widgets = {
