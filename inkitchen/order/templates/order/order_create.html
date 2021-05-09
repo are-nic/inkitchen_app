@@ -65,7 +65,7 @@
 					{{ form.at_door }}
 					<div>
 						<p>Оставить заказ у дверей</p>
-						<p>опция доступна только при оплате онлайн</p>
+						<p style="color: #9e9e9e">Опция доступна только при оплате онлайн</p>
 					</div>
 				</div>
 				<br>
@@ -95,4 +95,9 @@
 			</form>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#id_phone_number_0 option:contains("Россия +7")').prop('selected', true);
+		})
+	</script>
 {% endblock %}
