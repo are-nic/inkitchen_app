@@ -1,7 +1,5 @@
 from django import forms
 from .models import Order
-from datetime import date, timedelta
-import locale
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 
@@ -57,19 +55,15 @@ class OrderForm(forms.ModelForm, forms.Form):
 
 class PlanMenuForm(forms.Form):
     """
-    План меню для выбора количества блюд на главной странице
+    План меню для выбора количества блюд на главной странице по дням
+    Формат получения даты изменен на "день недели, число месяц" ('%A, %d %b')
     """
-    locale.setlocale(locale.LC_ALL, "")             # для русских названий в датах
-    start_day = date.today() + timedelta(days=1)    # начальная дата с завтрашнего дня
-    end_day = start_day + timedelta(days=6)         # конечная дата = + 6 дней от завтрашней
-    WEEK = {}
-    delta = end_day - start_day
-    key = 0
-    for i in range(delta.days + 1):
-        WEEK[key] = ((start_day + timedelta(i)).strftime('%A, %d %b'))
-        key += 1
-    key = 0
 
-    delivery_date = forms.DateField()
-    delivery_time = forms.TimeField()
-    qty_meals = forms.NumberInput()
+    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'readonly': 'readonly'}))     # дата заказа
+    delivery_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'text',
+                                                                  'class': 'bs-timepicker',
+                                                                  }))                           # время заказа
+    qty_meals = forms.IntegerField(widget=forms.NumberInput)              # кол-во блюд на конкретный день заказа
+
+
+PlanMenuFormSet = forms.formset_factory(PlanMenuForm, min_num=7, max_num=7, extra=0)
