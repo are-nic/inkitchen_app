@@ -23,7 +23,6 @@ def cart_add(request, id):
     return redirect(reverse('recipes'))  # после добавления рецепта в корзину возврат к списку рецептов
 
 
-@login_required(login_url='home')
 def add_to_cart(request):
     """
     Добавление 1 блюда в корзину при нажатии на кнопку "+" на странице рецептов с помощью AJAX.
@@ -44,7 +43,7 @@ def add_to_cart(request):
 
     cart[recipe_id] = cart.get(recipe_id, quantity)
 
-    request.session['cart'] = cart
+    request.session['cart'] = cart                  # обновляем корзину с учетом изменений
 
     return HttpResponse("рецепт добавлен")
 
