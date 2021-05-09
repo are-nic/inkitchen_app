@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, reverse
 from users.forms import UserRegistrationForm, UserLoginForm
-from order.forms import PlanMenuForm
+from order.forms import PlanMenuForm, PlanMenuFormSet
 from food.models import Recipe
+from datetime import date, timedelta, time
+import locale
 
 
 def index(request):
@@ -13,29 +15,47 @@ def index(request):
     Обработка плана меню для передачу в сессию, чтобы в корзине ограничить выбор кол-ва блюд в соответсвии с выбранным
     планом питания.
     """
+
+    locale.setlocale(locale.LC_ALL, ('en_EN', 'UTF-8'))     # для русских названий в датах
+
     if request.method == 'POST':
-        choose_plan_form = PlanMenuForm(request.POST)
-        if choose_plan_form.is_valid():
-            # присваиваем значение выбранного плана меню переменной
-            plan = choose_plan_form.cleaned_data.get('plan_menu')
-            request.session['plan_menu'] = plan  # передаем в сессию пользователя выбранный им план питания
+        menu_formset = PlanMenuFormSet(request.POST or None)
+        if menu_formset.is_valid():
+            # задаем пустой словарь ключу 'plan_menu' в сессии
+            request.session['plan_menu'] = {}
+            for data in menu_formset.cleaned_data:
+                # переменая для обращения к дню недели
+                week_day = data.get('delivery_date').strftime("%A").lower()
+                # используем день недели как ключ для добавления словаря с данными плана-меню
+                # т.к. данные формата datetime не сериализуются в json, превращаем их в строковый вид
+                delivery_date = data.get('delivery_date').strftime('%Y-%m-%d')
+                delivery_time = data.get('delivery_time').strftime('%H:%M')
+                qty_meals = data.get('qty_meals')
+                request.session['plan_menu'][week_day] = {'delivery_date': delivery_date,
+                                                          'delivery_time': delivery_time,
+                                                          'qty_meals': qty_meals}
 
-            return redirect('recipes')
-        # email = request.POST.get('email')                               # получение значения поля
-        # return redirect(reverse('register'), {'email': email})          # перенаправление на страницу регистрации
+            next_day = (date.today() + timedelta(days=1)).strftime("%A").lower()    # завтрашний день недели
+            return redirect('recipes/week/' + next_day)                             # перенаправление на завтрашний день
+        else:
+            print('error data')
 
-    request.session['plan_menu'] = 4    # если план меню не выбран и пользователь попал на страницу выбора блюд
+    # инициализируем список данных по умолчанию для 7 ближайших дней заказа в формсет выбора плана меню
+    menu_formset = PlanMenuFormSet(initial=[
+        {'delivery_date': date.today() + timedelta(days=day),
+         'delivery_time': time(hour=5, minute=30).isoformat(timespec='minutes'),
+         'qty_meals': 0} for day in range(1, 8)
+    ])
 
     register_form = UserRegistrationForm()          # передаем форму регистрации на главную страницу
     login_form = UserLoginForm                      # передаем форму логинга на главную страницу для popup-окна
     recipes = Recipe.objects.all()                  # передаем список рецептов на главную страницу
-    plan = PlanMenuForm()                           # передаем форму выбора плана питания
 
     data = {
         'register_form': register_form,
         'recipes': recipes,
         'login_form': login_form,
-        'choose_plan_form': plan,
+        'menu_formset': menu_formset
     }
     return render(request, 'main/index.html', data)
 
