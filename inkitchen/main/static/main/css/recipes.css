@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 60px 60px 85%;
+    grid-template-rows: 100px 60px 85%;
     grid-template-areas: "days days"
                          "filter filter"
                          "recipes cart";
@@ -14,6 +14,11 @@
     grid-area: days;
     text-align: center;
     border: 1px dashed;
+    display: flex;
+    justify-content: center;
+}
+#days_order_block div {
+    margin: 30px 20px 0 20px;
 }
 
 #filter_recipes_block {
@@ -208,4 +213,17 @@ form.form-create-recipe {
 
 #next_btn_wrap, .title-cart-wrap {
     text-align: center;
+}
+
+.week_day-delivery {
+    border: 2px solid #F15E45;
+    border-radius: 50px;
+    width: 110px;
+    padding: 5px;
+    color: #F15E45;
+    cursor: pointer;
+}
+
+.gty_per_day {
+    margin: 15px 0 0 0;
 }

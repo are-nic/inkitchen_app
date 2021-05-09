@@ -5,93 +5,54 @@
 .card-grid {
     box-sizing: border-box;
     margin: 20px auto;
-    max-width: 1000px;
-    padding: 0;
+    max-width: 1300px;
     text-align: center;
 }
 
-.card {
-    border-radius: 0;
-    margin: 0 10px 0 10px;
+#plan-menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-.card-radio {
-    font-size: inherit;
-    margin: 0;
-    position: absolute;
-    right: 16px;
-    top: 16px;
-}
-@supports (-webkit-appearance: none) or (-moz-appearance: none) {
-    .card-radio {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background: #fff;
-        border: 3px solid #BFE2FF;
-        border-radius: 50%;
-        cursor: pointer;
-        height: 28px;
-        width: 28px;
-        outline: none;
-        transition: background 0.2s ease-out, border-color 0.2s ease-out;
-    }
-    .card-radio::after {
-        border: 3px solid #fff;
-        border-top: 0;
-        border-left: 0;
-        content: '';
-        display: block;
-        height: 16px;
-        left: 26%;
-        position: absolute;
-        top: 50%;
-        transform: rotate(45deg) translate(-50%, -50%);
-        width: 8px;
-    }
-    .card-radio:checked {
-        background: rgb(223 80 3);
-        border-color: rgb(223 80 3);
-    }
 
-    .card:hover .card-radio {
-        border-color: #337AB7;
-    }
-    .card:hover .card-radio:checked {
-        border-color: rgb(223 80 3);
-    }
+.delivery_day_container {
+    margin: 0 10px;
+    max-width: 165px;
 }
-.plan-details {
-    cursor: pointer;
-    padding: 14px 16px;
-    height: 100%;
-    transition: border-color 0.2s ease-out, box-shadow 0.3s ease-out;
+
+.date_field_menu input,
+.time_field_menu input,
+.qty_meals_menu input{
+    text-align: center;
+    max-width: 145px;
+    font-size: 20px;
+    border: none;
+    transition: .3s ease-in;
 }
-.card:hover .plan-details {
-    border-color: #337AB7;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+
+.date_field_menu input {
+   background-color: #ffb938;
 }
-.card-radio:checked ~ .plan-details {
-    border-color: green;
+
+.time_field_menu input:hover {
+    box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+}
+
+.qty_meals_menu input{
+    padding: 0 40px 0 60px;
 }
 .plan-image {
     overflow: hidden;
     position: relative;
-    margin: 14px 0;
+    width: 145px;
 }
 .plan-image img {
     width: 100%;
     transition: transform 0.5s ease-out;
 }
-.card:hover .plan-details .plan-image img,
-.card-radio:checked + .plan-details .plan-image img {
-    transform: scale(1.2);
-}
-
-.plan-cost {
-    position: absolute;
-    bottom: 12px;
-    right: 20px;
-}
-
-.plan-menu-group {
-    display: flex;
+.plan_img-container {
+    margin: 15px 0;
+    padding: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 50%);
 }
