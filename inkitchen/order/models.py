@@ -47,8 +47,7 @@ class OrderRecipe(models.Model):
     recipe = models.ForeignKey(Recipe, related_name='recipe_items', on_delete=models.CASCADE, verbose_name='Рецепт')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     qty = models.PositiveIntegerField(verbose_name='Кол-во порций')
-    delivery_datetime = models.DateTimeField(verbose_name='Дата и время доставки',
-                                             default=datetime.today() + timedelta(days=1))
+    delivery_datetime = models.DateTimeField(verbose_name='Дата и время доставки', default=None)
 
     class Meta:
         ordering = ('recipe',)
