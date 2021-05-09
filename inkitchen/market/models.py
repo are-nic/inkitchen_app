@@ -99,6 +99,12 @@ class OrderItemMarket(models.Model):
     quantity = models.IntegerField(default=0, null=True, blank=True, verbose_name='Кол-во')
     date_added = models.DateTimeField(auto_now_add=True, verbose_name='Товар добавлен')
 
+    class Meta:
+        ordering = ('date_added',)
+        verbose_name = 'Товар заказа'
+        verbose_name_plural = 'Товары заказа'
+        db_table = 'Order_Item_Market'
+
     @property
     def get_total(self):
         """
