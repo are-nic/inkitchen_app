@@ -1,3 +1,4 @@
+// скрипт обработки метода оплаты, источник неизвестен
 $(function() {
     $("#payment-form").submit(function() {
         var form = this;
