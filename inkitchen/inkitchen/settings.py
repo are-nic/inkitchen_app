@@ -149,7 +149,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-CART_SESSION_ID = 'cart'    # ключ, используемый для хранения корзины в сессии пользователя.
+# CART_SESSION_ID = 'cart'    # ключ, используемый для хранения корзины в сессии пользователя.
 
 # для отправки сообщения для емайл с ссылкой в консоль при смене пароля юзера
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
