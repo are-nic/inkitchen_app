@@ -16,7 +16,16 @@ def index(request):
     планом питания.
     """
 
-    locale.setlocale(locale.LC_ALL, ('en_EN', 'UTF-8'))     # для русских названий в датах
+    locale.setlocale(locale.LC_ALL, ('en_EN', 'UTF-8'))     # для англ. названий дней недели и месяцев
+    week_rus = {
+        'monday': 'Понедельник',
+        'tuesday': 'Вторник',
+        'wednesday': 'Среда',
+        'thursday': 'Четверг',
+        'friday': 'Пятница',
+        'saturday': 'Суббота',
+        'sunday': 'Воскресенье',
+    }
 
     if request.method == 'POST':
         menu_formset = PlanMenuFormSet(request.POST or None)
@@ -28,15 +37,17 @@ def index(request):
                 week_day = data.get('delivery_date').strftime("%A").lower()
                 # используем день недели как ключ для добавления словаря с данными плана-меню
                 # т.к. данные формата datetime не сериализуются в json, превращаем их в строковый вид
-                delivery_date = data.get('delivery_date').strftime('%Y-%m-%d')
+                # отдельно добавляем параметр name_rus для отображения русских названий дней недели
+                delivery_date = data.get('delivery_date').strftime('%d.%m.%Y')
                 delivery_time = data.get('delivery_time').strftime('%H:%M')
                 qty_meals = data.get('qty_meals')
                 request.session['plan_menu'][week_day] = {'delivery_date': delivery_date,
                                                           'delivery_time': delivery_time,
-                                                          'qty_meals': qty_meals}
+                                                          'qty_meals': qty_meals,
+                                                          'name_rus': week_rus[week_day]}
 
             next_day = (date.today() + timedelta(days=1)).strftime("%A").lower()    # завтрашний день недели
-            return redirect('recipes/week/' + next_day)                             # перенаправление на завтрашний день
+            return redirect('recipes/week/' + next_day)         # перенаправление на завтрашний день на стр. рецептов
         else:
             print('error data')
 
