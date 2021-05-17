@@ -11,6 +11,9 @@ from .models import Recipe
 def delivery_day(request, index):
     """
     вывод плана меню на конкретный день на странице рецептов
+    На страницу рецептов функция отдает: weekday - словарь с данными по конкретному дню недели
+                                         plan_menu - словарь с данными по всем дням
+                                         recipes - все рецепты из БД
     """
     plan_menu = request.session['plan_menu']
     weekday_data = plan_menu[index]
@@ -21,9 +24,8 @@ def delivery_day(request, index):
         'recipes': recipes,
     }
 
-    if len(plan_menu) > 0:
-        for day in plan_menu:
-            print(day, plan_menu[day])
+    for day in plan_menu:
+        print(day, plan_menu[day])
 
     return render(request, "recipes.html", data)
 
