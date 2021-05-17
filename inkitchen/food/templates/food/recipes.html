@@ -1,14 +1,14 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Все рецепты{% endblock %}
+{% block title %}План-меню{% endblock %}
 
 {% block content %}
 <div id="recipe_page_container">
     <div id="days_order_block">
         {% for day, data in plan_menu.items %}
             <div>
-                <a href="{% url 'delivery_day' day %}" class="week_day-delivery">{{ day }}</a>
+                <a href="{% url 'delivery_day' day %}" class="week_day-delivery" id="{{ day }}">{{ data.name_rus }}</a>
                 <!--<p class="week_day-delivery"></p>-->
                 <!--<p>{{ data.delivery_date }}</p>-->
                 <p class="gty_per_day">0/{{ data.qty_meals }}</p>
@@ -42,12 +42,12 @@
                         <p>БЖУ</p>
                     </div>
                     <div class="add-recipe-btn-wrap">
-                        <!--<form method="post" action="{% url 'cart_add' recipe.id %}" class="form_recipe_add">-->
                         <form method="post" action="{% url 'add_to_cart' %}" class="form_recipe_add">
                             {% csrf_token %}
                             <button class="btn-add-recipe" type="submit"
                                     data-recipe="{{ recipe.id }}"
                                     data-name="{{ recipe.title }}"
+                                    data-date="{{ weekday.delivery_date }}"
                                     data-image="{{ recipe.image.url }}">+</button>
                         </form>
                     </div>
@@ -63,10 +63,12 @@
         <div id="cart_head">
             <h2 class="title-main-page">КОРЗИНА</h2>
             <div id="delivery_day">
-                <p>Доставка планируется</p>
+                <p class="delivery_date-cart">Доставка планируется:</p>
+                <p class="delivery_date-cart red">{{ weekday.name_rus }} / {{ weekday.delivery_date }}</p>
             </div>
         </div>
         <div id="cart_recipes_block">
+            <!--здесь перебор рецептов, которые поступают из данных контекстного процессора contexts.py-->
             {% for item in cart_items %}
             <div class="cart-item" id="recipe_id_{{ item.id }}">
                 <div class="aside">
@@ -80,26 +82,21 @@
                             {{ item.recipe.title }}
                         </a>
                         <!--Кнопка удаления рецепта-->
-                        <form action="{% url 'remove_from_cart' item.id %}">
-                            <button type="submit" class="btn btn-sm">x</button>
-                        </form>
+                        <button type="submit" class="btn-del_from_cart"
+                                data-recipe="{{ item.recipe.id }}"
+                                data-date="{{ weekday.delivery_date }}">x</button>
                     </div>
                         <!--Кнопки изменения кол-ва рецепта в корзине-->
                     <div class="meal_count_cart">
-                        <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus">-</button>
-                        <input type="number" min="0" max="99" value="{{ item.q_portion }}" readonly class="raz">
-                        <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus">+</button>
+                        <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus"
+                            data-recipe="{{ item.recipe.id }}"
+                            data-date="{{ weekday.delivery_date }}">-</button>
+                        <input type="number" min="0" max="99" value="{{ item.q_portion }}" class="q_portion" readonly>
+                        <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus"
+                            data-recipe="{{ item.recipe.id }}"
+                            data-date="{{ weekday.delivery_date }}">+</button>
                     </div>
                 </div>
-                <!--<form class="form-inline" method="post" action="{% url 'adjust_cart' item.id %}">
-                    {% csrf_token %}
-                    <div class="form-group" style="margin: 0;">
-                        <div class="input-group qty-recipe">
-                            <input placeholder="{{ item.q_portion }}" name="quantity" type="number" min="0" max="999" class="form-control">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-secondary btn-sm">Изменить</button>
-                </form>-->
 			</div>
             {% endfor %}
         </div>
