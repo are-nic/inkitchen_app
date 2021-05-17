@@ -30,8 +30,10 @@
                             <img src="{% if product.image %}{{ product.imageURL }}{% else %}{% static 'main/img/no_image.png' %}{% endif %}">
                         </a>
                     </div><br>
-                    <p>{{ product.name }}</p>
-                    {{ product.price }} Р
+                    <p class="name_product_market">{{ product.name }}</p>
+                    <button class="btn_add_product_market" type="submit" data-product="{{ product.id }}" data-action="add">
+                        {{ product.price }} Р +
+                    </button>
                 </div>
                 {% endfor %}
             </div>
@@ -48,4 +50,6 @@
     <div class="order-market">
 
     </div>
+
+    <script type="text/javascript" src="{% static 'main/js/market.js' %}"></script>
 {% endblock %}
