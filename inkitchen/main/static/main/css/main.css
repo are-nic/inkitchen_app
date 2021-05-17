@@ -17,6 +17,14 @@ h1, h2, h3, h4, h5, h6 {
 
 input {outline:none;}       /* убирает обводку полей ввода при нажатии на них */
 
+button:active, button:focus {
+  outline: none !important;
+}
+
+button::-moz-focus-inner {
+  border: 0 !important;
+}
+
 a:hover{text-decoration:none;}
 
 ul {list-style-type: none;}

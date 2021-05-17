@@ -145,13 +145,12 @@ caption p {
 }
 
 /*--------------------------------------корзина на странице рецептов-------------------------------------------------*/
-#cart_head {
+#cart_head h2{
     text-align: center;
-    margin: 30px 0;
 }
 
-#delivery_day {
-    margin-left: -200px;
+#cart_head {
+    margin: 30px 15px 0;
 }
 
 #cart_recipes_block {
@@ -165,7 +164,7 @@ caption p {
     box-shadow: 0 0 10px rgb(0 0 0 / 50%);
 }
 
-.raz {
+.q_portion {
     all: unset;
     -moz-appearance: textfield;
     width: 80px;
@@ -175,7 +174,7 @@ caption p {
     margin: 0 -20px;
 }
 
-.raz::-webkit-inner-spin-button {
+.q_portion::-webkit-inner-spin-button {
     display: none;
 }
 
@@ -193,7 +192,7 @@ caption p {
     border: none;
     background: white;
 }
-.plus, .raz {
+.plus, .q_portion {
     color: #FC453B;
 }
 .minus {
@@ -237,7 +236,20 @@ caption p {
     background: #c9c0bb;
 }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+.delivery_date-cart.red {
+    color: #FC453B;
+}
+.delivery_date-cart {
+    font-size: 16px;
+    margin: 0;
+}
+
+.btn-del_from_cart {
+    padding-bottom: 30px;
+    border: none;
+    background-color: white;
+    width: 20px;
+}
 /*---------------------------------------корзина на странице заказа--------------------------------------------------*/
 .order_container {
     height: 100%;
