@@ -1,4 +1,4 @@
-from decimal import Decimal
+'''from decimal import Decimal
 from django.conf import settings
 from food.models import Recipe
 
@@ -91,4 +91,4 @@ class Cart:
     def clear(self):
         """удаление корзины из сессии"""
         del self.session[settings.CART_SESSION_ID]
-        self.session.modified = True
+        self.session.modified = True'''
