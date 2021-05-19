@@ -4,21 +4,15 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 
 
-def cart_add(request, id):
+def cart_add(request, id):  # УБРАТЬ
     """
     Добавление блюда в корзину
     """
     cart = request.session.get('cart', {})
-    # получаем из сессии значение выбранного кол-во блюд (план питания)
-    # plan_menu = int(request.session.get('plan_menu'))
-    # if len(cart) < plan_menu:  # если количество рецептов в корзине меньше числа блюд по плану меню
-    # quantity = int(request.POST.get('quantity'))  # получаем кол-во блюд при добалвении блюда в корзину
     quantity = 1  # добавляем одну порцию блюда в корзину
     cart[id] = cart.get(id, quantity)
 
     request.session['cart'] = cart
-    # else:
-    # messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
 
     return redirect(reverse('recipes'))  # после добавления рецепта в корзину возврат к списку рецептов
 
@@ -46,7 +40,7 @@ def add_to_cart(request):
     cart[delivery_date][recipe_id] = cart.get(recipe_id, quantity)
 
     request.session['cart'] = cart                  # обновляем корзину с учетом изменений
-
+    # messages.error(request, 'Корзина полна, замените рецепт или выберите другой план питания')
     return HttpResponse("рецепт добавлен")
 
 
@@ -81,8 +75,8 @@ def remove_from_cart(request):
 
     cart[delivery_date].pop(recipe_id)
 
-    if len(cart[delivery_date]) == 0:       # если кол-во рецептов в конкретной дате корзины = 0
-        cart.pop(delivery_date)             # удаляем эту дату из корзины сессии
+    # if len(cart[delivery_date]) == 0:       # если кол-во рецептов в конкретной дате корзины = 0
+    #    cart.pop(delivery_date)             # удаляем эту дату из корзины сессии
 
     request.session['cart'] = cart
     return HttpResponse("рецепт удален")
