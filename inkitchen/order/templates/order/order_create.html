@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
+{% block title %}Оформление заказа{% endblock %}
+
 {% block content %}
 	<div class="order_container">
 		<!--Шапка-->
@@ -11,28 +13,29 @@
 		<!--Блок с Рецептами заказа-->
 		<div id="order_recipes">
 			<p>БЕСПЛАТНАЯ ДОСТАВКА при покупке от 1000 руб.</p>
-			<p>Блюд в корзине: {{ request.session.cart|length }}</p>
+			<p>Блюд в корзине: {{ recipe_count }}</p>
 			<hr>
-			{% for item in cart_items %}
-			<div class="cart-item">
-				<div class="aside">
-					<a href="{% url 'recipe_details' item.recipe.slug %}">
-						<img src="{{ item.recipe.imageURL }}" class="img-sm">
-					</a>
-				</div>
-				<div class="info">
-					<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
-						{{ item.recipe.title }}
-					</a>
-					<p>{{ item.recipe.price }} р.</p>
-					<p>Кол-во порций: {{ item.q_portion }}</p>
-				</div>
-				<!--Кнопка удаления рецепта-->
-				<!--<form action="{% url 'remove_from_cart' item.id %}">
-					<button type="submit" class="btn btn-sm">x</button>
-				</form>-->
-			</div>
-			<hr>
+			{% for date, items in cart_items.items %}
+				{% if items|length > 0 %}
+					<p class="over-info"><strong>{{ date }}</strong></p>
+					{% for item in items %}
+					<div class="cart-item">
+						<div class="aside">
+							<a href="{% url 'recipe_details' item.recipe.slug %}">
+								<img src="{{ item.recipe.imageURL }}" class="img-sm">
+							</a>
+						</div>
+						<div class="info">
+							<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+								{{ item.recipe.title }}
+							</a>
+							<p>{{ item.recipe.price }} р.</p>
+							<p>Кол-во порций: {{ item.q_portion }}</p>
+						</div>
+					</div>
+					<hr>
+					{% endfor %}
+				{% endif %}
 			{% endfor %}
 		</div>
 
@@ -60,7 +63,7 @@
 				<p><strong>Оплата</strong></p>
 				{{ form.pay_method }}<br><br>
 
-				<p><strong id="over-info">Доп. информация</strong></p>
+				<p><strong class="over-info">Доп. информация</strong></p>
 				<div id="order_at_door">
 					{{ form.at_door }}
 					<div>
@@ -90,7 +93,7 @@
 							<dd class="text-right b ml-3"><u>00.00 руб.</u></dd>
 						</dl>
 					</div>
-					<a href="{% url 'order_create' %}" id="button-create-order" data-abc="true"> Оплатить </a>
+					<a href="{% url 'order_created' %}" id="button-create-order" data-abc="true"> Оплатить </a>
 				</div>
 			</form>
 		</div>
