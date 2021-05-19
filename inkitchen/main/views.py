@@ -27,6 +27,8 @@ def index(request):
         'sunday': 'Воскресенье',
     }
 
+    cart = request.session['cart'] = {}     # создаем корзину в сессии
+
     if request.method == 'POST':
         menu_formset = PlanMenuFormSet(request.POST or None)
         if menu_formset.is_valid():
@@ -46,10 +48,11 @@ def index(request):
                                                           'qty_meals': qty_meals,
                                                           'name_rus': week_rus[week_day]}
 
+                cart[delivery_date] = {}         # добавляем все даты плана-меню в корзину сессии в виде пустых словарей
             next_day = (date.today() + timedelta(days=1)).strftime("%A").lower()    # завтрашний день недели
-            return redirect('recipes/week/' + next_day)         # перенаправление на завтрашний день на стр. рецептов
+            return redirect('recipes/week/' + next_day)            # перенаправление на завтрашний день на стр. рецептов
         else:
-            print('error data')
+            print('error plan_menu data')
 
     # инициализируем список данных по умолчанию для 7 ближайших дней заказа в формсет выбора плана меню
     menu_formset = PlanMenuFormSet(initial=[
