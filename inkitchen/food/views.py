@@ -15,30 +15,29 @@ def delivery_day(request, index):
                                          plan_menu - словарь с данными по всем дням
                                          recipes - все рецепты из БД
     """
-    plan_menu = request.session['plan_menu']
-    weekday_data = plan_menu[index]
+    plan_menu = request.session['plan_menu']        # получаем план-меню из ajax
+    weekday_data = plan_menu[index]     # выделяем данные по конкретному дню, ан странице которого находится покупатель
     recipes = Recipe.objects.all()
+    cart = request.session.get('cart', {})  # получаем корзину из сессии
+    qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
     data = {
+        'qty_meals_added': qty_meals_added,
         'weekday': weekday_data,
         'plan_menu': plan_menu,
         'recipes': recipes,
     }
-
     for day in plan_menu:
         print(day, plan_menu[day])
 
     return render(request, "recipes.html", data)
 
 
-def all_recipes(request):
+def all_recipes(request):   # УБРАТЬ
     """
     вывод всех рецептов на странице Рецептов
     Выборка из сессии плана-меню (даты, кол-ва блюд на конкретный день) и отправка в html-шаблон
     """
     plan_menu = request.session['plan_menu']
-    if len(plan_menu) > 0:
-        for day in plan_menu:
-            print(day, plan_menu[day])
     recipes = Recipe.objects.all()                                  # получаем экземпляры всех рецептов
     data = {
         "recipes": recipes,
