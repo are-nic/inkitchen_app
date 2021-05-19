@@ -11,15 +11,25 @@
                 <a href="{% url 'delivery_day' day %}" class="week_day-delivery" id="{{ day }}">{{ data.name_rus }}</a>
                 <!--<p class="week_day-delivery"></p>-->
                 <!--<p>{{ data.delivery_date }}</p>-->
-                <p class="gty_per_day">0/{{ data.qty_meals }}</p>
+                <!-- перебираем словари дат заказа в корзине сессии. Если дата совпадает с текущей датой страницы,
+                     то записываем кол-во добавленных в эту дату рецептов. Иначе пишем "ноль" -->
+                <p class="gty_per_day">
+                    {%for date, menu in request.session.cart.items %}
+                        {% if date == data.delivery_date %}
+                            <span id="meals_for_{{ day }}">{{ menu|length }}</span>/{{ data.qty_meals }}
+                        {% elif data.delivery_date not in request.session.cart.keys %}
+                            0/{{ data.qty_meals }}
+                        {% endif %}
+                    {% endfor %}
+                </p>
             </div>
         {% endfor %}
     </div>
-
+    <!-- блок фильтров рецептов -->
     <div id="filter_recipes_block">
 
     </div>
-
+    <!-- блок рецептов -->
     <div id="recipes-list">
         {% for recipe in recipes %}
         <div class="recipe-wrapper">
@@ -69,7 +79,9 @@
         </div>
         <div id="cart_recipes_block">
             <!--здесь перебор рецептов, которые поступают из данных контекстного процессора contexts.py-->
-            {% for item in cart_items %}
+            {% for date, items in cart_items.items %}
+            {% if date == weekday.delivery_date and items|length > 0 %}
+            {% for item in items %}
             <div class="cart-item" id="recipe_id_{{ item.id }}">
                 <div class="aside">
                     <a href="{% url 'recipe_details' item.recipe.slug %}">
@@ -91,7 +103,7 @@
                         <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus"
                             data-recipe="{{ item.recipe.id }}"
                             data-date="{{ weekday.delivery_date }}">-</button>
-                        <input type="number" min="0" max="99" value="{{ item.q_portion }}" class="q_portion" readonly>
+                        <input type="number" min="1" max="99" value="{{ item.q_portion }}" class="q_portion" readonly>
                         <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus"
                             data-recipe="{{ item.recipe.id }}"
                             data-date="{{ weekday.delivery_date }}">+</button>
@@ -99,18 +111,17 @@
                 </div>
 			</div>
             {% endfor %}
+            {% endif %}
+            {% endfor %}
         </div>
         <div id="next_btn_wrap">
-            <h4>0/{{ weekday.qty_meals }} Блюд</h4>
-            {% if request.session.cart|length != request.session.plan_menu %}
+            <h4><span>{{ qty_meals_added }}</span>/{{ weekday.qty_meals }} Блюд</h4>
             <a href="{% url 'order_create' %}" role="button" aria-disabled="true" id="disable-btn-next-order">
                 Далее
             </a>
-            {% else %}
             <a href="{% url 'order_create' %}" role="button" aria-pressed="true" id="active-btn-next-order">
                 Далее
             </a>
-            {% endif %}
         </div>
     </div>
 </div>
