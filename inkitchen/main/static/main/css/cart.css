@@ -264,17 +264,18 @@ caption p {
 #order_header {
     grid-area: header;
     text-align: center;
-    border: 1px dashed;
+    /*border: 1px dashed;*/
 }
 
 #order_recipes {
     grid-area: recipes;
     padding: 20px 20px 20px 0;
+    height: 850px;
+    overflow-y: scroll;
 }
 
 #order_data {
     grid-area: data;
-    border: 1px dashed;
     padding: 20px;
 }
 
@@ -353,7 +354,7 @@ a {
     background: #ff5f56;
 }
 
-.text-right, #over-info {
+.text-right, .over-info {
     color: #e5433a;
 }
 .sm-text {

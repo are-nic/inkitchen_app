@@ -90,14 +90,14 @@ ul li {
 /*разметка главной страницы*/
 #main-page-content {
     display: grid;
-    grid-template-columns: 100%;                        /*ширина колонки*/
-    grid-template-rows: 700px 300px 550px 500px 500px;  /*высота строк*/
+    grid-template-columns: 100%;                  /*ширина колонки*/
+    grid-template-rows: 700px 300px 500px 500px;  /*высота строк*/ /* добавить 550px для слайдера рецептов */
 }
 
 /*изменяем размеры разметки страницы при уменьшении экрана*/
 @media screen and (max-width: 1099px){
     #main-page-content {
-        grid-template-rows: 400px 300px 550px 500px 400px;  /*высота строк*/
+        grid-template-rows: 400px 300px 500px 400px;  /*высота строк*/
     }
 }
 
