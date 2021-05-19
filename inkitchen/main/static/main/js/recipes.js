@@ -1,5 +1,15 @@
-// обработка добавления рецептов в корзину и изменения их кол-ва внутри корзины
-$(document).ready(function(){                           // общая обертка для выполнения скрипта после загрузки всего документа html
+// обработка добавления, удаления рецептов и изменения их кол-ва в корзине
+
+// общая обертка для выполнения скрипта после загрузки всего документа html
+$(document).ready(function(){
+    // функция определяет по url на какой странице дня недели заказа находится пользователь
+    function getWeekday(){
+        var url = window.location.href;
+        parts = url.split("/");
+        day = parts[parts.length-1];
+        return day;
+    };
+
     $(".btn-add-recipe").click(function(event){         // обработка события по клику на кнопку "+" - добавления блюда в корзину
         event.preventDefault();                         // для того, чтобы страница не перезагружалась при нажатии на кнопку "+"
         var data = {};                                  // данные для отправки на сервер
@@ -20,7 +30,7 @@ $(document).ready(function(){                           // общая оберт
         if(!$('#recipe_id_' + id).length) {             // если на странице нет элемента с таким id (блюда нет в корзине)
             meal_qty = 1;                               // кол-во порций = 1
         }else{
-           meal_qty = $('#recipe_id_' + id).find('.raz').val(); // кол-во порций = значению уже добавленного кол-ва в корзину
+           meal_qty = $('#recipe_id_' + id).find('.q_portion').val(); // кол-во порций = значению уже добавленного кол-ва в корзину
            meal_qty = Number.parseInt(meal_qty);        // преобразовываем полученное значение в число
         };
 
@@ -52,10 +62,19 @@ $(document).ready(function(){                           // общая оберт
                     meal_qty++;
                     $('#recipe_id_' + id).find('.q_portion').attr('value', meal_qty);
                 }
+
+                // при добавлении блюда в корзину, находим в списке дней и в корзине текущее кол-во добавленных блюд
+                // превращаем строку в число и увеличиваем их на 1, подставляя новое значение вместо старого
+                day = getWeekday()
+                // находим текущее кол-во добавленных блюд в дне заказа в блоке недели и превращаем в число
+                var cur_qty_meals = Number.parseInt($('#meals_for_' + day).text());
+                $('#meals_for_' + day).text(cur_qty_meals + 1); // прибавляем +1 к кол-ву добавленных блюд
+                // обновленное кол-во подставляем вместо текущего кол-ва добавленных блюд в корзине
+                $("#next_btn_wrap span").text($('#meals_for_' + day).text());
             },
 
             error: function(){                           // при ошибке с сервера
-                alert('Error recipe add!');
+                alert('Error recipe add!');              // вылетает алерт-окно об ошибке в этом разделе
             },
         })
     });
@@ -117,6 +136,7 @@ $(document).ready(function(){                           // общая оберт
             },
         })
     });
+
     // удаление рецепта из корзины при нажатии на "х"
     $(".btn-del_from_cart").click(function(event){
         event.preventDefault();
@@ -134,10 +154,21 @@ $(document).ready(function(){                           // общая оберт
             success: function(response){
                 console.log('рецепт удален')
                 $("#recipe_id_" + id).remove();         // удалить рецепт из корзины (DOM-дерева)
+
+                day = getWeekday()
+                // уменьшение кол-ва добавленных блюд в блоке дней недели и корзине
+                var cur_qty_meals = Number.parseInt($('#meals_for_' + day).text());
+                $('#meals_for_' + day).text(cur_qty_meals - 1);
+                // обновленное кол-во подставляем вместо текущего кол-ва добавленных блюд в корзине
+                $("#next_btn_wrap span").text($('#meals_for_' + day).text());
             },
             error: function(){
                 alert('Error remove recipe!');
             },
         })
     });
+
+    // задаем стили выделения кнопки дня недели в соответсвии с открытой страницей дня недели
+    day = getWeekday()
+    button_day = $("#" + day).css({'background': '#e5433a', 'color': 'white'});
 })
