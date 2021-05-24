@@ -209,13 +209,13 @@ caption p {
     padding-top: 15px;
 }
 
-#active-btn-next-order:hover, .btn-add-recipe:hover {
+.active-btn-next-order:hover, .btn-add-recipe:hover {
     background-color: #ff5f56;
     text-decoration: none;
     color: white;
 }
 
-#active-btn-next-order, #disable-btn-next-order {
+.active-btn-next-order, .disable-btn-next-order {
     transition: .1s ease-in;
     margin: auto;
     width: 250px;
@@ -228,12 +228,14 @@ caption p {
     border-radius: 50px;
 }
 
-#active-btn-next-order {
+.active-btn-next-order {
     background: #e5433a;
 }
 
-#disable-btn-next-order {
+.disable-btn-next-order {
     background: #c9c0bb;
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
 }
 
 .delivery_date-cart.red {
@@ -249,6 +251,35 @@ caption p {
     border: none;
     background-color: white;
     width: 20px;
+}
+
+#cart_lower {
+    height: 100px;
+    min-width: 100%;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+    position: relative;
+}
+.cartLinkModal {
+    font-size: 20px;
+    color: black;
+    width: 100px;
+    border: none;
+    border-top: 1px solid #dee2e6;
+    background-color: white;
+    border-radius: 50px;
+    position: absolute;
+    bottom: 85px;
+    left: 50%;
+    margin-left: -50px;
+
+}
+.meals_added {
+    color: #FC453B;
+}
+.cart_messages{
+    margin-top: 10px;
+
 }
 /*---------------------------------------корзина на странице заказа--------------------------------------------------*/
 .order_container {

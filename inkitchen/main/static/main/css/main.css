@@ -18,11 +18,11 @@ h1, h2, h3, h4, h5, h6 {
 input {outline:none;}       /* убирает обводку полей ввода при нажатии на них */
 
 button:active, button:focus {
-  outline: none !important;
+    outline: none !important;
 }
 
 button::-moz-focus-inner {
-  border: 0 !important;
+    border: 0 !important;
 }
 
 a:hover{text-decoration:none;}
@@ -95,12 +95,29 @@ ul li {
 }
 
 /*изменяем размеры разметки страницы при уменьшении экрана*/
-@media screen and (max-width: 1099px){
+@media screen and (max-width: 1300px){
     #main-page-content {
-        grid-template-rows: 400px 300px 500px 400px;  /*высота строк*/
+        grid-template-rows: 400px 300px 500px 800px;
     }
 }
 
+@media screen and (max-width: 767px){
+    #main-page-content {
+        grid-template-rows: 400px 450px 500px 1100px;
+    }
+}
+
+@media screen and (max-width: 554px){
+    #main-page-content {
+        grid-template-rows: 400px 450px 500px 1400px;
+    }
+}
+
+@media screen and (max-width: 468px){
+    #main-page-content {
+        grid-template-rows: 400px 850px 500px 1400px;
+    }
+}
 /*------------------------------Заголовки главной страницы------------------------------*/
 .title-main-page {
     font-size: 2rem;
@@ -110,25 +127,26 @@ ul li {
 
 /*------------------------------выпадающее меню МОЙ ПРОФИЛЬ------------------------------*/
 .two .user-submenu {
-  visibility: hidden;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin-left: 130px;
+    visibility: hidden;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 .two ul li:hover .user-submenu {
-  visibility: visible;
+    visibility: visible;
 }
 .user-submenu {
-  position: absolute;
-  z-index: 10;
-  -webkit-transition: 0.5s ease-in-out;
-  -moz-transition: 0.5s ease-in-out;
-  -o-transition: 0.5s ease-in-out;
-  transition: 0.5s ease-in-out;
-  display: grid;
+    position: absolute;
+    z-index: 10;
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    display: grid;
 }
 .user-submenu li a {
-  border-bottom: 1px solid rgba(255,255,255,.3);
-  color: black;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    color: black;
 }
 .sub {
     transform: none;
@@ -187,29 +205,29 @@ div.login-case h1 {
     height: 350px;
 }
 .close-login-popup {
-  position: absolute;
-  right: 30px;
-  top: 13px;
-  width: 10px;
-  height: 20px;
-  opacity: 0.3;
+    position: absolute;
+    right: 30px;
+    top: 13px;
+    width: 10px;
+    height: 20px;
+    opacity: 0.3;
 }
 .close-login-popup:hover {
-  opacity: 1;
+    opacity: 1;
 }
 .close-login-popup:before, .close-login-popup:after {
-  position: absolute;
-  left: 15px;
-  content: ' ';
-  height: 20px;
-  width: 2px;
-  background-color: #333;
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 20px;
+    width: 2px;
+    background-color: #333;
 }
 .close-login-popup:before {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 .close-login-popup:after {
-  transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 
 /* -------------------поле ввода емайл для продолжения регистрации на главной странице ---------------------------*/
@@ -271,7 +289,7 @@ footer {
     min-height: 120px;
     display: table;
     text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
     height: 40px;
     clear: both;
     padding-top: 20px;
@@ -383,10 +401,16 @@ footer .cv-pdf i:hover {
     align-items: center;
     margin: 1% 3%;
 }
+@media screen and (max-width: 767px){
+    .how-to-work-icons-block {
+        flex-wrap: wrap;
+    },
+
+}
 
 .how-to-work-icon {
-    width: 230px;
-    height: 130px;
+    width: 220px;
+    height: 200px;
     color: white;
     text-align: center;
     margin: auto;
@@ -421,25 +445,25 @@ footer .cv-pdf i:hover {
 /*-----------------------------------------------Блок "часто задаваемые вопросы"------------------------------*/
 
 .accordion {
-  background-color: #fff;
-  color: #444;
-  cursor: pointer;
-  padding: 15px;
-  width: 100%;
-  text-align: left;
-  border-top: 3px;
-  border-left: 3px;
-  border-right: 3px;
-  outline: none;
-  transition: 0.4s;
+    background-color: #fff;
+    color: #444;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    text-align: left;
+    border-top: 3px;
+    border-left: 3px;
+    border-right: 3px;
+    outline: none;
+    transition: 0.4s;
 }
 
 .panel-questions {
-  padding: 0 18px;
-  background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }
 .often-questions {
     width: 45%;
@@ -452,15 +476,15 @@ footer .cv-pdf i:hover {
     }
 }
 .accordion:after {
-  content: '\02C5'; /* Unicode character for "down" sign (^) */
-  font-size: 13px;
-  color: #777;
-  float: right;
-  margin-left: 5px;
+    content: '\02C5'; /* Unicode character for "down" sign (^) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
 }
 
 .active:after {
-  content: "\02C4"; /* Unicode character for "up" sign (^) */
+    content: "\02C4"; /* Unicode character for "up" sign (^) */
 }
 
 /*страница О нас*/

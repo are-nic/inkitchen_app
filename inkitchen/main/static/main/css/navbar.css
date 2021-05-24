@@ -53,14 +53,14 @@
     display: none;
 }
 /*Бургер меню скрыто до размера экрана в 767рх*/
-@media( max-width: 767px){
-    .menuToggle{
+@media (max-width: 767px){
+    .menuToggle {
         display: block;
     }
     .navbar-logo {
         display: none;
     }
-    .navbar-menu{
+    .navbar-menu {
         display: none;
         position: absolute;
         background: #fff;
@@ -69,8 +69,9 @@
         margin-top: 19px;
         padding-left: 10px;
     }
-    .navbar-menu li{
+    .navbar-menu li {
         display: block;
+        margin-top: 10px;
     }
 }
 
@@ -78,6 +79,7 @@
     width: 25px;
     height: 25px;
     cursor: pointer;
+    margin: 10px;
 }
 
 .hamburger {

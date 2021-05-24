@@ -3,27 +3,84 @@
     height: 100%;
     display: grid;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 100px 60px 82%;
+    grid-template-rows: 100px 60px 860px;
     grid-template-areas: "days days"
                          "filter filter"
                          "recipes cart";
     margin: 0 70px;
 }
+@media screen and (max-width: 1024px){
+    .meal_count_cart {
+        padding-left: 50%;
+    }
+    #recipe_page_container {
+        grid-template-rows: 100px 60px 600px;
+    }
+    #cart_recipes_block {
+        height: 350px;
+    }
+    .active-btn-next-order, .disable-btn-next-order {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .meal_count_cart {
+        padding-left: 40%;
+    }
+    #recipe_page_container {
+        grid-template-columns: 60% 40%;
+        grid-template-rows: 100px 60px 600px;
+        margin: 0;
+    }
+    #cart_recipes_block {
+        height: 350px;
+        text-align: justify;
+    }
+    .active-btn-next-order, .disable-btn-next-order {
+        width: 150px;
+    }
+}
+
+@media screen and (max-width: 767px){
+    #recipe_page_container {
+        grid-template-columns: 100%;
+        grid-template-rows: 100px 60px 400px;
+        grid-template-areas: "days"
+                             "filter"
+                             "recipes";
+    }
+    .active-btn-next-order, .disable-btn-next-order {
+        width: 90%;
+        margin-top: 25px;
+    }
+    #cart_recipes_page_wrap {
+        background-color: white;
+    }
+    .meal_count_cart {
+        padding-left: 75%;
+    }
+}
 
 #days_order_block {
     grid-area: days;
     text-align: center;
-    border: 1px dashed;
+    /*border: 1px dashed;*/
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 #days_order_block div {
     margin: 30px 20px 0 20px;
 }
-
+@media screen and (max-width: 500px){
+    #days_order_block div {
+        margin: 30px 10px;
+    }
+}
 #filter_recipes_block {
     grid-area: filter;
-    border: 1px dashed;
+    /*border: 1px dashed;*/
 }
 
 #recipes-list {
@@ -33,6 +90,7 @@
     justify-content: center;
     flex-wrap: wrap;
     align-content: flex-start;
+    overflow-y: scroll;
 }
 /*-----------------------------------------------------------------------------------------------------------------*/
 
@@ -44,6 +102,19 @@
 	margin: 0 15px 30px 15px;
 	width: 250px;
 	box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+}
+
+@media screen and (max-width: 768px){
+    .recipe-wrapper {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 460px){
+    .recipe-wrapper {
+        width: 90%;
+        display: flex;
+    }
 }
 
 div.recipe {
@@ -226,4 +297,44 @@ form.form-create-recipe {
 
 .gty_per_day {
     margin: 15px 0 0 0;
+}
+
+/*------------------------------------- всплывающее окно корзины-------------------------------------*/
+
+#cartModal {
+  width: 100%;
+  height: 60%;
+  margin: 0 auto;
+  padding: 18px 9px;
+  border-radius: 4px;
+  background: #fafafa;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: none;
+  opacity: 0;
+  z-index: 38;
+  text-align: center;
+}
+#cartModal #cartModal__close {
+  position: absolute;
+  top: 11px;
+  left: 49%;
+  cursor: pointer;
+  display: block;
+}
+#cartModal__close img {
+    height: 14px;
+    width: 21px;
+}
+#cartOverlay {
+  z-index: 37;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  cursor :pointer;
+  display :none;
 }
