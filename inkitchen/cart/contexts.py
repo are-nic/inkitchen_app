@@ -26,7 +26,7 @@ def cart_contents(request):
                 'recipe': recipe,
                 'q_portion': q_portion,
             })
-    print('-------------------------------------------------------------------------------')
+    print('----------------------------------contexts.py---------------------------------------------')
     for data in cart_items:
         print(data, cart_items[data])
     return {'cart_items': cart_items, 'total': total, 'recipe_count': recipe_count}
