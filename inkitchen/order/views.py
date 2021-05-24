@@ -39,10 +39,6 @@ def order_create(request):
     return render(request, 'order/order_create.html', data)
 
 
-def order_created(request):
-    return render(request, 'order/order_created.html')
-
-
 def get_current_location(request):
     """
     получить текущее местоположение пользователя при заказе
