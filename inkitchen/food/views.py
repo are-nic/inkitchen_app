@@ -20,12 +20,20 @@ def delivery_day(request, index):
     recipes = Recipe.objects.all()
     cart = request.session.get('cart', {})  # получаем корзину из сессии
     qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
+
+    need_meals = 0
+    for meal in plan_menu.values():
+        need_meals += meal.get('qty_meals')
+    print('нужно добавить блюд в коризну:', need_meals)
+
     data = {
         'qty_meals_added': qty_meals_added,
         'weekday': weekday_data,
         'plan_menu': plan_menu,
         'recipes': recipes,
+        'need_meals': need_meals,
     }
+    print('----------------------------------------plan-menu-----------------------------------------')
     for day in plan_menu:
         print(day, plan_menu[day])
 
