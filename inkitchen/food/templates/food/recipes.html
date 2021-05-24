@@ -8,15 +8,13 @@
     <div id="days_order_block">
         {% for day, data in plan_menu.items %}
             <div>
-                <a href="{% url 'delivery_day' day %}" class="week_day-delivery" id="{{ day }}">{{ data.name_rus }}</a>
-                <!--<p class="week_day-delivery"></p>-->
-                <!--<p>{{ data.delivery_date }}</p>-->
+                <a href="{% url 'delivery_day' day %}" class="week_day-delivery" id="{{ day }}">{{ data.name_rus.1 }}</a>
                 <!-- перебираем словари дат заказа в корзине сессии. Если дата совпадает с текущей датой страницы,
                      то записываем кол-во добавленных в эту дату рецептов. Иначе пишем "ноль" -->
                 <p class="gty_per_day">
                     {%for date, menu in request.session.cart.items %}
                         {% if date == data.delivery_date %}
-                            <span id="meals_for_{{ day }}">{{ menu|length }}</span>/{{ data.qty_meals }}
+                            <span id="meals_for_{{ day }}">{{ menu|length }}</span>/<span id="meals_need_for_{{ day }}">{{ data.qty_meals }}</span>
                         {% elif data.delivery_date not in request.session.cart.keys %}
                             0/{{ data.qty_meals }}
                         {% endif %}
@@ -74,7 +72,7 @@
             <h2 class="title-main-page">КОРЗИНА</h2>
             <div id="delivery_day">
                 <p class="delivery_date-cart">Доставка планируется:</p>
-                <p class="delivery_date-cart red">{{ weekday.name_rus }} / {{ weekday.delivery_date }}</p>
+                <p class="delivery_date-cart red">{{ weekday.name_rus.0 }} / {{ weekday.delivery_date }}</p>
             </div>
         </div>
         <div id="cart_recipes_block">
@@ -115,15 +113,30 @@
             {% endfor %}
         </div>
         <div id="next_btn_wrap">
-            <h4><span>{{ qty_meals_added }}</span>/{{ weekday.qty_meals }} Блюд</h4>
-            <a href="{% url 'order_create' %}" role="button" aria-disabled="true" id="disable-btn-next-order">
-                Далее
-            </a>
-            <a href="{% url 'order_create' %}" role="button" aria-pressed="true" id="active-btn-next-order">
-                Далее
-            </a>
+            <h5><span class="meals_added">{{ qty_meals_added }}</span>/{{ weekday.qty_meals }} Блюд</h5>
+            <a href="{% url 'order_create' %}" role="button" aria-disabled="true" class="disable-btn-next-order">Далее</a>
+            <p class="cart_messages">Добавьте блюда согласно плану-меню</p>
         </div>
+        <input type="hidden" name="recipe_count" value="{{ need_meals }}" id="hidden_recipe_count">
     </div>
 </div>
+<!----------------------------------------- модальное окно корзины  ----------------------------------------------->
+<div id="cart_lower" hidden>
+    <button class="cartLinkModal"><span class="meals_added">{{ qty_meals_added }}</span>/{{ weekday.qty_meals }}</button>
+    <div id="btn-cartModal">
+        <a href="{% url 'order_create' %}" role="button" aria-disabled="true" class="disable-btn-next-order">Далее</a>
+    </div>
+    <p class="cart_messages">Добавьте блюда согласно плану-меню</p>
+</div>
+
+<div id="cartModal">
+    <div id="cartModal__close" class="close">
+        <img src="{% static 'main/img/plan_menu/down_arrow.png' %}" alt="down_arr">
+    </div>
+</div>
+
+<div id="cartOverlay"></div>
+
 <script type="text/javascript" src="{% static 'main/js/recipes.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/recipes_767px.js' %}"></script>
 {% endblock content %}
