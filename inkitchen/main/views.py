@@ -18,13 +18,13 @@ def index(request):
 
     locale.setlocale(locale.LC_ALL, ('en_EN', 'UTF-8'))     # для англ. названий дней недели и месяцев
     week_rus = {
-        'monday': 'Понедельник',
-        'tuesday': 'Вторник',
-        'wednesday': 'Среда',
-        'thursday': 'Четверг',
-        'friday': 'Пятница',
-        'saturday': 'Суббота',
-        'sunday': 'Воскресенье',
+        'monday': ['Понедельник', 'Пн'],
+        'tuesday': ['Вторник', 'Вт'],
+        'wednesday': ['Среда', 'Ср'],
+        'thursday': ['Четверг', 'Чт'],
+        'friday': ['Пятница', 'Пт'],
+        'saturday': ['Суббота', 'Сб'],
+        'sunday': ['Воскресенье', 'Вс']
     }
 
     cart = request.session['cart'] = {}     # создаем корзину в сессии
