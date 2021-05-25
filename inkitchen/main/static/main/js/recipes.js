@@ -1,13 +1,40 @@
-// обработка добавления, удаления рецептов и изменения их кол-ва в корзине
+// обработка добавления, удаления и изменения кол-ва рецептов в корзине
 
-// общая обертка для выполнения скрипта после загрузки всего документа html
-$(document).ready(function(){
-    // функция определяет по url на какой странице дня недели заказа находится пользователь
+$(document).ready(function(){   // после загрузки DOM-дерева (всего документа html)
+
     function getWeekday(){
+        // функция определяет по url на какой странице дня недели заказа находится пользователь
         var url = window.location.href;
         parts = url.split("/");
         day = parts[parts.length-1];
         return day;
+    };
+
+    function btnContinue(){
+        // определяем соответствует ли плану-меню кол-во блюд, добавленных в корзину.
+        // меняет цвет кол-ва добавленных блюд, сообщение корзины и доступность кнопки "Далее"
+        var week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        var counter = 0;
+        var all_need_meals = $('#hidden_recipe_count').val();
+        week.forEach(function(weekday) {
+            var current_meals = Number.parseInt($('#meals_for_' + weekday).text());     // добавленные блюда
+            var need_meals = Number.parseInt($('#meals_need_for_' + weekday).text());   // кол-во блюд по плану
+            if(current_meals == need_meals && all_need_meals != 0){                     // если они равны и меню не "нулевое"
+                counter++;                                                              // увеличиваем счетчик дней на +1
+            };
+        });
+        if(counter == 7){                                                               // если условие выполнилось для всех 7 дней заказа
+            $('.disable-btn-next-order').attr("class", "active-btn-next-order"),        // активируем кнопку "Далее"
+            $('.meals_added').css('color', 'blue'),
+            $('.cart_messages').text('Все блюда добавлены!')
+        }else{
+            if($('.active-btn-next-order').length){                                     // если кнопка активна при неполном заказе
+                $('.active-btn-next-order').attr("class", "disable-btn-next-order"),    // сделать ее неактивной
+                $('.meals_added').css('color', '#FC453B'),                              // поменять цвет кол-ва добавленых блюд
+                $('.cart_messages').text('Добавьте блюда в корзину')                    // поменять сообщение корзины
+            }
+        };
+        counter = 0;                                                                    // обнуляем счетчик
     };
 
     $(".btn-add-recipe").click(function(event){         // обработка события по клику на кнопку "+" - добавления блюда в корзину
@@ -40,8 +67,8 @@ $(document).ready(function(){
             url: url,                                   // роут, по которому мы направим асинхронный запрос с данными на сервер
             data: data,                                 // данные для отправки на сервер
             success: function(response){                // при удачном ответе с сервера
-                if(!$('#recipe_id_' + id).length) {     // если на странице нет элемента с таким id (блюда нет в корзине)
-                    $("#cart_recipes_block").append(    // добавляем блюдо в корзину в виде html-кода
+                if(!$('#recipe_id_' + id).length) {     // если в корзине нет блюда с таким id
+                    $("#cart_recipes_block").append(    // добавляем блюдо в корзину
                         '<div class="cart-item" id="recipe_id_' + id +'">' +
                             '<div class="aside">' +
                                 '<img src="' + meal_image + '"' + 'class="img-sm">' +
@@ -49,38 +76,39 @@ $(document).ready(function(){
                             '<div class="info">' +
                                 '<div class="info-title">' +
                                     '<a href="" class="title text-dark" data-abc="true">'+ meal_name + '</a>'+
-                                    '<button type="submit" class="btn-del_from_cart">x</button>'+
+                                    '<button type="submit" class="btn-del_from_cart" data-recipe="' + id + '" data-date="' + delivery_date + '">x</button>'+
                                 '</div>'+
                                 '<div class="meal_count_cart">'+
-                                    '<button type="button" onclick="this.nextElementSibling.stepDown()" class="minus">-</button>'+
+                                    '<button type="button" onclick="this.nextElementSibling.stepDown()" class="minus" data-recipe="' + id + '" data-date="' + delivery_date + '">-</button>'+
                                     '<input type="number" min="0" max="100" value="'+ meal_qty +'" readonly class="q_portion">'+
-                                    '<button type="button" onclick="this.previousElementSibling.stepUp()" class="plus">+</button>'+
+                                    '<button type="button" onclick="this.previousElementSibling.stepUp()" class="plus" data-recipe="' + id + '" data-date="' + delivery_date + '">+</button>'+
                                 '</div>'+
                             '</div>'+
-                        '</div>')
+                        '</div>'),
+                    // при добавлении блюда в корзину, находим в списке дней и в корзине текущее кол-во добавленных блюд
+                    // превращаем строку в число и увеличиваем их на 1, подставляя новое значение вместо старого
+                    day = getWeekday()
+                    // находим текущее кол-во добавленных блюд в дне заказа в блоке недели и превращаем в число
+                    var cur_qty_meals = Number.parseInt($('#meals_for_' + day).text());
+                    $('#meals_for_' + day).text(cur_qty_meals + 1); // прибавляем +1 к кол-ву добавленных блюд
+                    // обновленное кол-во подставляем вместо текущего кол-ва добавленных блюд в корзине
+                    $(".meals_added").text($('#meals_for_' + day).text());
+
+                    btnContinue();
                 }else{
                     meal_qty++;
                     $('#recipe_id_' + id).find('.q_portion').attr('value', meal_qty);
-                }
-
-                // при добавлении блюда в корзину, находим в списке дней и в корзине текущее кол-во добавленных блюд
-                // превращаем строку в число и увеличиваем их на 1, подставляя новое значение вместо старого
-                day = getWeekday()
-                // находим текущее кол-во добавленных блюд в дне заказа в блоке недели и превращаем в число
-                var cur_qty_meals = Number.parseInt($('#meals_for_' + day).text());
-                $('#meals_for_' + day).text(cur_qty_meals + 1); // прибавляем +1 к кол-ву добавленных блюд
-                // обновленное кол-во подставляем вместо текущего кол-ва добавленных блюд в корзине
-                $("#next_btn_wrap span").text($('#meals_for_' + day).text());
+                };
             },
 
             error: function(){                           // при ошибке с сервера
                 alert('Error recipe add!');              // вылетает алерт-окно об ошибке в этом разделе
             },
-        })
+        });
     });
 
     // добавление кол-ва порций внутри корзины
-    $("button.plus").click(function(event){
+    $(document).on("click", "button.plus", function(event){
         event.preventDefault();
         var data = {};
 
@@ -97,7 +125,7 @@ $(document).ready(function(){
         data.quantity = quantity;
 
         $.ajax({
-            url: '../../cart/adjust',                         // url для отправки данных в adjust_cart
+            url: '../../cart/adjust',                   // url для отправки данных в adjust_cart
             data: data,
             success: function(response){
                 console.log('больше')
@@ -109,7 +137,7 @@ $(document).ready(function(){
     });
 
     // уменьшение кол-ва порций внутри корзины
-    $("button.minus").click(function(event){
+    $(document).on("click", "button.minus", function(event){
         event.preventDefault();
         var data = {};
 
@@ -126,7 +154,7 @@ $(document).ready(function(){
         data.quantity = quantity;
 
         $.ajax({
-            url: '../../cart/adjust',                         // url для отправки данных в adjust_cart
+            url: '../../cart/adjust',                   // url для отправки данных в adjust_cart
             data: data,
             success: function(response){
                 console.log('меньше')
@@ -137,22 +165,21 @@ $(document).ready(function(){
         })
     });
 
-    // удаление рецепта из корзины при нажатии на "х"
-    $(".btn-del_from_cart").click(function(event){
+    // удаление рецепта из корзины при нажатии на "х" (сначала загружаем документ заново, т.к. появились новые элементы на странице)
+    $(document).on("click", ".btn-del_from_cart", function(event){
         event.preventDefault();
         var data = {};
 
-        var id = $(this).attr("data-recipe");           // получаем id рецепта, кол-во которого уменьшаем
-        data.recipe_id = id;
-
+        var id = $(this).attr("data-recipe");           // получаем id рецепта, который следует удалить
+        data.recipe_id = id;                            // заносим его в словарь данных для отправки на сервер
         var delivery_date = $(this).attr("data-date");  // получаем дату доставки
-        data.delivery_date = delivery_date;
+        data.delivery_date = delivery_date;             // заносим ее в словарь данных для отправки на сервер
 
         $.ajax({
             url: '../../cart/remove',                   // url для отправки данных в remove_from_cart
             data: data,
             success: function(response){
-                console.log('рецепт удален')
+                console.log('recipe was removing')
                 $("#recipe_id_" + id).remove();         // удалить рецепт из корзины (DOM-дерева)
 
                 day = getWeekday()
@@ -160,7 +187,9 @@ $(document).ready(function(){
                 var cur_qty_meals = Number.parseInt($('#meals_for_' + day).text());
                 $('#meals_for_' + day).text(cur_qty_meals - 1);
                 // обновленное кол-во подставляем вместо текущего кол-ва добавленных блюд в корзине
-                $("#next_btn_wrap span").text($('#meals_for_' + day).text());
+                $(".meals_added").text($('#meals_for_' + day).text());
+
+                btnContinue();
             },
             error: function(){
                 alert('Error remove recipe!');
@@ -169,6 +198,8 @@ $(document).ready(function(){
     });
 
     // задаем стили выделения кнопки дня недели в соответсвии с открытой страницей дня недели
-    day = getWeekday()
+    day = getWeekday();
     button_day = $("#" + day).css({'background': '#e5433a', 'color': 'white'});
+
+    btnContinue();
 })
