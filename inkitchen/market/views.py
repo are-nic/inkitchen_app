@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import CategoryProduct, ProductMarket
+from .models import CategoryProduct, ProductMarket, OrderMarket, OrderItemMarket
+from django.http import JsonResponse
 
 
 def product_list(request, category_slug=None):
@@ -18,6 +19,17 @@ def product_list(request, category_slug=None):
         category = get_object_or_404(CategoryProduct, slug=category_slug)
         products = products.filter(category=category)
 
+    # ----------------------------------------------обработка корзины-------------------------------------------------
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = OrderMarket.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitemmarket_set.all()
+        cart_items = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_items': 0, 'get_cart_total': 0}
+        cart_items = order['get_cart_items']
+
     data = {
         'category': category,
         'categories': categories,
@@ -26,17 +38,8 @@ def product_list(request, category_slug=None):
     return render(request, 'products.html', data)
 
 
-def cart(request):
+def update_item(request):
     """
-    Корзина
+    добавление продукта в корзину
     """
-    data = {}
-    return render(request, 'products.html', data)
-
-
-def checkout(request):
-    """
-    Заказ
-    """
-    data = {}
-    return render(request, 'products.html', data)
+    return JsonResponse('Товар был добавлен', safe=False)
