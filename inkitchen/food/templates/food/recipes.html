@@ -31,15 +31,36 @@
     <div id="recipes-list">
         {% for recipe in recipes %}
         <div class="recipe-wrapper">
-            <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+            <!--<a href="{% url 'recipe_details' recipe.slug %}" class="recipe">-->
+            <a href="" class="recipeLinkModal"  data-title="{{ recipe.title }}"
+                                                data-image="{{ recipe.image.url }}"
+                                                data-description="{{ recipe.description }}"
+                                                data-kkal="{{ recipe.kkal }}"
+                                                data-protein="{{ recipe.protein }}"
+                                                data-fat="{{ recipe.fat }}"
+                                                data-carbo="{{ recipe.carbohydrates }}"
+                                                data-time="{{ recipe.cooking_time }}"
+                                                data-ingredients="{{ recipe.ingredients.all }}"
+                                                data-id="{{ recipe.id }}">
                 <div class="recipe-photo">
-                    <img src="{{ recipe.image.url }}" alt="рецепт">
+                    <img src="{{ recipe.image.url }}" alt="recipe">
                 </div>
             </a>
             <div class="recipe-info-wrap">
-                <div class="recipe-title-wrap">
-                    <h3>{{ recipe.title }}</h3>
-                </div>
+                <a href="" class="recipeLinkModal"  data-title="{{ recipe.title }}"
+                                                    data-image="{{ recipe.image.url }}"
+                                                    data-description="{{ recipe.description }}"
+                                                    data-kkal="{{ recipe.kkal }}"
+                                                    data-protein="{{ recipe.protein }}"
+                                                    data-fat="{{ recipe.fat }}"
+                                                    data-carbo="{{ recipe.carbohydrates }}"
+                                                    data-time="{{ recipe.cooking_time }}"
+                                                    data-ingredients="{{ recipe.ingredients.all }}"
+                                                    data-id="{{ recipe.id }}">
+                    <div class="recipe-title-wrap">
+                        <h3>{{ recipe.title }}</h3>
+                    </div>
+                </a>
                 <div class="recipe-info-block">
                     <div class="kkal-info">
                         {{ recipe.kkal }}
@@ -137,6 +158,13 @@
 
 <div id="cartOverlay"></div>
 
+<!-------------------------------------- модальное окно карточки рецепта --------------------------------------------->
+<div id="recipeModal">
+    {% include "recipe_card.html" %}
+</div>
+<div id="recipeOverlay"></div>
+
 <script type="text/javascript" src="{% static 'main/js/recipes.js' %}"></script>
 <script type="text/javascript" src="{% static 'main/js/recipes_767px.js' %}"></script>
+<script type="text/javascript" src="{% static 'main/js/recipe_card.js' %}"></script>
 {% endblock content %}
