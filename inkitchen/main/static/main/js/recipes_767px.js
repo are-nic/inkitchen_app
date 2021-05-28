@@ -1,5 +1,5 @@
 // скрипт для страницы рецептов при размерах экрана от 767px и ниже
-// создается два вылетающих окна - снизу корзина, сверху - дни заказа.
+// создается вылетающее окно корзины.
 
 $(document).ready(function() {
     $(window).on('load resize', function(){
@@ -11,8 +11,14 @@ $(document).ready(function() {
                 event.preventDefault();
                 $('#cartOverlay').fadeIn(297, function(){
                     $('#cartModal')
-                    .css('display', 'block')
+                    .css({display: 'block', height: '85%'})
                     .animate({opacity: 1}, 198);
+                    if ($(window).width() <= 375){
+                        $('#cartModal').css('height', '80%')
+                    };
+                    if($(window).width() <= 320){
+                        $('#cartModal').css('height', '70%')
+                    };
                 });
             });
 
