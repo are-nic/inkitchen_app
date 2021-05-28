@@ -109,13 +109,13 @@ ul li {
 
 @media screen and (max-width: 554px){
     #main-page-content {
-        grid-template-rows: 400px 450px 500px 1400px;
+        grid-template-rows: 400px 450px 500px 1420px;
     }
 }
 
 @media screen and (max-width: 468px){
     #main-page-content {
-        grid-template-rows: 400px 850px 500px 1400px;
+        grid-template-rows: 400px 850px 500px 1420px;
     }
 }
 /*------------------------------Заголовки главной страницы------------------------------*/
@@ -123,33 +123,6 @@ ul li {
     font-size: 2rem;
     color: black;
     margin-bottom: 20px;
-}
-
-/*------------------------------выпадающее меню МОЙ ПРОФИЛЬ------------------------------*/
-.two .user-submenu {
-    margin-left: 130px;
-    visibility: hidden;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-.two ul li:hover .user-submenu {
-    visibility: visible;
-}
-.user-submenu {
-    position: absolute;
-    z-index: 10;
-    -webkit-transition: 0.5s ease-in-out;
-    -moz-transition: 0.5s ease-in-out;
-    -o-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
-    display: grid;
-}
-.user-submenu li a {
-    border-bottom: 1px solid rgba(255,255,255,.3);
-    color: black;
-}
-.sub {
-    transform: none;
 }
 /*---------------------------кнопка "Продолжить" и форма Регистрации на главной странице-----------------------*/
 div.login-case {
@@ -404,8 +377,7 @@ footer .cv-pdf i:hover {
 @media screen and (max-width: 767px){
     .how-to-work-icons-block {
         flex-wrap: wrap;
-    },
-
+    }
 }
 
 .how-to-work-icon {

@@ -1,0 +1,180 @@
+p {
+    margin:0;
+}
+.recipe_card-wrap {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100px 100%;
+    grid-template-areas: "title title"
+                         "img info";
+    margin: 0 20px;
+    max-width: 1000px;
+    position: relative;
+}
+
+.title-recipe {
+    grid-area: title;
+    padding: 0 20px;
+}
+.title_ingredients h4 {
+    margin: 0;
+}
+.title_ingredients {
+    margin: 0 0 10px 0;
+}
+.img-recipe {
+    grid-area: img;
+    padding: 0 20px;
+}
+
+.recipe_info {
+    grid-area: info;
+}
+
+.img-recipe img {
+    width: 100%;
+}
+
+.cook_time, .count_persons, .prot_fat_carb, .kkal {
+    text-align: center;
+    height: 40px;
+    padding-right: 10px;
+}
+.cook_time, .count_persons, .prot_fat_carb {
+    padding: 0 10px;
+}
+
+.cook_time, .prot_fat_carb, .kkal {
+    border-right: solid gray;
+}
+
+.energy_value-info {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 20px 0;
+}
+
+.ingredients_recipe {
+    margin: 0 0 20px;
+    height: 150px;
+}
+.ingredient_list-card {
+    overflow-y: scroll;
+}
+
+@media screen and (max-width: 951px){
+    .energy_value-info div{
+        height: auto;
+    }
+    .recipe_card-wrap {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .recipe_card-wrap {
+        grid-template-rows: 70px 100%;
+    }
+    .energy_value-info {
+        display: grid;
+        grid-template-columns: 12% 20% 35% 33%;
+        grid-template-rows: 100%;
+        margin: 20px 0;
+    }
+    .energy_value-info div {
+        font-size: 2vw;
+        white-space: nowrap;
+        padding: 0;
+    }
+    .title-recipe {
+        padding: 0;
+        font-size: 4vw;
+    }
+    .img-recipe {
+        padding: 0;
+    }
+    .recipe_info {
+        padding-left: 10px;
+    }
+    .p_f_c-info {
+        width: auto;
+    }
+    .cook_time, .prot_fat_carb, .kkal {
+        border-right: 2px solid gray;
+    }
+    .description_recipe, .cooking, .ingredients_recipe {
+        font-size: 4vw;
+    }
+}
+
+/*-------------------------------------------------кнопка закрытия карточки рецепта--------------------------------------*/
+.close-recipe_card {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+.close-recipe_card:hover {
+  opacity: 1;
+}
+.close-recipe_card:before,
+.close-recipe_card:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+.close-recipe_card:before {
+  transform: rotate(45deg);
+}
+.close-recipe_card:after {
+  transform: rotate(-45deg);
+}
+@media screen and (max-width: 424px){
+    .close-recipe_card:before,
+    .close-recipe_card:after {
+        height: 23px;
+    }
+}
+
+/*-------------------------------------------------всплывающее окно карточки рецепта----------------------------------------*/
+
+#recipeModal {
+  max-width: 1000px;
+  max-height: 90%;
+  margin: 0 auto;
+  padding: 18px 9px;
+  border-radius: 4px;
+  background: #fafafa;
+  position: fixed;
+  top: 50px; left: 0; right: 0; bottom: 0;
+  margin: auto;
+  display: none;
+  opacity: 0;
+  z-index: 38;
+  overflow-y: scroll;
+}
+#recipeModal #recipeModal__close {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 1px;
+  right: -10px;
+  cursor: pointer;
+  display: block;
+  font-size: 29px;
+}
+#recipeOverlay {
+  z-index: 37;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  cursor :pointer;
+  display :none;
+}

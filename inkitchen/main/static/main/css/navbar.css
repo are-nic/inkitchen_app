@@ -29,7 +29,8 @@
   padding: 0;
   float: right;
   font-size: 14px;
-  font-weight: 500;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .navbar-menu a {
@@ -46,14 +47,44 @@
     text-decoration: underline      /*нижнее подчеркивание при наведение на элементы navbar*/
 }
 
-/*hamburger*/
+/*------------------------------выпадающее меню МОЙ ПРОФИЛЬ------------------------------*/
+.two .user-submenu {
+    visibility: hidden;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.two ul li:hover .user-submenu {
+    visibility: visible;
+}
+.user-submenu {
+    position: absolute;
+    z-index: 10;
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    display: grid;
+}
+.user-submenu li a {
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    color: black;
+}
+.sub {
+    transform: none;
+}
+/*----------------------------------------------burger--------------------------------------------------------*/
+#btn-market-navbar {
+    margin: 0 10px;
+}
+
 .menuToggle{
     color: #000;
     cursor: pointer;
     display: none;
 }
+
 /*Бургер меню скрыто до размера экрана в 767рх*/
-@media (max-width: 767px){
+@media screen and (max-width: 767px){
     .menuToggle {
         display: block;
     }
@@ -66,13 +97,20 @@
         background: #fff;
         width: 100%;
         margin-left: -20px;
-        margin-top: 19px;
         padding-left: 10px;
+        height: 160px;
+        border-bottom: 1px solid;
     }
-    .navbar-menu li {
-        display: block;
-        margin-top: 10px;
+    .two .user-submenu {
+        margin-left: 130px;
     }
+    #btn-market-navbar {
+        margin: 10px 0 0 0;
+    }
+}
+.navbar-menu li {
+    display: block;
+    margin-top: 10px;
 }
 
 .icon {
@@ -123,4 +161,4 @@
     top: 0;
     transform: rotate(135deg);
 }
-/*hamburger*/
+/*burger*/

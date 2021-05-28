@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-
-body {
-    font-family: 'Open Sans', serif;
-    font-size: 14px
-}
-
 .card-total_price-wrap {
     display: flex;
     padding-top: 20px;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+}
+
+@media screen and (max-width: 768px){
+    .card-total_price-wrap {
+        flex-wrap: wrap;
+    }
 }
 
 .table-shopping-cart .price-wrap {
@@ -310,6 +309,24 @@ caption p {
     padding: 20px;
 }
 
+@media screen and (max-width: 767px){
+    .order_container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 50px auto auto;
+        grid-template-areas: "header "
+                             "recipes"
+                             "data";
+        margin: 50px 30px;
+    }
+    #order_recipes {
+        padding: 20px 0;
+        height: auto;
+        border-bottom: 1px solid;
+    }
+}
+
 .cart-item {
     display: flex;
     margin: 15px;
@@ -381,6 +398,12 @@ a {
     border-radius: 50px;
 }
 
+@media screen and (max-width: 1024px){
+    #button-create-order {
+        width: 130px;
+    }
+}
+
 #button-create-order:hover {
     background: #ff5f56;
 }
@@ -398,44 +421,53 @@ a {
     width: 50%;
 }
 
+@media screen and (max-width: 768px){
+    #id_pay_method {
+        width: auto;
+    }
+    .order_container {
+        margin: 50px 30px;
+    }
+}
+
 input[type='radio'],
 label {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 input[type='radio'] {
-  position: relative;
-  height: 20px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin-right: 15px;
+    position: relative;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-right: 15px;
 }
 
 input[type='radio']::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #e5433a;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #e5433a;
 }
 
 input[type='radio']:checked::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #e5433a;
-  transform: translate(-50%, -50%);
-  visibility: visible;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #e5433a;
+    transform: translate(-50%, -50%);
+    visibility: visible;
 }
 
 #id_pay_method label,
@@ -495,5 +527,5 @@ input[type='radio']:checked::after {
 }
 
 #id_building {
-    width: 50px;
+    width: 60px;
 }
