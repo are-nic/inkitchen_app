@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -15,8 +16,8 @@ def delivery_day(request, index):
                                          plan_menu - словарь с данными по всем дням
                                          recipes - все рецепты из БД
     """
-    plan_menu = request.session['plan_menu']        # получаем план-меню из ajax
-    weekday_data = plan_menu[index]     # выделяем данные по конкретному дню, ан странице которого находится покупатель
+    plan_menu = request.session['plan_menu']        # получаем план-меню из сессии
+    weekday_data = plan_menu[index]     # выделяем данные по конкретному дню, на странице которого находится покупатель
     recipes = Recipe.objects.all()
     cart = request.session.get('cart', {})  # получаем корзину из сессии
     qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
@@ -24,7 +25,7 @@ def delivery_day(request, index):
     need_meals = 0
     for meal in plan_menu.values():
         need_meals += meal.get('qty_meals')
-    print('нужно добавить блюд в коризну:', need_meals)
+    print('need meals added:', need_meals)
 
     data = {
         'qty_meals_added': qty_meals_added,
@@ -52,6 +53,22 @@ def all_recipes(request):   # УБРАТЬ
         "plan_menu": plan_menu
     }
     return render(request, "recipes.html", data)                    # выводим их на страницу рецептов
+
+
+def get_ingredients(request):
+    """
+    получение id рецепта из ajax и отправка в скрипт данных об ингредиентах по конкретному рецепту
+    """
+    id = request.GET.get('id', None)    # получаем из ajax id рецепта
+    recipe = Recipe.objects.get(id=id)  # получаем экземпляры всех рецептов
+    ingredients = {}
+    for ingredient in recipe.ingredients.all():
+        ingredients[str(ingredient)] = [ingredient.qty, ingredient.get_unit_display()]
+        print(ingredient, ingredient.qty, ingredient.get_unit_display())
+    response = {
+        'ingredients': ingredients,
+    }
+    return JsonResponse(response)
 
 
 class RecipeDetailView(DetailView):
