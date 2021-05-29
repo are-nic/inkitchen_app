@@ -14,7 +14,7 @@ $(document).ready(function() {
         var time = $(this).attr("data-time");
         var data = {};
         data.id = id;
-        var url = '../ingredients';
+        var url = '../../recipes/ingredients';
 
         $.ajax({
             url: url,
@@ -38,6 +38,7 @@ $(document).ready(function() {
                 });
 
                 $('#recipeModal__close, #recipeOverlay').click(function(){
+                    $(".ingredient_list-card").empty();
                     $('#recipeModal').animate({opacity: 0}, 198,
                     function(){
                         $(this).css('display', 'none');
