@@ -8,7 +8,6 @@
 
 html, body {
     height: 100%;
-    min-width: 400px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -205,6 +204,7 @@ div.login-case h1 {
 
 /* -------------------поле ввода емайл для продолжения регистрации на главной странице ---------------------------*/
 #id_email,
+#register_email,
 #id_password1,
 #id_password2,
 #id_password,
@@ -218,6 +218,9 @@ div.login-case h1 {
     border-radius: 20px;
     padding: 5px 20px 5px;
     width: 250px;
+}
+#emailError {
+    margin: 0 20px;
 }
 
 .do_have_acc {
@@ -234,8 +237,56 @@ div.login-case h1 {
     margin-left: 20px;
 }
 
-
 /*-----------------------------------------------------------Формы---------------------------------------------*/
+/*---------------------Модальные окна логина и регистрации--------------------------*/
+#registerModal, #loginModal {
+    width: 298px;
+    margin: 0 auto;
+    padding: 18px 9px;
+    border-radius: 4px;
+    background: #fafafa;
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: none;
+    opacity: 0;
+    z-index: 38;
+    text-align: center;
+}
+#registerModal {
+    height: 520px;
+}
+#loginModal {
+    height: 350px;
+}
+
+#registerModal #registerModal__close,
+#loginModal #loginModal__close {
+    width: 21px;
+    height: 21px;
+    position: absolute;
+    top: 11px;
+    right: 15px;
+    cursor: pointer;
+    display: block;
+    font-size: 29px;
+}
+#registerOverlay,
+#loginOverlay {
+    z-index: 37;
+    position: fixed;
+    background-color: rgba(0,0,0,.7);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor :pointer;
+    display :none;
+}
+/*------------------------------------------------------------------------*/
 
 .login-form {
     margin-left: 5%;
@@ -331,39 +382,17 @@ footer .cv-pdf i:hover {
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
 }
-
-/*--------------------------------------------------Личный кабинет---------------------------------------*/
-
-.card-profile {
-    display: inline-block;
-}
-
-.card-profile .btn-outline-info {
-    width: 200px;
-    float: left;
-}
-
-.card-profile .btn-outline-danger {
-    width: 200px;
-    float: right;
-}
-.avatar-block {
-    margin: auto;
-    max-width: 75%;
-    flex: 0 0 75%;
-}
-.profile-row {
-    margin: 20px 0 0 0;
-}
-#profileForm {
-    z-index: 9;
+@media screen and (max-width: 321px){
+    footer {
+        margin-top: 10px;
+    }
 }
 /*-----------------------------------------------Блок "Как это работает"------------------------------*/
 .how-to-work-wrapper{
     text-align: center;
     background: url('../img/how_to_work/how_to_work.jpg') 0 0 no-repeat;
     background-size: cover;
-    padding: 2% 0 3%;
+    padding: 1% 0 3%;
 }
 .how-to-work-title {
     color: white;

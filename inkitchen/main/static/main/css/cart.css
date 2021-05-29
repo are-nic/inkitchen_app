@@ -529,3 +529,43 @@ input[type='radio']:checked::after {
 #id_building {
     width: 60px;
 }
+
+/*------------------------------------- всплывающее окно корзины-------------------------------------*/
+
+#cartModal {
+  width: 100%;
+  height: 60%;
+  margin: 0 auto;
+  padding: 18px 9px;
+  border-radius: 4px;
+  background: #fafafa;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  display: none;
+  opacity: 0;
+  z-index: 38;
+  text-align: center;
+}
+#cartModal #cartModal__close {
+  position: absolute;
+  top: 11px;
+  left: 49%;
+  cursor: pointer;
+  display: block;
+}
+#cartModal__close img {
+    height: 14px;
+    width: 21px;
+}
+#cartOverlay {
+  z-index: 37;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  cursor :pointer;
+  display :none;
+}

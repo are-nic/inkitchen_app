@@ -75,7 +75,7 @@
 }
 @media screen and (max-width: 500px){
     #days_order_block div {
-        margin: 30px 10px;
+        margin: 30px 5px;
     }
 }
 #filter_recipes_block {
@@ -87,9 +87,7 @@
     display: flex;
     grid-area: recipes;
     list-style: none;
-    justify-content: center;
     flex-wrap: wrap;
-    align-content: flex-start;
     overflow-y: scroll;
 }
 /*-----------------------------------------------------------------------------------------------------------------*/
@@ -112,8 +110,15 @@
 
 @media screen and (max-width: 460px){
     .recipe-wrapper {
-        width: 90%;
+        min-width: 340px;
         display: flex;
+        margin: 10px auto;
+    }
+    .recipe-photo {
+        width: 175px;
+    }
+    .recipe-info-wrap {
+        width: 100%;
     }
 }
 
@@ -143,6 +148,16 @@ div.recipe {
     height: 150px;
     max-width:100%;
 }
+
+@media screen and (max-width: 376px){
+    .recipe-photo {
+        width: 125px;
+    }
+    .recipe-photo img {
+        height: 120px;
+    }
+}
+
 .recipe:hover .recipe-photo img {
 	transform: scale(1.05);
 }
@@ -157,7 +172,6 @@ div.recipe {
   color: #444444;
   margin: 0 0 10px 0;
 }
-
 .recipe-info-block {
     display: flex;
     flex-wrap: nowrap;
@@ -213,7 +227,7 @@ div.recipe {
 
 .a-recipe {
     float: left;
-    margin: 50px;
+    margin: 50px 50px 0;
     width: 500px;
 }
 
@@ -241,9 +255,18 @@ div.recipe {
 }
 
 form.form-create-recipe {
-    margin-left: 5%;
-    margin-top: 5%;
+    margin: 5% 0 0 5%;
     width: 500px;
+}
+@media screen and (max-width: 426px){
+    form.form-create-recipe {
+        width: 380px;
+    }
+}
+@media screen and (max-width: 376px){
+    form.form-create-recipe {
+        width: 360px;
+    }
 }
 
 .btn-add-recipe {
@@ -253,6 +276,7 @@ form.form-create-recipe {
     width: 45px;
     border: none;
     float: right;
+    font-family: none;
 }
 
 .kkal-info, .p_f_c-info {
@@ -297,42 +321,100 @@ form.form-create-recipe {
     margin: 15px 0 0 0;
 }
 
-/*------------------------------------- всплывающее окно корзины-------------------------------------*/
+@media screen and (max-width: 321px){
+    .kkal-info, .p_f_c-info {
+        font-size: 14px;
+        padding: 0 5px;
+    }
+    .p_f_c-info {
+        width: 70px;
+    }
+    .add-recipe-btn-wrap {
+        -webkit-flex: none;
+        -ms-flex: none;
+        flex: none;
+    }
+    .recipe-info-wrap {
+        min-width: 180px;
+    }
+    form.form-create-recipe {
+        width: 355px;
+    }
+    .recipe-title-wrap h3{
+        font-size: 14px;
+    }
+    .recipe-photo img {
+        height: 120px;
+    }
+    .recipe-wrapper {
+        min-width: 300px;
+        margin: 10px 5px;
+    }
+}
 
-#cartModal {
-  width: 100%;
-  height: 60%;
-  margin: 0 auto;
-  padding: 18px 9px;
-  border-radius: 4px;
-  background: #fafafa;
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  display: none;
-  opacity: 0;
-  z-index: 38;
-  text-align: center;
+/*iphone 5/SE/6/7/8*/
+@media screen and (max-height: 569px), (max-height: 668px){
+    #cart_head h2 {
+        margin: 0 auto;
+        font-size: 20px;
+    }
+    #delivery_day p{
+        font-size: 14px;
+    }
+    #cart_recipes_block {
+        height: 280px;
+    }
+    #next_btn_wrap h5{
+        font-size: 16px;
+    }
+    #next_btn_wrap a{
+        width: 200px;
+        margin-top: 0;
+        padding: 5px;
+    }
+    .cart_messages {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    .meal_count_cart {
+        padding-left: 60%;
+    }
 }
-#cartModal #cartModal__close {
-  position: absolute;
-  top: 11px;
-  left: 49%;
-  cursor: pointer;
-  display: block;
+
+@media screen and (max-height: 668px){
+    #cart_recipes_block {
+        height: 360px;
+    }
 }
-#cartModal__close img {
-    height: 14px;
-    width: 21px;
+/*iphone /6/7/8 Plus*/
+@media screen and (max-height: 737px){
+    .title-main-page {
+        margin-bottom: 0;
+        font-size: 20px;
+    }
+    #cart_recipes_block {
+        height: 370px;
+    }
+    footer {
+        margin-top: 0;
+    }
+    .recipe-wrapper {
+        min-width: 380px;
+    }
 }
-#cartOverlay {
-  z-index: 37;
-  position: fixed;
-  background-color: rgba(0,0,0,.7);
-  width: 100%; height: 100%;
-  top: 0; left: 0;
-  cursor :pointer;
-  display :none;
+/*iphone X*/
+@media screen and (max-height: 813px) and (max-width: 376px){
+    .title-main-page {
+        margin-bottom: 0;
+        font-size: 20px;
+    }
+    #cart_recipes_block {
+        height: 440px;
+    }
+    footer {
+        margin-top: 0;
+    }
+    #recipe_page_container {
+        grid-template-rows: 100px 60px 460px;
+    }
 }

@@ -147,7 +147,6 @@ p {
 #recipeModal {
   max-width: 1000px;
   max-height: 90%;
-  margin: 0 auto;
   padding: 18px 9px;
   border-radius: 4px;
   background: #fafafa;
@@ -177,4 +176,19 @@ p {
   top: 0; left: 0;
   cursor :pointer;
   display :none;
+}
+
+@media screen and (max-width: 768px){
+    #recipeModal #recipeModal__close {
+        right: 0;
+    }
+    #recipeModal {
+        margin: auto 3px;
+    }
+}
+
+@media screen and (max-width: 426px){
+    .title_ingredients h4, .cooking h4{
+        font-size: 16px;
+    }
 }

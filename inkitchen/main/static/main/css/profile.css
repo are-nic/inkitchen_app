@@ -1,0 +1,51 @@
+/*--------------------------------------------------Личный кабинет---------------------------------------*/
+
+.card-profile {
+    display: inline-block;
+}
+
+.card-profile .btn-outline-info {
+    width: 200px;
+    float: left;
+}
+
+.card-profile .btn-outline-danger {
+    width: 200px;
+    float: right;
+}
+.avatar-block {
+    margin: auto;
+    max-width: 75%;
+    flex: 0 0 75%;
+}
+.profile-row {
+    margin: 20px 0 0 0;
+}
+#profileForm {
+    z-index: 9;
+}
+.profile_btns_block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.remove_user, .change_user, .add_recipe{
+    width: 200px;
+    margin: 10px 0;
+}
+.item_btn_change_recipe, #column_change_recipe {
+    text-align: center;
+    width: 100px;
+}
+@media screen and (max-width: 767px){
+    .profile-row div.col-md{
+        margin: 10px 0 0 0;
+    }
+    .item_btn_change_recipe, #column_change_recipe {
+        width: 50px;
+    }
+}
+
+.update_user-form {
+    margin: 5% 0 0 5%;
+}
