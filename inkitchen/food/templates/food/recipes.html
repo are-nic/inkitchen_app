@@ -31,7 +31,6 @@
     <div id="recipes-list">
         {% for recipe in recipes %}
         <div class="recipe-wrapper">
-            <!--<a href="{% url 'recipe_details' recipe.slug %}" class="recipe">-->
             <a href="" class="recipeLinkModal"  data-title="{{ recipe.title }}"
                                                 data-image="{{ recipe.image.url }}"
                                                 data-description="{{ recipe.description }}"
@@ -40,7 +39,6 @@
                                                 data-fat="{{ recipe.fat }}"
                                                 data-carbo="{{ recipe.carbohydrates }}"
                                                 data-time="{{ recipe.cooking_time }}"
-                                                data-ingredients="{{ recipe.ingredients.all }}"
                                                 data-id="{{ recipe.id }}">
                 <div class="recipe-photo">
                     <img src="{{ recipe.image.url }}" alt="recipe">
@@ -55,7 +53,6 @@
                                                     data-fat="{{ recipe.fat }}"
                                                     data-carbo="{{ recipe.carbohydrates }}"
                                                     data-time="{{ recipe.cooking_time }}"
-                                                    data-ingredients="{{ recipe.ingredients.all }}"
                                                     data-id="{{ recipe.id }}">
                     <div class="recipe-title-wrap">
                         <h3>{{ recipe.title }}</h3>
@@ -103,13 +100,13 @@
             {% for item in items %}
             <div class="cart-item" id="recipe_id_{{ item.id }}">
                 <div class="aside">
-                    <a href="{% url 'recipe_details' item.recipe.slug %}">
+                    <a href="">
                         <img src="{{ item.recipe.imageURL }}" class="img-sm">
                     </a>
                 </div>
                 <div class="info">
                     <div class="info-title">
-                        <a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+                        <a href="" class="title text-dark" data-abc="true">
                             {{ item.recipe.title }}
                         </a>
                         <!--Кнопка удаления рецепта-->
