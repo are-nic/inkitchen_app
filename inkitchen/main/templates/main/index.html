@@ -17,15 +17,14 @@
                 <form method="post" class="continue-register-form">
                     {% csrf_token %}
                     {{ register_form.email }}
-                    <button type="button" class="orange-btn register" onclick="openRegisterForm()">Продолжить</button>
+                    <button type="button" class="orange-btn register registerLinkModal">Продолжить</button>
                 </form>
                 <script type="text/javascript" src="{% static 'main/js/available_email.js' %}"></script>
                 <p class="do_have_acc">Есть аккаунт?
-                    <button type="button" onclick="openLoginForm()">Войти</button>
+                    <button class="loginLinkModal" type="button">Войти</button>
                 </p>
             <!--------------------------------блок popup формы логина-------------------------------->
-                <div class="login-wrapper-popup" id="loginForm">
-                    <a href="#" class="close-login-popup" onclick="closeLoginForm()"></a>
+                <div id="loginModal">
                     <form method="post" action="{% url 'login' %}?next={{ next }}" class="login-form-popup">
                         <fieldset class="form-group">
                             <legend>Войти</legend>
@@ -34,25 +33,16 @@
                             {{ login_form.email }}<br><br>
                             <p>Введите пароль</p>
                             {{ login_form.password }}<br><br>
-                            <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+                            <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p><br>
                             <button type="submit" class="orange-btn">Войти</button>
                         </fieldset>
                     </form>
+                    <span id="loginModal__close" class="close-login-popup"></span>
                 </div>
-                <script>
-                    function openLoginForm() {
-                        document.getElementById("loginForm").style.display = "block";
-                    }
-
-                    function closeLoginForm() {
-                        document.getElementById("loginForm").style.display = "none";
-                    }
-                </script>
-            <!----------------------------конец блока popup формы логина-------------------------------->
+                <div id="loginOverlay"></div>
 
             <!------------------------------блок popup формы регистрации-------------------------------->
-                <div class="register-wrapper-popup" id="registerForm">
-                    <a href="" class="close-login-popup" onclick="closeRegisterForm()"></a>
+                <div id="registerModal">
                     <form method="post" action="{% url 'register' %}" class="register-form-popup">
                         <fieldset class="form-group">
                             <legend>Регистрация</legend>
@@ -65,21 +55,14 @@
                             <p>Повторите пароль</p>
                             {{ register_form.password2 }}<br><br>
                             <p>Выберите категорию</p>
-                            {{ register_form.group }}<br><br>
+                            {{ register_form.group }}
                             <button type="submit" class="orange-btn">Создать аккаунт</button>
                         </fieldset>
                     </form>
+                    <span id="registerModal__close" class="close-login-popup"></span>
                 </div>
-                <script>
-                    function openRegisterForm() {
-                        document.getElementById("registerForm").style.display = "block";
-                    }
-
-                    function closeRegisterForm() {
-                        document.getElementById("registerForm").style.display = "none";
-                    }
-                </script>
-            <!------------------------------конец блока popup формы регистрации-------------------------------->
+                <div id="registerOverlay"></div>
+                <script type="text/javascript" src="{% static 'main/js/login_register_modal.js' %}"></script>
             {% endif %}
         </div>
     </div>
@@ -104,7 +87,7 @@
             <div class="slider">
                 {% for recipe in recipes %}
                     <div class="slider-item">
-                        <a href="{% url 'recipe_details' recipe.slug %}" class="recipe">
+                        <a href="" class="recipe">
                             <div class="recipe-photo-carousel">
                                 <img src="{{ recipe.image.url }}" alt="рецепт">
                             </div>
