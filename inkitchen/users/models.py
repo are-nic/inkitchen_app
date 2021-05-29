@@ -20,6 +20,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=20, verbose_name='Номер телефона', blank=True)
     address = models.CharField(max_length=255, verbose_name='Адрес доставки', blank=True)
     about = models.TextField(max_length=300, verbose_name='О Себе', blank=True)
+    photo = models.ImageField(verbose_name='Фото профиля', blank=True, null=True, upload_to='profile_photo')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
