@@ -3,7 +3,7 @@
 {% block title %}Изменить данные Пользователя{% endblock %}
 
 {% block content %}
-    <form method="post" enctype="multipart/form-data" class="login-form">
+    <form method="post" enctype="multipart/form-data" class="update_user-form">
         <fieldset class="form-group">
             <legend>Данные пользователя</legend>
             {% csrf_token %}
@@ -12,6 +12,7 @@
             {{ profile_form.phone }}<br><br>
             {{ profile_form.address }}<br><br>
             {{ profile_form.about }}<br><br>
+            {{ profile_form.photo }}<br><br>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </fieldset>
     </form>
