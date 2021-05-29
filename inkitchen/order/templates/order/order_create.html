@@ -21,12 +21,12 @@
 					{% for item in items %}
 					<div class="cart-item">
 						<div class="aside">
-							<a href="{% url 'recipe_details' item.recipe.slug %}">
+							<a href="">
 								<img src="{{ item.recipe.imageURL }}" class="img-sm">
 							</a>
 						</div>
 						<div class="info">
-							<a href="{% url 'recipe_details' item.recipe.slug %}" class="title text-dark" data-abc="true">
+							<a href="" class="title text-dark" data-abc="true">
 								{{ item.recipe.title }}
 							</a>
 							<p>{{ item.recipe.price }} р.</p>
