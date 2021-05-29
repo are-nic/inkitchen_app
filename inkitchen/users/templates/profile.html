@@ -7,27 +7,28 @@
     <div class="row profile-row">
         <div class="col-md">
             <div class="card card-body card-profile">
-                <h5>{{ user.groups.all.0}}</h5>
                 <div class="row">
                     <div class="col-sm-3 avatar-block"><!--left col-->
                         <div class="text-center">
-                            <img src="{% static 'main/img/profile_icons/cook.jpg' %}" class="avatar img-circle img-thumbnail" alt="avatar">
+                            <img src="{% if user.photo %}{{ user.photo.url }}{% else %}{% static 'main/img/profile_icons/cook.jpg' %}{% endif %}" class="avatar img-circle img-thumbnail" alt="avatar">
                         </div>
                     </div>
                 </div>
 
                 <hr>
+                <div class="profile_btns_block">
                 {% if user.is_authenticated and request.user == user %}
                 <!--если юзер в своем ЛК, то ему доступны кнопки-->
-                    <a class="btn btn-sm btn-outline-danger" href="{% url 'remove_profile' user.id %}">Удалить Профиль</a>
-                    <a class="btn btn-sm btn-outline-info" href="{% url 'upgrade_profile' user.id %}">Изменить данные</a>
+                    <a class="btn btn-sm btn-outline-danger remove_user" href="{% url 'remove_profile' user.id %}">Удалить Профиль</a>
+                    <a class="btn btn-sm btn-outline-info change_user" href="{% url 'upgrade_profile' user.id %}">Изменить данные</a>
                     {% for group in user.groups.all %}
                         {% if group.name == 'cooks' or group.name == 'doctors' or group.name == 'nutritionists'%}
-                            <a class="btn btn-sm btn-outline-success" href="{% url 'create_recipe' %}"> + Добавить рецепт</a>
+                            <a class="btn btn-sm btn-outline-success add_recipe" href="{% url 'create_recipe' %}"> + Добавить рецепт</a>
                         {% endif %}
                     {% endfor %}
             <!------------------------------конец блока popup формы изменения данных пользователя---------------------->
                 {% endif %}
+                </div>
             </div>
         </div>
 
@@ -74,22 +75,32 @@
                     <tr>
                         <th>Рецепт</th>
                         <th>Категория</th>
-                        <th>Дата создания</th>
                         {% if user.is_authenticated and request.user == user %}
-                            <th>Изменить</th>
-                            <th>Удалить</th>
+                            <th id="column_change_recipe">Изменить</th>
                         {% else %}
                             <th>Добавить в корзину</th>
                         {% endif %}
                     </tr>
                     {% for recipe in recipes %}
                         <tr>
-                            <td><a href="{% url 'recipe_details' recipe.slug %}">{{ recipe.title }}</a></td>
+                            <td>
+                                <a href="" class="recipeLinkModal"  data-title="{{ recipe.title }}"
+                                                                    data-image="{{ recipe.image.url }}"
+                                                                    data-description="{{ recipe.description }}"
+                                                                    data-kkal="{{ recipe.kkal }}"
+                                                                    data-protein="{{ recipe.protein }}"
+                                                                    data-fat="{{ recipe.fat }}"
+                                                                    data-carbo="{{ recipe.carbohydrates }}"
+                                                                    data-time="{{ recipe.cooking_time }}"
+                                                                    data-id="{{ recipe.id }}">{{ recipe.title }}</a>
+                            </td>
                             <td>{{ recipe.category }}</td>
-                            <td>{{ recipe.date_created }}</td>
                             {% if user.is_authenticated and request.user == user %}
-                                <td><a class="btn btn-sm btn-outline-info" href="{% url 'edit_recipe' recipe.id %}">Изменить</a></td>
-                                <td><a class="btn btn-sm btn-outline-danger" href="{% url 'remove_recipe' recipe.id %}">Удалить</a></td>
+                                <td class="item_btn_change_recipe">
+                                    <a class="btn btn-sm btn-outline-info change_recipe" href="{% url 'edit_recipe' recipe.id %}">
+                                        Изменить
+                                    </a>
+                                </td>
                             {% else %}
                                 <th>
                                     <form method="post" action="{% url 'cart_add' recipe.id %}">
@@ -110,4 +121,12 @@
             </div>
         </div>
     </div>
+    <!-------------------------------------- модальное окно карточки рецепта --------------------------------------------->
+    <div id="recipeModal">
+        {% include "recipe_card.html" %}
+    </div>
+    <div id="recipeOverlay"></div>
+
+    <script type="text/javascript" src="{% static 'main/js/profile.js' %}"></script>
+    <script type="text/javascript" src="{% static 'main/js/recipe_card.js' %}"></script>
 {% endblock %}
