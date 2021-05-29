@@ -71,11 +71,11 @@ def get_ingredients(request):
     return JsonResponse(response)
 
 
-class RecipeDetailView(DetailView):
+'''class RecipeDetailView(DetailView):
     """вывод рецепта на странице"""
     model = Recipe
     template_name = 'food/recipe_detail.html'
-    context_object_name = 'recipe'                              # имя 'recipe' для обращения в шаблоне к полям рецепта
+    context_object_name = 'recipe'   '''                 # имя 'recipe' для обращения в шаблоне к полям рецепта
 
 
 @login_required(login_url='home')
@@ -129,7 +129,7 @@ def edit_recipe(request, id):
             form_recipe.save_m2m()          # сохраняем тэги в БД
             ingredients_formset.save()      # сохраняем ингридиенты в БД
 
-        return redirect('recipe_details', slug=recipe.slug)
+        return redirect('profile', slug=recipe.slug)
 
     data = {
         'form_recipe': form_recipe,
