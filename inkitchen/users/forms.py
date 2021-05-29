@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.forms import TextInput, EmailInput, ModelForm, Textarea
+from django.forms import TextInput, EmailInput, ModelForm, Textarea, FileInput
 
 User = get_user_model()
 
@@ -38,7 +38,7 @@ class UserRegistrationForm(UserCreationForm):
         widgets = {
             'email': EmailInput(attrs={
                 'placeholder': 'Введите E-mail',
-
+                'id': 'register_email',
             }),
             'password1': TextInput(attrs={
                 'placeholder': 'введите пароль',
@@ -73,7 +73,7 @@ class UserProfileForm(ModelForm, forms.Form):
     """форма для зменения данных пользователя в ЛК"""
     class Meta:
         model = User
-        fields = ['first_name', 'email', 'phone', 'address', 'about']
+        fields = ['first_name', 'email', 'phone', 'address', 'about', 'photo']
 
         widgets = {
             'first_name': TextInput(attrs={
@@ -90,5 +90,8 @@ class UserProfileForm(ModelForm, forms.Form):
             }),
             'about': Textarea(attrs={
                 'placeholder': 'О себе',
+            }),
+            'photo': FileInput(attrs={
+                'class': 'profile-photo',
             }),
         }
