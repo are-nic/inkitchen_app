@@ -31,16 +31,14 @@
             {% for ingredient in ingredients_formset %}
                 {{ ingredient.id }}
                 <div class="row form-row spacer">
-                    <div class="">
-                        <div class="input-group ingredient">
-                            <ul>
-                                <li>{{ ingredient.name }}</li>
-                                <li>{{ ingredient.qty }}</li>
-                                <li>{{ ingredient.unit }}</li>
-                            </ul>
-                            <div class="input-group-append">
-                                <button class="btn btn-success add-form-row">+</button>
-                            </div>
+                    <div class="input-group ingredient">
+                        <ul>
+                            <li>{{ ingredient.name }}</li>
+                            <li>{{ ingredient.qty }}</li>
+                            <li>{{ ingredient.unit }}</li>
+                        </ul>
+                        <div class="input-group-append">
+                            <button class="btn btn-success add-form-row">+</button>
                         </div>
                     </div>
                 </div>
