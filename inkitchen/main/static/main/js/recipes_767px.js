@@ -11,7 +11,7 @@ $(document).ready(function() {
                 event.preventDefault();
                 $('#cartOverlay').fadeIn(297, function(){
                     $('#cartModal')
-                    .css({display: 'block', height: '86%'})
+                    .css({display: 'block', height: '92%'})
                     .animate({opacity: 1}, 198);
                 });
             });
