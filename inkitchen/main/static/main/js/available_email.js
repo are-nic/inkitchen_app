@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     // поймать событие отправки формы
-    $('#id_email').keyup(function () {
+    $('#register_email').keyup(function () {
         // создаем вызов AJAX
         $.ajax({
              data: $(this).serialize(), // получить данные из формы
@@ -10,10 +10,10 @@ $(document).ready(function () {
              // При успешном вызове
              success: function (response) {
                   if (response.is_taken == true) {
-                       $('#id_email').removeClass('is-valid').addClass('is-invalid');
-                       $('#id_email').after('<div class="invalid-feedback d-block" id="emailError">Этот Email уже занят</div>')
+                       $('#register_email').removeClass('is-valid').addClass('is-invalid');
+                       $('.registerLinkModal').after('<div class="invalid-feedback d-block" id="emailError">Этот Email уже занят</div>')
                   } else {
-                       $('#id_email').removeClass('is-invalid').addClass('is-valid');
+                       $('#register_email').removeClass('is-invalid').addClass('is-valid');
                        $('#emailError').remove();
                   }
              },
