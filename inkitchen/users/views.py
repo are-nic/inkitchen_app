@@ -93,7 +93,7 @@ def register(request):
 
 
 def validate_email(request):
-    """Проверка доступности емайл при регистрации"""
+    """Проверка доступности емайл при регистрации через ajax"""
     email = request.GET.get('email', None)
     response = {
         'is_taken': User.objects.filter(email__iexact=email).exists()
@@ -134,7 +134,7 @@ def upgrade_profile(request, user_id):
     if user != request.user:            # проверка на то, что текущий пользователь правит свой аккаунт
         raise PermissionDenied
 
-    profile_form = UserProfileForm(request.POST or None, instance=user)
+    profile_form = UserProfileForm(request.POST or None, request.FILES or None, instance=user)
 
     if profile_form.is_valid():
         profile_form.save()
