@@ -26,16 +26,14 @@ def login(request):
                 if request.GET and request.GET['next'] != '':
                     next = request.GET['next']
                     return HttpResponseRedirect(next)
-                else:
-                    return redirect(reverse('home'))
-            else:
-                login_form.add_error(None, "Ваш Email или пароль неверны")
+                return redirect(reverse('home'))
+            login_form.add_error(None, "Ваш Email или пароль неверны")
         messages.error(request, 'Ошибка введенных данных')
     else:
         login_form = UserLoginForm()
 
     data = {'login_form': login_form, 'next': request.GET.get('next', '')}
-    return render(request, 'login.html', data)
+    return render(request, 'main/index.html', data)
 
 
 def logout(request):
@@ -89,7 +87,7 @@ def register(request):
         register_form = UserRegistrationForm()
 
     data = {'register_form': register_form}
-    return render(request, 'register.html', data)
+    return render(request, 'main/index.html', data)
 
 
 def validate_email(request):
