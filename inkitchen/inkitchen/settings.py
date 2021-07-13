@@ -1,9 +1,10 @@
+import os
 from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -57,9 +58,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'main/templates/users',                 # каталог поиска шаблонов для страниц Пользователя
-            'food/templates/food',                  # каталог поиска шаблонов рецептов
-            'market/templates/market',              # каталог поиска шаблонов маркета
+            os.path.join(BASE_DIR, 'main/templates/users'),                 # каталог поиска шаблонов для страниц Пользователя
+            os.path.join(BASE_DIR, 'food/templates/food'),                  # каталог поиска шаблонов рецептов
+            os.path.join(BASE_DIR, 'market/templates/market'),              # каталог поиска шаблонов маркета
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -141,12 +142,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'home'
-
+STATIC_ROOT = os.path.join(BASE_DIR, '/static')
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    # BASE_DIR / 'static',
 ]
 
 # CART_SESSION_ID = 'cart'    # ключ, используемый для хранения корзины в сессии пользователя.
@@ -194,11 +195,12 @@ SIMPLE_JWT = {
 }
 # APPEND_SLASH = False
 # -----------smtp----------
+# менять пароль раз в пол года. SMTPAuthenticationError
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'inkitchen.club@gmail.com'
-EMAIL_HOST_PASSWORD = 'glazUnia69'
+EMAIL_HOST_PASSWORD = 'GrizuN00'
 EMAIL_HOST_PORT = 587
 # -------------------------
 
