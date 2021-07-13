@@ -16,7 +16,7 @@ def index(request):
     планом питания.
     """
 
-    locale.setlocale(locale.LC_ALL, ('en_EN', 'UTF-8'))     # для англ. названий дней недели и месяцев
+    locale.setlocale(locale.LC_ALL, ('en_US', 'UTF-8'))     # для англ. названий дней недели и месяцев
     week_rus = {
         'monday': ['Понедельник', 'Пн'],
         'tuesday': ['Вторник', 'Вт'],
