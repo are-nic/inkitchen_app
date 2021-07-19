@@ -1,12 +1,15 @@
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.views.generic import DetailView
 from rest_framework.generics import get_object_or_404
+from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from .forms import RecipeForm, IngredientFormSet
 from .models import Recipe
+
+User = get_user_model()
 
 
 def delivery_day(request, index):
@@ -15,39 +18,44 @@ def delivery_day(request, index):
     На страницу рецептов функция отдает: weekday - словарь с данными по конкретному дню недели
                                          plan_menu - словарь с данными по всем дням
                                          recipes - все рецепты из БД
+    без логина пользователя будет выбрасывать на домашнюю страницу после выбора плана-меню
     """
-    plan_menu = request.session['plan_menu']        # получаем план-меню из сессии
-    weekday_data = plan_menu[index]     # выделяем данные по конкретному дню, на странице которого находится покупатель
-    recipes = Recipe.objects.all()
-    cart = request.session.get('cart', {})  # получаем корзину из сессии
-    qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
+    if request.user.is_authenticated:                               # если юзер залогинен
+        plan_menu = request.session['plan_menu']                    # получаем план-меню из сессии
+        weekday_data = plan_menu[index]                             # выделяем данные по конкретному дню, на странице которого находится покупатель
+        recipes = Recipe.objects.all()                              # получаем экземпляры всех рецептов
+        cart = request.session.get('cart', {})                      # получаем корзину из сессии
+        qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
 
-    need_meals = 0
-    for meal in plan_menu.values():
-        need_meals += meal.get('qty_meals')
-    print('need meals added:', need_meals)
+        # кол-во блюд, которое необходимо добавить в корзину (передается на страницу рецептов в #hidden_recipe_count)
+        need_meals = 0
+        for meal in plan_menu.values():
+            need_meals += meal.get('qty_meals')
+        # print('need to add meals:', need_meals)
 
-    data = {
-        'qty_meals_added': qty_meals_added,
-        'weekday': weekday_data,
-        'plan_menu': plan_menu,
-        'recipes': recipes,
-        'need_meals': need_meals,
-    }
-    print('----------------------------------------plan-menu-----------------------------------------')
-    for day in plan_menu:
-        print(day, plan_menu[day])
+        data = {
+            'qty_meals_added': qty_meals_added,
+            'weekday': weekday_data,
+            'plan_menu': plan_menu,
+            'recipes': recipes,
+            'need_meals': need_meals,
+        }
+        print('----------------------------------------plan-menu-----------------------------------------')
+        for day in plan_menu:
+            print(day, plan_menu[day])
 
-    return render(request, "recipes.html", data)
+        return render(request, "recipes.html", data)
+    messages.error(request, "Войдите или Зарегистрируйтесь")
+    return redirect(reverse('home'))
 
 
-def all_recipes(request):   # УБРАТЬ
+def all_recipes(request):   # для слайдера рецептов на главной
     """
     вывод всех рецептов на странице Рецептов
     Выборка из сессии плана-меню (даты, кол-ва блюд на конкретный день) и отправка в html-шаблон
     """
     plan_menu = request.session['plan_menu']
-    recipes = Recipe.objects.all()                                  # получаем экземпляры всех рецептов
+    recipes = Recipe.objects.all()
     data = {
         "recipes": recipes,
         "plan_menu": plan_menu
@@ -71,13 +79,6 @@ def get_ingredients(request):
     return JsonResponse(response)
 
 
-'''class RecipeDetailView(DetailView):
-    """вывод рецепта на странице"""
-    model = Recipe
-    template_name = 'food/recipe_detail.html'
-    context_object_name = 'recipe'   '''                 # имя 'recipe' для обращения в шаблоне к полям рецепта
-
-
 @login_required(login_url='home')
 def create_recipe(request):
     """
@@ -97,8 +98,7 @@ def create_recipe(request):
                 form_recipe.save_m2m()                          # сохраняем ингридиенты в БД
                 formset.save()
                 return redirect('recipes')                      # перенаправляем пользователя на страницу рецептов
-        else:
-            error = 'Введеные данные некорректны'
+        error = 'Введеные данные некорректны'                   # если введенные данные рецепта некорректны
 
     form_recipe = RecipeForm()
     formset = IngredientFormSet()
