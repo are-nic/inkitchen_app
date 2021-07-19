@@ -78,7 +78,7 @@
                         {% if user.is_authenticated and request.user == user %}
                             <th id="column_change_recipe">Изменить</th>
                         {% else %}
-                            <th>Добавить в корзину</th>
+
                         {% endif %}
                     </tr>
                     {% for recipe in recipes %}
@@ -102,21 +102,10 @@
                                     </a>
                                 </td>
                             {% else %}
-                                <th>
-                                    <form method="post" action="{% url 'cart_add' recipe.id %}">
-                                        {% csrf_token %}
-                                        <div class="input-qty-recipes">
-                                            <input style="width: 100px; height: 30px; margin-right: 5px;" name="quantity" type="number" min="1" max="999" class="form-control qty-portions" placeholder="Кол-во">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-sm btn-outline-success" type="submit">Добавить</button>
-                                            </span>
-                                        </div>
-                                    </form>
-                                </th>
+
                             {% endif %}
                         </tr>
                     {% endfor %}
-
                 </table>
             </div>
         </div>
