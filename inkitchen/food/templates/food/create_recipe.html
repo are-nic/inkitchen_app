@@ -47,6 +47,16 @@
             <span>{{ error }}</span><br>
             <button type="submit" class="btn btn-primary">Создать</button>
         </form>
+        <!--скрипт Select2 для поиска и выбора ингредиентов-->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.js-example-basic-single').select2({
+                    placeholder: "Выберите ингредиент",
+                    allowClear: true
+                });
+            });
+        </script>
         <script type="text/javascript" src="{% static 'main/js/dynamic_formset.js' %}"></script>
     </div>
+
 {% endblock content %}
