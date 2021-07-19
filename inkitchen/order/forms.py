@@ -59,11 +59,10 @@ class PlanMenuForm(forms.Form):
     Формат получения даты изменен на "день недели, число месяц" ('%A, %d %b')
     """
 
-    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'readonly': 'readonly'}))     # дата заказа
+    delivery_date = forms.DateField(widget=forms.DateInput(attrs={'readonly': 'readonly'}))      # дата заказа
     delivery_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'text',
-                                                                  'class': 'bs-timepicker',
-                                                                  }))                           # время заказа
-    qty_meals = forms.IntegerField(widget=forms.NumberInput)              # кол-во блюд на конкретный день заказа
+                                                                  'class': 'bs-timepicker', }))  # время заказа
+    qty_meals = forms.IntegerField(min_value=0, widget=forms.NumberInput)       # кол-во блюд на конкретный день заказа
 
 
 PlanMenuFormSet = forms.formset_factory(PlanMenuForm, min_num=7, max_num=7, extra=0)
