@@ -78,11 +78,11 @@ def register(request):
 
             if user:
                 auth.login(request, user)
-                messages.success(request, "Вы успешно зарегистрированы")
+                messages.success(request, "Вы успешно зарегистрированы и вошли на сайт!")
                 return redirect(reverse('home'))
+        messages.error(request, "Ошибка данных регистрации! Повторите попытку")
+        return redirect(reverse('home'))
 
-            else:
-                messages.error(request, "Невозможно войти в систему... ошибка данных")
     else:
         register_form = UserRegistrationForm()
 
