@@ -98,9 +98,6 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#id_phone_number_0 option:contains("Россия +7")').prop('selected', true);
-		})
-	</script>
+	<!--скрипт обработки поля телефонного номера-->
+	<script type="text/javascript" src="{% static 'main/js/telephone_prefix.js' %}"></script>
 {% endblock %}
