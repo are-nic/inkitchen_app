@@ -14,10 +14,12 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
         // определяем соответствует ли плану-меню кол-во блюд, добавленных в корзину.
         // меняет цвет кол-ва добавленных блюд, сообщение корзины и доступность кнопки "Далее"
         var week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        var counter = 0;
-        var all_need_meals = $('#hidden_recipe_count').val();
+        var counter = 0;                                                                // счетчик выполнения условий заказа по каждому дню
+        var all_current_meals = 0;                                                      // переменная для подсчета добавленных в корзину блюд
+        var all_need_meals = $('#hidden_recipe_count').val();                           // кол-во блюд, которое нужно добавить в корзину
         week.forEach(function(weekday) {
             var current_meals = Number.parseInt($('#meals_for_' + weekday).text());     // добавленные блюда
+            all_current_meals += current_meals;                                         // подсчет общего добавленного кол-ва блюд
             var need_meals = Number.parseInt($('#meals_need_for_' + weekday).text());   // кол-во блюд по плану
             if(current_meals == need_meals && all_need_meals != 0){                     // если они равны и меню не "нулевое"
                 counter++;                                                              // увеличиваем счетчик дней на +1
@@ -29,10 +31,14 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
             $('.cart_messages').text('Все блюда добавлены!')
         }else{
             if($('.active-btn-next-order').length){                                     // если кнопка активна при неполном заказе
-                $('.active-btn-next-order').attr("class", "disable-btn-next-order"),    // сделать ее неактивной
-                $('.meals_added').css('color', '#FC453B'),                              // поменять цвет кол-ва добавленых блюд
-                $('.cart_messages').text('Добавьте блюда в корзину')                    // поменять сообщение корзины
-            }
+                $('.active-btn-next-order').attr("class", "disable-btn-next-order");    // сделать ее неактивной
+                $('.meals_added').css('color', '#FC453B');                              // поменять цвет кол-ва добавленых блюд
+            };
+            if(all_current_meals > all_need_meals){                                     // если кол-во добавленных в корзину блюд больше необходимого
+                $('.cart_messages').text('Уберите лишние блюда из корзины')             // поменять сообщение корзины
+            }else if(all_current_meals < all_need_meals){                               // если кол-во добавленных в корзину блюд меньше необходимого
+                $('.cart_messages').text('Добавьте блюда в корзину')
+            };
         };
         counter = 0;                                                                    // обнуляем счетчик
     };
@@ -47,7 +53,7 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
         var id = $(this).attr("data-recipe");           // получаем id рецепта, который добавляем в корзину сессии
         data.recipe_id = id;                            // записываем id в данные для отправки на сервер
 
-        var delivery_date = $(this).attr("data-date");   // получаем дату доставки
+        var delivery_date = $(this).attr("data-date");  // получаем дату доставки
         data.delivery_date = delivery_date;             // записываем дату доставки в данные для отправки на сервер
 
         var meal_name = $(this).data("name");           // присваеваем переменной заголовок рецепта
@@ -80,7 +86,7 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
                                 '</div>'+
                                 '<div class="meal_count_cart">'+
                                     '<button type="button" onclick="this.nextElementSibling.stepDown()" class="minus" data-recipe="' + id + '" data-date="' + delivery_date + '">-</button>'+
-                                    '<input type="number" min="0" max="100" value="'+ meal_qty +'" readonly class="q_portion">'+
+                                    '<input class="q_portion" type="number" min="1" max="99" value="'+ meal_qty +'" readonly">'+
                                     '<button type="button" onclick="this.previousElementSibling.stepUp()" class="plus" data-recipe="' + id + '" data-date="' + delivery_date + '">+</button>'+
                                 '</div>'+
                             '</div>'+
@@ -128,7 +134,7 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
             url: '../../cart/adjust',                   // url для отправки данных в adjust_cart
             data: data,
             success: function(response){
-                console.log('больше')
+                console.log('more meals...')
             },
             error: function(){
                 alert('Error quantity plus!');
@@ -157,7 +163,7 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
             url: '../../cart/adjust',                   // url для отправки данных в adjust_cart
             data: data,
             success: function(response){
-                console.log('меньше')
+                console.log('less meals...')
             },
             error: function(){
                 alert('Error quantity minus!');
