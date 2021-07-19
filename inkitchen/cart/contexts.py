@@ -18,8 +18,11 @@ def cart_contents(request):
     for delivery_date in cart:                                      # перебираем все даты заказа в корзине
         cart_items[delivery_date] = []
         recipe_count += len(cart[delivery_date])                    # прибавляем ко-во блюд по каждой дате заказа
-        for recipe_id, q_portion in cart[delivery_date].items():    # перебираем в каждой дате
+        for recipe_id, q_portion in cart[delivery_date].items():    # перебираем в каждой дате рецепты и кол-во порций
             recipe = get_object_or_404(Recipe, pk=recipe_id)        # получаем экземпляр рецепта, добавленый в корзину
+            # если кол-во порций рецепта в сессии меньше 1, то ставим 1, чтобы случайно не было нулевых порций в заказе
+            if q_portion < 1:
+                q_portion = 1
             total += q_portion * recipe.price                       # общая цена заказа
             cart_items[delivery_date].append({
                 'id': recipe_id,
