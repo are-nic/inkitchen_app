@@ -87,8 +87,7 @@ IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=Ingredi
                                                 fk_name='recipe',
                                                 widgets={
                                                     'name': Select(attrs={
-                                                        'class': 'form-recipe-ingredient form-control',
-                                                        'placeholder': 'Выбрать ингредиент',
+                                                        'class': 'form-recipe-ingredient form-control js-example-basic-single',
                                                         'style': 'width: 250px',
                                                     }),
                                                     'qty': NumberInput(attrs={
@@ -98,7 +97,6 @@ IngredientFormSet = forms.inlineformset_factory(Recipe, Ingredient, form=Ingredi
                                                     }),
                                                     'unit': Select(attrs={
                                                         'class': 'form-recipe-ingredient-unit form-control',
-                                                        'placeholder': 'Ед.',
                                                         'style': 'width: 70px',
                                                     }),
                                                 })
