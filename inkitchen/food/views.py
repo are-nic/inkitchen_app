@@ -25,7 +25,7 @@ def delivery_day(request, index):
         weekday_data = plan_menu[index]                             # выделяем данные по конкретному дню, на странице которого находится покупатель
         recipes = Recipe.objects.all()                              # получаем экземпляры всех рецептов
         cart = request.session.get('cart', {})                      # получаем корзину из сессии
-        qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретный день
+        qty_meals_added = len(cart[weekday_data['delivery_date']])  # определяем кол-во добавленных рецептов в конкретную дату
 
         # кол-во блюд, которое необходимо добавить в корзину (передается на страницу рецептов в #hidden_recipe_count)
         need_meals = 0
@@ -90,7 +90,7 @@ def create_recipe(request):
     if request.method == 'POST':
         form_recipe = RecipeForm(request.POST, request.FILES)   # данные, полученные из формы создания рецепта
         if form_recipe.is_valid():                              # если данные из формы коректно заполнены
-            recipe = form_recipe.save(commit=False)             # сохраняем данные формы без коммита в БД
+            recipe = form_recipe.save(commit=False)             # сохраняем данные формы (без коммита в БД)
             recipe.owner = request.user                         # присваиваем значению owner текущего пользователя
             formset = IngredientFormSet(request.POST, instance=recipe)
             if formset.is_valid():
