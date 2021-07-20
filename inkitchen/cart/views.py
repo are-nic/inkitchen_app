@@ -12,7 +12,7 @@ def add_to_cart(request):
     recipe_id = request.GET.get('recipe_id', None)          # получаем из ajax id добавленного в корзину рецепта
     delivery_date = request.GET.get('delivery_date', None)  # получаем из ajax дату заказа
 
-    cart = request.session.get('cart', {})
+    cart = request.session.get('cart', {})                  # получаем корзину из сессии
     if delivery_date not in cart:                           # если дата заказа еще не была в корзине,
         cart[delivery_date] = {}                            # то заводим для нее пустой словарь
     # проверяем, есть ли рецепт в корзине (в сессии) по конкретной дате заказа
