@@ -56,6 +56,9 @@ $(document).ready(function(){   // после загрузки DOM-дерева 
         var delivery_date = $(this).attr("data-date");  // получаем дату доставки
         data.delivery_date = delivery_date;             // записываем дату доставки в данные для отправки на сервер
 
+        var delivery_date = $(this).attr("data-date");  // получаем дату доставки
+        data.delivery_date = delivery_date;             // записываем дату доставки в данные для отправки на сервер
+
         var meal_name = $(this).data("name");           // присваеваем переменной заголовок рецепта
         var meal_image = $(this).data("image");         // присваеваем переменной url фото рецепта
 
