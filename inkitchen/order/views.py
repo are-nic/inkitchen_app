@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .forms import OrderForm, PlanMenuFormSet
 from .models import OrderRecipe, Order
+from food.models import Recipe
 from django import forms
 from datetime import date, timedelta, time
 import locale
@@ -16,16 +17,19 @@ def order_create(request):
         form_order = OrderForm(request.POST)
         if form_order.is_valid():
             order = form_order.save(commit=False)
-            order.owner = request.user                  # записываем в поле owner текущего пользователя
+            order.customer = request.user               # записываем в поле customer текущего пользователя
             order.save()                                # сохраняем в БД экземпляр заказа
 
-            for recipe in cart:
-                OrderRecipe(                            # создаем экземпляр продукта в заказе
-                    order=order,
-                    recipe=recipe['recipe'],
-                    price=recipe['price'],
-                    qty=recipe['qty']
-                )
+            for delivery_datetime in cart:                 # перебираем все дни заказа в корзине сессии
+                if len(cart[delivery_datetime]) > 0:       # если на день заказа есть блюда (словарь дня заказа не пуст)
+                    for recipe_id, qty in cart[delivery_datetime].items():    # перебираем словарь каждого непустого дня заказа
+                        OrderRecipe(                    # создаем экземпляр рецепта для заказа
+                            order=order,
+                            recipe=int(recipe_id),
+                            price=Recipe.objects.get(id=recipe_id).price,
+                            qty=qty,
+                            delivery_datetime=delivery_datetime
+                        )
 
             cart.clear()                                            # очистка корзины
             return render(request, 'order/order_created.html')
