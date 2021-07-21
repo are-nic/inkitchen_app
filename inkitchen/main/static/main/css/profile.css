@@ -8,7 +8,9 @@
     width: 200px;
     float: left;
 }
-
+.profile_info, .card-profile {
+    height: 400px;
+}
 .card-profile .btn-outline-danger {
     width: 200px;
     float: right;
