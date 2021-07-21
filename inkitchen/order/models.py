@@ -50,7 +50,7 @@ class OrderRecipe(models.Model):
     delivery_datetime = models.DateTimeField(verbose_name='Дата и время доставки', default=None)
 
     class Meta:
-        ordering = ('recipe',)
+        ordering = ('delivery_datetime',)
         verbose_name = 'Рецепт заказа'
         verbose_name_plural = 'Рецепты заказа'
         db_table = 'Order_Recipes'
