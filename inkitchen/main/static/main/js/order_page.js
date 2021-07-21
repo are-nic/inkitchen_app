@@ -6,6 +6,7 @@ $(document).ready(function() {
             $('#id_at_door').prop('disabled', false);
         } else {
             $('#id_at_door').prop('disabled', true);
+            $('#id_at_door').prop('checked', false);
         }
     })
 });
