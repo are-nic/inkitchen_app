@@ -2,6 +2,17 @@ from django.contrib import admin
 from .models import *
 
 
+class OrderItemMarketInline(admin.TabularInline):
+    model = OrderItemMarket
+    raw_id_fields = ['product']
+
+
+@admin.register(OrderMarket)
+class OrderMarketAdmin(admin.ModelAdmin):
+    list_display = ['id', 'customer', 'date_order', 'complete', 'transaction_id']
+    inlines = [OrderItemMarketInline, ]
+
+
 class CategoryProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}                                       # для автозаполнения поля slug
 
@@ -16,6 +27,4 @@ class ProductMarketAdmin(admin.ModelAdmin):
 # Регистрация моделей в админке
 admin.site.register(CategoryProduct, CategoryProductAdmin)
 admin.site.register(ProductMarket, ProductMarketAdmin)
-admin.site.register(OrderMarket)
-admin.site.register(OrderItemMarket)
 admin.site.register(ShippingAddress)
