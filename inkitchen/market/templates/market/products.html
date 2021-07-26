@@ -43,13 +43,101 @@
     <!--блок корзины-->
     <div class="cart-market">
         <h2>Корзина</h2>
-        <div class="cart-items"></div>
+        <div class="cart-items">
+            {% for i in loop %}
+            <div class="cart-item" id="recipe_id_{{ item.id }}">
+                <div class="aside">
+                    <a href="">
+                        <img src="{{ item.recipe.imageURL }}" class="img-sm">
+                    </a>
+                </div>
+                <div class="info">
+                    <div class="info-title">
+                        <a href="" class="title text-dark" data-abc="true">
+                            {{ item.recipe.title }}
+                        </a>
+                        <!--Кнопка удаления рецепта-->
+                        <button type="submit" class="btn-del_from_cart"
+                                data-recipe="{{ item.recipe.id }}"
+                                data-date="{{ weekday.delivery_date }}">x</button>
+                    </div>
+                        <!--Кнопки изменения кол-ва рецепта в корзине-->
+                    <div class="meal_count_cart">
+                        <button type="button" onclick="this.nextElementSibling.stepDown()" class="minus"
+                            data-recipe="{{ item.recipe.id }}"
+                            data-date="{{ weekday.delivery_date }}">-</button>
+                        <input class="q_portion" type="number" min="1" max="99" value="{{ item.q_portion }}" readonly>
+                        <button type="button" onclick="this.previousElementSibling.stepUp()" class="plus"
+                            data-recipe="{{ item.recipe.id }}"
+                            data-date="{{ weekday.delivery_date }}">+</button>
+                    </div>
+                </div>
+			</div>
+            {% endfor %}
+        </div>
     </div>
 
     <!--блок формы заказа-->
     <div class="order-market">
+        <div id="checkout_forms">
 
+            <div class="wrap-order_forms">
+                <div id="title_address_forms">Адрес доставки</div>
+                <div class="checkout_forms-arrows">
+                    <div class="arrow check-arrow_address"></div>
+                </div>
+            </div>
+            <div id="content_block_address" style="display: none;">
+                <input type="text" placeholder="Город">
+                <input type="text" placeholder="Улица">
+                <input type="text" placeholder="Дом">
+                <input type="text" placeholder="Квартира">
+            </div>
+
+            <div class="wrap-order_forms">
+                <div id="title_pay_method_forms">Способ оплаты</div>
+                <div class="checkout_forms-arrows">
+                    <div class="arrow check-arrow_pay_method"></div>
+                </div>
+            </div>
+            <div id="content_block_pay_method" style="display: none;">
+                <label for="pay_method-online">
+                    <input type="radio" id="pay_method-online">
+                    Онлайн
+                </label>
+                <label for="pay_method-on_delivery">
+                    <input type="radio" id="pay_method-on_delivery">
+                    При получении
+                </label>
+            </div>
+
+            <div class="wrap-order_forms">
+                <div id="title_promo_forms">Промокод</div>
+                <div class="checkout_forms-arrows">
+                    <div class="arrow check-arrow_promo"></div>
+                </div>
+            </div>
+            <div id="content_block_promo" style="display: none;">
+                <input type="text" placeholder="Ввести промокод">
+            </div>
+        </div>
+
+        <div id="total_price-block">
+            <table>
+                <tr>
+                    <td>Товары с учетом скидки</td>
+                    <td class="checkout-total_sum"> 1902 руб </td>
+                </tr>
+                    <tr>
+                    <td>Доставка за 15 минут</td>
+                    <td class="checkout-total_sum"> 0 руб </td>
+                </tr>
+                    <tr>
+                    <td>К оплате</td>
+                    <td class="checkout-total_sum"> 1902 руб </td>
+                </tr>
+            </table>
+        </div>
     </div>
-
     <script type="text/javascript" src="{% static 'main/js/market.js' %}"></script>
 {% endblock %}
