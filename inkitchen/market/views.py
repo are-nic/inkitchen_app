@@ -5,9 +5,9 @@ from django.http import JsonResponse
 
 def product_list(request, category_slug=None):
     """
-    Вывод продуктов на странице
-    По умолчанию запрос отфильтрован по available=True, чтобы получить только доступные продукты.
-    Если в фуркцию поступит необязатльный параметр category_slug, то фильтрация продуктов осуществояется по категории.
+    Вывод продуктов на странице, содержимого корзины, форм заказа.
+    По умолчанию запрос отфильтрован по доступным продуктам (available=True).
+    Если в функцию поступит необязатльный параметр category_slug, то фильтрация продуктов осуществояется по категории.
     :param request:
     :param category_slug:
     :return:
@@ -20,20 +20,22 @@ def product_list(request, category_slug=None):
         products = products.filter(category=category)
 
     # ----------------------------------------------обработка корзины-------------------------------------------------
-    if request.user.is_authenticated:
+    if request.user.is_authenticated:               # если юзер авторизован
         customer = request.user
         order, created = OrderMarket.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitemmarket_set.all()
-        cart_items = order.get_cart_items
-    else:
-        items = []
+        items = order.orderitemmarket_set.all()     # все продукты данного заказа
+        cart_items = order.get_cart_items           # кол-во продуктов в корзине (учитывая qty самого продукта)
+    else:                                           # если юзер не авторизован
+        items = []                                  # продукты заказа - пустой список
         order = {'get_cart_items': 0, 'get_cart_total': 0}
         cart_items = order['get_cart_items']
 
     data = {
+        'loop': [0,1,2],
         'category': category,
         'categories': categories,
-        'products': products
+        'products': products,
+        'items': items,
     }
     return render(request, 'products.html', data)
 
