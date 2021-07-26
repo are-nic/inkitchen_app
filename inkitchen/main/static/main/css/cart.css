@@ -437,7 +437,7 @@ label {
 
 input[type='radio'] {
     position: relative;
-    height: 20px;
+    height: 25px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -454,7 +454,7 @@ input[type='radio']::before {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    border: 1px solid #e5433a;
+    border: 2px solid #e5433a;
 }
 
 input[type='radio']:checked::after {

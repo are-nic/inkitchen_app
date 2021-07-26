@@ -2,7 +2,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 60% 40%;
-    grid-template-rows: 60% 40%;
+    grid-template-rows: 55% 45%;
     grid-template-areas: "catalog cart"
                          "catalog order";
 }
@@ -27,13 +27,16 @@
     display: flex;
     flex-wrap: wrap;    /*перенос продуктов на строку ниже при нехватки места*/
     justify-content: center;
+    margin: 10px;
+    overflow-y: scroll;
+    height: 600px;
 }
 
 .item_market {
     float: left;
     transition: width .2s;
-    padding: 15px;
-    margin: 15px;
+    padding: 10px;
+    margin-top: 20px;
     width: 200px;
 }
 
@@ -59,8 +62,85 @@
     padding: 5px;
     color: #F15E45;
     cursor: pointer;
+    background-color: white;
 }
 
 .name_product_market {
     height: 38px;
+}
+
+/*блок форм заказа*/
+
+/*блок итоговой стоимости*/
+.wrap-order_forms {
+    display: flex;
+}
+
+#total_price-block {
+    border-top: 2px solid #fafafa;
+}
+#checkout_forms,
+#total_price-block table{
+    margin: 25px 0 25px 40px;
+}
+
+#checkout_forms {
+
+}
+#title_address_forms,
+#title_pay_method_forms,
+#title_promo_forms{
+    width: 110px;
+}
+#title_address_forms,
+#title_pay_method_forms,
+#title_promo_forms,
+.checkout_forms-arrows,
+#total_price-block table td{
+    padding: 10px 0 10px 0;
+    cursor: pointer;
+}
+.checkout-total_sum {
+    text-align: right;
+    width: 50%;
+}
+.checkout_forms-arrows {
+    padding-left: 60px;
+}
+.arrow {
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid #e5433a;
+      border-right: 2px solid #e5433a;
+      transform: rotate(135deg);
+      color: #e5433a;
+      margin-top: 3px;
+}
+
+.open {
+    transform: rotate(315deg);
+}
+
+#pay_method-online,
+#pay_method-on_delivery{
+    height: 10px;
+}
+
+#content_block_pay_method {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+#content_block_pay_method label {
+    margin: 0 0 10px 0;
+}
+
+#content_block_address input,
+ #content_block_promo input {
+    border-color: #ff5f56;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 20px;
+    padding: 5px 20px 5px;
+    margin: 5px;
 }
