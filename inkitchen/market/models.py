@@ -33,7 +33,7 @@ class ProductMarket(models.Model):
     # qty_per_item = models.PositiveIntegerField(verbose_name='Кол-во на ед. продукта')
     # unit = models.CharField(max_length=10, verbose_name='Ед. измерения')
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True, verbose_name='Фото')
-    description = models.TextField(blank=True, verbose_name='Описание')        # delete
+    description = models.TextField(blank=True, verbose_name='Описание')  # delete
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     stock = models.PositiveIntegerField(verbose_name='Остаток')
     tags = models.ManyToManyField(TagProduct, blank=True, verbose_name='Тэги', related_name='products')
@@ -50,8 +50,9 @@ class ProductMarket(models.Model):
     def __str__(self):
         return self.name
 
-    @property
+    @property   # преобразует функцию в свойство
     def imageURL(self):
+        """метод для обращения в шаблоне к url картинки товара как к свойтсву imageURL (из-за декоратора)"""
         try:
             url = self.image.url
         except:
@@ -74,7 +75,7 @@ class OrderMarket(models.Model):
     def __str__(self):
         return str(self.id)
 
-    @property       # дает возожность обращаться к методу в шаблоне для вывода цен
+    @property  # дает возожность обращаться к методу в шаблоне для вывода цен
     def get_cart_total(self):
         """
         стоимость всего заказа
